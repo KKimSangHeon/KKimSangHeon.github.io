@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>규칙 11. clone을 재정의할 떄는 신중하라 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java" />
+    
+    
+
+      <meta name="description" content="Cloneable의 괴상함Cloneable은 어떤 객체가 복제를 허용한다는 사실을 알리는 데 쓰려고 고안된 믹스인(mixin) 인터페이스이다. 해당 인터페이스에는 clone 메서드가 없으며 Object의 clone 메서드는 protected로 선언되어 있다.Cloneabledms protected로 선언된 Object의 clone 메소드가 어떻게 동작할지">
+<meta property="og:type" content="article">
+<meta property="og:title" content="규칙 11. clone을 재정의할 떄는 신중하라">
+<meta property="og:url" content="http://kkimsangheon.github.io/2019/03/31/effective/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="Cloneable의 괴상함Cloneable은 어떤 객체가 복제를 허용한다는 사실을 알리는 데 쓰려고 고안된 믹스인(mixin) 인터페이스이다. 해당 인터페이스에는 clone 메서드가 없으며 Object의 clone 메서드는 protected로 선언되어 있다.Cloneabledms protected로 선언된 Object의 clone 메소드가 어떻게 동작할지">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/effectivejava.png">
+<meta property="article:published_time" content="2019-03-31T12:14:01.000Z">
+<meta property="article:modified_time" content="2022-02-09T11:44:20.576Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/effectivejava.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Language/">Language</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Language/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-effective" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        규칙 11. clone을 재정의할 떄는 신중하라
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/03/31/effective/" class="article-date">
+            <time datetime="2019-03-31T12:14:01.000Z" itemprop="datePublished">2019-03-31</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h4 id="Cloneable의-괴상함"><a href="#Cloneable의-괴상함" class="headerlink" title="Cloneable의 괴상함"></a>Cloneable의 괴상함</h4><p>Cloneable은 어떤 객체가 복제를 허용한다는 사실을 알리는 데 쓰려고 고안된 믹스인(mixin) 인터페이스이다. 해당 인터페이스에는 clone 메서드가 없으며 Object의 clone 메서드는 protected로 선언되어 있다.<br>Cloneabledms protected로 선언된 Object의 clone 메소드가 어떻게 동작할지 결정한다. 어떤 클래스가 Clonable을 구현하면 Object의 clone메서드는 해당 객체를 필드 다누이로 복사한 객체를 반환하고 Cloneable을 구현하지 않은 클래스라면 clone 메서드는 CloneNotSupportedException을 던진다.</p>
+<h4 id="clone-메서드의-일반-규약"><a href="#clone-메서드의-일반-규약" class="headerlink" title="clone 메서드의 일반 규약"></a>clone 메서드의 일반 규약</h4><p>객체의 복사본을 만들어서 반환한다. 그리고 다음을 따른다.<br>x.clone() !&#x3D; x 의 조건은 참이어야 한다,</p>
+<p>x.clone().getClass() &#x3D;&#x3D; x.getClass()<br>위의 조건은 참이겠지만 반드시 그래야 하는 것은 아니다.</p>
+<p>x.clone().equals(x)<br>위의 코드를 실행한 결과도 true가 되겠지만 반드시 그래야하는것은 아니다.</p>
+<p>위의 코드를 실행한 결과도 true가 되겠지만 반드시 그래야 하는 것은 아니다.<br>객체를 복사하면 보통 같은 클래스의 새로운 객체가 만들어지는데, 내부 자료 구조까지 복사해야 될 수도 있다. 어떤 생성자도 호출되지 않는다.</p>
+<h4 id="규약의-문제점"><a href="#규약의-문제점" class="headerlink" title="규약의 문제점"></a>규약의 문제점</h4><p>어떠한 생성자도 호출되지 않는다는 점은 심하다. 복사본의 내부 객체는 생성자로 만들 수도있다. 클래스가 final로 선언되어 있다면, 생성자로 만든 객체를 반환하도록 clone을 구현할 수도 있다. 하지만 클래스가 final이든 아니든 생성자로 객체를 반환한다면 이 경우 원하는 클래스가 아닐것이다. 즉 clone를 재정의 할 때는 반드시 super.clone을 호출 해 얻은 객체를 반환해야 한다.</p>
+<h4 id="제대로된-사용방법"><a href="#제대로된-사용방법" class="headerlink" title="제대로된 사용방법"></a>제대로된 사용방법</h4><p>1.Cloneable인터페이스를 구현하는 클래스는 제대로 동작하는 public clone 메서드를 제공해야 하고 이를 위해서는 상위클래스들이 제대로된 public 또는 protected clone 메서드를 제공해야 한다.</p>
+<p>2.clone() 메소드의 반환형은 적절한 형태로 반환하여 라이브러리가 할 수 있는 일을 클라이언트에게 미루지 말자. 즉 라이브러리가 형변환을 하고 클라이언트는 변환하여 사용하지 않도록 하자.</p>
+<p>3.복제할 객체가 변경가능 객체에 대한 참조 필드를 가지고 있을경우 deepCopy를 통해 극복하도록 하자.(ex 링크드 리스트의 배열!) 이방법이 싫다면 super.clone 호출 결과로 반환된 객체의 모든 필드를 초기상태로 되돌려 놓은 다음에 상위레벨 메서드를 호출해서 객체상태를 다시 만드는것이다.</p>
+<ol start="4">
+<li>다중스레드에 안전해야 하는 thread-safe 클래스를 Cloneable로 만들려면, clone 메서드에도 동기화 메커니즘을 적용해야 한다. Object.clone 메서드에는 동기화 메커니즘이 적용되어 있지 않으므로 설사 Object.clone 이 대체로 만족스럽다고 하더라도 super.clone()을 호출하는 동기화된 clone 메서드를 만들어야 할 것이다.</li>
+</ol>
+<h4 id="clone의-주의사항"><a href="#clone의-주의사항" class="headerlink" title="clone의 주의사항"></a>clone의 주의사항</h4><p>1.clone 메서드는 또 다른 형태의 생성자이다. 원래 객체를 손상시키지 않아야 하며 복사본의 불변식도 만족시켜야 한다.<br>2.clone 메서드는 복사본의 비-final 메서드, 즉 <u>재정의 가능 메서드를 복사 도중에 호출해서는 안된다</u>. 만일 하위 클래스에서 재정의한 메서드를 clone 안에서 호출하면 해당 메서드는 복사본의 상태가 완성되기 전에 호출될 것이며 복사본의 상태를 망가뜨릴것이다.</p>
+<h4 id="정리하자면"><a href="#정리하자면" class="headerlink" title="정리하자면"></a>정리하자면</h4><p>계승을 위해 설계된 클래스에 clone을 재정의 할 때 Object.clone을 그대로 흉내내야 한다. protected로 선언하고, CloneNotSupportedException 예외를 던지고, Cloneable 인터페이스는 구현하지 않아야한다. 그래야 Object 클래스를 직접 계승한 클래스가 그렇듯, 하위 클래스가 Cloneable 구현 여부를 마음대로 정할 수 있다.</p>
+<p>또한 Cloneable을 구현하는 모든 클래스는 반환값 자료형이 자기 자신은 public clone 메서드를 재정의 해야한다. 또한 처음에 super.clone을 호출해야한다. 그렇게 해서 만들어진 객체를 두고 수정해야 하는 필드를 수정한다.(deepCopy 등을 활용)</p>
+<h4 id="반전의-결론"><a href="#반전의-결론" class="headerlink" title="반전의 결론"></a>반전의 결론</h4><p>객체복제를 지원하는 좋은 방법은, 복사 생성자나 복사 팩터리를 제공하는 것이다. 복사 생성자는 단순히 같은 클래스의 객체 하나를 인자로 받는 생성자이다. 복사 팩터리 또한 같은 클래스의 객체 하나를 인자로 받는것이다.<br>이는 Cloneable&#x2F;clone보다 좋은점이 많다. 언어 외적 객체생성 수단에 의존하지 않으며 , 규약에 충실할 것을 요구하지도 않으며, final 필드 용법과 충돌하지도 않으며, 불필요한 예외를 검사하도록 요구하지도 않으며 형 변환도 필요없다.<br>또한 해당 메서드가 정의된 클래스가 구현하는 인터페이스를 인자로 받을 수 있다.<br>즉 Cloneable은 단점이 너무많다.. 쓰는것을 지양하자.. 배열의 clone메소드는 어쩔수 없이 쓰는경우가 있다.</p>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2019/03/31/effective/" data-id="cl1avmksf00jia0un6fue6ovq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/04/02/effective1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            규칙12. Comparable 구현을 고려하라.
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/03/29/effective/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">규칙 10. toString은 항상 재정의하라</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2019/03/31/effective/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

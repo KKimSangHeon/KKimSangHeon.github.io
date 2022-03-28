@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>6.쿠버네티스의 주요 개념(리소스 개요,파드,네임스페이스,레플리카세트,디플로이먼트 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="kubernetes" />
+    
+    
+
+      <meta name="description" content="docker container prunedocker container prune [options]도커를 오래 사용하다 보면 디스케이 컨테이너와 이미지가 점점 늘어나게 된다. 이런 경우 prune 명령을 사용해 필요없는 컨테이너를 일괄 삭제할 수 있다. docker image prune [options]도커를 오래 사용하다 보면 디스케이 컨테이너와 이미지가">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.쿠버네티스의 주요 개념(리소스 개요,파드,네임스페이스,레플리카세트,디플로이먼트">
+<meta property="og:url" content="http://kkimsangheon.github.io/2019/05/27/kube6/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="docker container prunedocker container prune [options]도커를 오래 사용하다 보면 디스케이 컨테이너와 이미지가 점점 늘어나게 된다. 이런 경우 prune 명령을 사용해 필요없는 컨테이너를 일괄 삭제할 수 있다. docker image prune [options]도커를 오래 사용하다 보면 디스케이 컨테이너와 이미지가">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/dockerandkube.jpg">
+<meta property="article:published_time" content="2019-05-27T11:01:24.000Z">
+<meta property="article:modified_time" content="2022-02-09T11:44:20.604Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/dockerandkube.jpg">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/CS/">CS</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/CS/MSA/">MSA</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-kube6" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        6.쿠버네티스의 주요 개념(리소스 개요,파드,네임스페이스,레플리카세트,디플로이먼트
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2019/05/27/kube6/" class="article-date">
+            <time datetime="2019-05-27T11:01:24.000Z" itemprop="datePublished">2019-05-27</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/kubernetes/" rel="tag">kubernetes</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><code>docker container prune</code><br>docker container prune [options]<br>도커를 오래 사용하다 보면 디스케이 컨테이너와 이미지가 점점 늘어나게 된다. 이런 경우 prune 명령을 사용해 필요없는 컨테이너를 일괄 삭제할 수 있다.</p>
+<p>docker image prune [options]<br>도커를 오래 사용하다 보면 디스케이 컨테이너와 이미지가 점점 늘어나게 된다. 이런 경우 prune 명령을 사용해 필요없는 이미지를 일괄 삭제할 수 있다.</p>
+<p>docker system prune [options]<br>사용하지 않는 도커 이미지 및 컨테이너,볼륨,네트워크 등 모든 리소스를 일괄적으로 삭제할 수 있다.</p>
+<p>쿠버네티스로 실행하는 애펄리케이션은 애플리케이션을 구성하는 다양한 리소스가 함께 연동해 동작한다.</p>
+<h3 id="리소스의-종류-및-용도"><a href="#리소스의-종류-및-용도" class="headerlink" title="리소스의 종류 및 용도"></a>리소스의 종류 및 용도</h3><p><code>노드</code> : 컨테이너가 배치되는 서버<br><code>네임스페이스</code> : 쿠버네티스 클러스터 안의 가상 클러스터.<br><code>파드</code> : 컨테이너의 집합 중 가장 작은 단위로 컨테이너 실행 방법을 정의한다.<br><code>레플리카 세트</code>: 같은 스펙을 갖는 파드를 여러개 생성하고 관리하는 역할을 한다.<br><code>디플로이먼트</code> : 레플리카 세트의 리비전을 관리한다.<br><code>서비스</code>: 파드의 집합에 접근하기 위한 경로를 정의한다.<br><code>인그레스</code>:서비스를 쿠버네티스 클러스터 외부로 노출시킨다.<br><code>컨피그맵</code> : 설정 정보를 정의하고 파드에 전달한다.<br><code>퍼시스턴트 볼륨</code> : 파드가 사용할 스토리지의 크기 및 종류를 정의.<br><code>퍼시스턴스 볼륨 클레임</code> : 퍼시스턴트 볼륨을 동적으로 확보.<br><code>스토리지 클래스</code> : 퍼시스턴트 볼륨이 확보하는 스토리지의 종류를 정의<br><code>스테이트풀 세트</code> : 같은 스펙으로 모두 동일한 파드를 여러개 생성하고 관리한다.<br><code>잡</code>: 상주 실행을 목적으로 하지 않는 파드를 여러개 생성하고 정상적인 종료를 보장한다.<br><code>크론잡</code>: 크론 문법으로 스케줄링되는 잡.<br><code>시크릿</code> : 인증 정보같은 기밀 데이터를 정의한다.<br><code>롤</code>: 네임스페이스 안에서 조작 가능한 쿠버네티스 리소스의 규칙을 정의한다.<br><code>롤바인딩</code>: 쿠버네티스 리소스 사용자와 롤을 연결 짓는다.<br><code>클러스터룰</code>: 클러스터 전체적으로 조작 가능한 쿠버네티스 리소스의 규칙을 정의한다.<br><code>클러스터롤바인딩</code>:쿠버네티스 리소스 사용자와 클러스터 롤을 연결 짓는다.<br><code>서비스 계정</code>: 파드가 쿠버네티스 리소스를 조작할 때 사용하는 계정</p>
+<h3 id="쿠버네티스-클러스터와-노드"><a href="#쿠버네티스-클러스터와-노드" class="headerlink" title="쿠버네티스 클러스터와 노드"></a>쿠버네티스 클러스터와 노드</h3><p>쿠버네티스 리소스 중에서 가장 큰 개념은 노드이다. 쿠버네티스는 클러스터 전체를 관리하는 서버인 마스터가 적어도 하나 이상 있어야 하며 쿠버네티스 클러스터는 마스터와 노드의 그룹으로 구성된다.</p>
+<h3 id="네임스페이스"><a href="#네임스페이스" class="headerlink" title="네임스페이스"></a>네임스페이스</h3><p>쿠버네티스는 클러스터 안에 가상 클러스터를 또 다시 만들 수 있다. 이를 네임스페이스라 한다. 클러스터를 처음 구축하면 default, docker, kube-public, kube-system의 네임스페이스 4개가 이미 만들어져 있다.</p>
+<h3 id="파드"><a href="#파드" class="headerlink" title="파드"></a>파드</h3><p>파드는 컨테이너가 모인 집합체의 단위로 적어도 하나 이상의 컨테이너로 이루어진다. 쿠버네티스에서는 결합이 강한 컨테이너를 파드로 묶어 일괄 배포한다.<br>파드 하나는 여러 노드에 걸쳐 배치될 수 없다. 함께 배포해야 정합성을 유지할 수 있는 컨테이너 등에도 해당 컨테이너를 같은 파드로 묶어두는 전략이 유용하다.<br>쿠버네티스에서는 관리용 서버인 마스터가 클러스터 전체를 제어하며 마스터 노드는 관리용 컴포넌트가 담긴 파드만 배포된 노드이다. 어플리케이션에 사용되는 파드는 배포할 수 없다.</p>
+<h3 id="파드생성-및-배포"><a href="#파드생성-및-배포" class="headerlink" title="파드생성 및 배포"></a>파드생성 및 배포</h3><p>파드생성은 kubectl만 사용해도 가능하지만, 버전관리 관점에서도 yaml파일로 정의하는것이 좋다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1  # 리소스의 유형을 지정하는 속성</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:       # 리소스에 부여되는 메타데이터. metadata.name 속성의 값이 리소스의 이름이 된다.</span><br><span class="line">  name: simple-echo</span><br><span class="line">spec:           # 리소스를 정의하기 위한 속성.</span><br><span class="line">  containers:</span><br><span class="line">  - name: nginx # 컨테이너 이름</span><br><span class="line">    image: gihyodocker/nginx:latest # 도커 허브에 저장된 이미지 태그값</span><br><span class="line">    env:        # 환경변수</span><br><span class="line">    - name: BACKEND_HOST</span><br><span class="line">      value: localhost:8080</span><br><span class="line">    ports:      # 컨테이너가 노출시킬 포트를 지정 (도커파일에서 지정한 경우 따로 지정할필요 x)</span><br><span class="line">    - containerPort: 80</span><br><span class="line">  - name: echo</span><br><span class="line">    image: gihyodocker/echo:latest</span><br><span class="line">    ports:</span><br><span class="line">    - containerPort: 8080</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>아래 명령어를 입력하여 클러스터에 배포할 수 있다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f simple-pod.yaml</span><br><span class="line">$ kubectl get pod</span><br><span class="line">를 입력하여 파드 정보를 볼 수 있다. READY에 분모는 파드에 정의된 컨테이너 수이고 분자는 실행 상태의 컨테이너 수 이다.</span><br></pre></td></tr></table></figure>
+
+<p>아래 명령어를 통해 파드안에 있는 컨테이너의 표준 출력을 화면에 출력할 수 있다.<br>뒤 -c는 컨테이너를 지정한것.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl logs -f simple-echo -c echo</span><br></pre></td></tr></table></figure>
+
+<p>파드를 삭제하기 위해 다음명령어를 사용할 수 있다</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete pod simple-echo</span><br></pre></td></tr></table></figure>
+
+<p>매니페스트 파일로도 파드를 삭제할 수 있다. 이 경우 메니패스트에 작성된 리소스 전체가 삭제된다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete -f simple-pod.yaml</span><br></pre></td></tr></table></figure>
+
+<p>파드에는 각각 고유의 가상 IP주소가 할당된다. 이는 파드에 속하는 모든 컨테이너가 공유하며 이로인해 같은 파드 안의 모든 컨테이너의 가상 IP가 같기 때문에 컨테이너간 통신이 가능해진다.</p>
+<h3 id="레플리카세트"><a href="#레플리카세트" class="headerlink" title="레플리카세트"></a>레플리카세트</h3><p>레플리카세트는 똑같은 정의를 갖는 파드를 여러개 생성하고 관리하기 위한 리소스다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: ReplicaSet</span><br><span class="line">metadata:</span><br><span class="line">  name: echo</span><br><span class="line">  labels:</span><br><span class="line">    app: echo</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: echo</span><br><span class="line">  template: # template 아래는 파드 리소스 정의와 같음</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: echo</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image: gihyodocker/nginx:latest</span><br><span class="line">        env:</span><br><span class="line">        - name: BACKEND_HOST</span><br><span class="line">          value: localhost:8080</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">      - name: echo</span><br><span class="line">        image: gihyodocker/echo:latest</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br></pre></td></tr></table></figure>
+
+<h3 id="디플로이먼트"><a href="#디플로이먼트" class="headerlink" title="디플로이먼트"></a>디플로이먼트</h3><p>레플리카세트보다 상위에 해당하는 리소스로 디플로이먼트가 있다. 디플로이먼트는 어플리케이션 배포의 기본단위가 되는 리소스이다.<br>디플로이먼트의 정의는 레플리카세트의 정의와 크게 다르지 않다. 차이가 있다면 디플로이먼트가 레플리카세트의 리비전 관리를 할 수 있다는 점 정도다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: echo</span><br><span class="line">  labels:</span><br><span class="line">    app: echo</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: echo</span><br><span class="line">  template: # template 아래는 파드 리소스 정의와 같음</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: echo</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: nginx</span><br><span class="line">        image: gihyodocker/nginx:latest</span><br><span class="line">        env:</span><br><span class="line">        - name: BACKEND_HOST</span><br><span class="line">          value: localhost:8080</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br><span class="line">      - name: echo</span><br><span class="line">        image: gihyodocker/echo:patched</span><br><span class="line">        env:</span><br><span class="line">        - name: HOGE</span><br><span class="line">          value: fuga</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br></pre></td></tr></table></figure>
+
+<h3 id="레플리카세트의-생애주기"><a href="#레플리카세트의-생애주기" class="headerlink" title="레플리카세트의 생애주기"></a>레플리카세트의 생애주기</h3><p>실제운영에서는 디폴로이먼트 매니페스트 파일을 통해 레플리카 세트를 다룬다.<br>디플로이먼트를 수정하면 레플리카세트가 새로 생성되고 기존 레플리카 세트와 교체된다.</p>
+<h4 id="레플리카-세트의-다양한-경우의-수"><a href="#레플리카-세트의-다양한-경우의-수" class="headerlink" title="레플리카 세트의 다양한 경우의 수"></a>레플리카 세트의 다양한 경우의 수</h4><p>파드 개수만 수정할 경우 (replicas값을 3에서 4로) 레플리카세트가 새로 생성되지 않는다.</p>
+<p>컨테이너 이미지가 수정된 경우 기존 파드는 단계적으로 정지된다. 또한 <code>kubectl rollout history deployment echo</code>를 입력해보면 새로운 리비전으로 변경된것을 확인할 수 있다.</p>
+<h3 id="롤백하기"><a href="#롤백하기" class="headerlink" title="롤백하기"></a>롤백하기</h3><p>undo를 실행하면 디플로이먼트가 바로 직전 리비전으로 롤백된다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl rollout undo deployment echo</span><br></pre></td></tr></table></figure>
+
+<p>디플로이먼트는 다음 명령어를 통해 삭제할 수 있다. 이와 관련된 레플리카세트와 파드가 함께 삭제된다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete -f simple-deployment.yaml</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2019/05/27/kube6/" data-id="cl1avmkt300l4a0undmezh7ty" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/05/29/kube7/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            7. 서비스
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2019/05/26/kube5/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">5.도커 운영과 관리를 위한 명령</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2019/05/27/kube6/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

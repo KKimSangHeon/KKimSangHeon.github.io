@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Category: Linux | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+
+      <meta name="description" content="Welcome to Sang Heon&#39;s Blog.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:url" content="http://kkimsangheon.github.io/categories/OS/Linux/page/3/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="Welcome to Sang Heon&#39;s Blog.">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Kim Sang Heon">
+<meta name="twitter:card" content="summary">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <i class="icon fa fa-folder-open"></i>Category: <em class="page-title-link">Linux</em>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            
+
+    
+    
+        
+        
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
+            </div>
+            <div class="archives">
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/15/ThisIsLinux36/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="13장. FTP 서버 설치와 운영" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/15/ThisIsLinux36/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-15T02:04:42.000Z" itemprop="datePublished">2017-07-15</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/15/ThisIsLinux36/">13장. FTP 서버 설치와 운영</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            네임서버, 이메일서버, 웹서버 보다는 훨신 간단하다.FTP 는 file transfer protocol의 약자로 파일을 전송하기 위한 서비스. 대용량 파일을 전송 할 때 FTP 서버는 성능이 좋다. ftp서버의 종류는 몇가지가 있는데 CentOS에서는 vsftpd를 제공한다. 페도라, 레드헷 엔터프라이즈 쪽에서 인기가 좋다.proftpd는 주로 대형 사이트
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/14/ThisIsLinux35/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="12장. 웹서버 설정파일,APM 컴파일 설치" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/14/ThisIsLinux35/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-14T09:45:57.000Z" itemprop="datePublished">2017-07-14</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/14/ThisIsLinux35/">12장. 웹서버 설정파일,APM 컴파일 설치</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            x윈도를 통해 httpd.conf파일을 설정해보자httpd.conf는 웹서버 설정파일이다. 책을 통해 이 내용을 알아보자.
+1234카페에서 system-config-httpd 파일을 받자.# yum -y localinstall system-config-httpd-1.5.5-6.fc20.noarch.rpm# system-config-httpd
+
+소스를 컴파일
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/14/ThisIsLinux34/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="12장. 클라우드 서비스 구축" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/14/ThisIsLinux34/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-14T08:04:41.000Z" itemprop="datePublished">2017-07-14</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/14/ThisIsLinux34/">12장. 클라우드 서비스 구축</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            클라우드 서비스를 구축해봅시다.클라우드 서비스는 서버에 파일이 있고 각각의 PC마다 폴더를 지정하여 동기화가 된다. 즉 웹하드는 업로드 다운로드를 하지만 클라우드는 자동으로 동기화가 되는점이 다르다.
+카페에서 관련 서버 두개를 깔자.
+123456789# cd /root/다운로드# yum -y localinstall owncloud- *# ls -l /var
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/14/ThisIsLinux33/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="12장. 웹하드 설치와 운영" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/14/ThisIsLinux33/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-14T05:26:47.000Z" itemprop="datePublished">2017-07-14</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/14/ThisIsLinux33/">12장. 웹하드 설치와 운영</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            웹하드는 웹서버상에서 파일을 저장할 수 있는것. 웹하드에 파일을 저장해 놓으면 전세계 어디서든지 내려받고 수정할 수 있다.
+설정하자1234567891011121314151617181920212223# cd /var/www/html# ls -l# mv /root/다운로드/pydio-core-6.0.2.tar.gz / .# tar xfz pydio-core-6
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/14/ThisIsLinux32/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="12장. APM 개념과 설치, XE 설치와 운영" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/14/ThisIsLinux32/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-14T02:14:09.000Z" itemprop="datePublished">2017-07-14</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/14/ThisIsLinux32/">12장. APM 개념과 설치, XE 설치와 운영</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            리눅스에서 가장 많이 활용하는것중 하나가 웹서버이다.APM &#x3D; Apache 웹서버 + 프로그래밍언어 PHP + 데이터베이스 MaraiaDB리눅스 환경에서 사용될 경우 LAPM(Linux Apache,PHP,MariaDB)라고도 부름.APM 이라는 소프트웨어는 존재하지 않으며 이 3가지가 서로 잘 연동되어 운영되도록 만든 환경을 APM이라 함
+APM
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/13/ThisIsLinux31/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="11장. 쇼핑몰 데이터베이스 구축, Oracle 설치, Oracle에서 쇼핑몰 DB 구축" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/13/ThisIsLinux31/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-13T09:09:57.000Z" itemprop="datePublished">2017-07-13</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/13/ThisIsLinux31/">11장. 쇼핑몰 데이터베이스 구축, Oracle 설치, Oracle에서 쇼핑몰 DB 구축</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            서버에서 실행해도 되고 윈 클라이언트에서 해도된다. 그러나 윈 클라이언트에서 해보자
+윈도우에서 실행cmd 열기cd “c:\Program Files (x86)”cd “MariaDB 10.0”cd MariaDB 10.0cd bin
+mysql -h 192.168.111.100 -u winuser -p4321 입력쿼리문은 책을 참조하자…..
+오라클을 설치해보자서버
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/12/ThisIsLinux30/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="11장. MariaDB 설치/운영 , Windows에서 접속" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/12/ThisIsLinux30/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-12T09:21:35.000Z" itemprop="datePublished">2017-07-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/12/ThisIsLinux30/">11장. MariaDB 설치/운영 , Windows에서 접속</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            마리아 DB 운영DBMS 설치12345678910111213141516171819카페에 올려놓은 마리아 db를 세개 다 받자.# yum -y remove mariadb-libs    // 버전이 달라 새로 설치하면 충돌우려..# yum -y localinstall Maria*# systemctl restart mysql //mysql이 오라클로 들어가자  
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/12/ThisIsLinux29/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="10장. 웹 메일의 설치 및 사용" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/12/ThisIsLinux29/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-11T18:40:05.000Z" itemprop="datePublished">2017-07-12</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/12/ThisIsLinux29/">10장. 웹 메일의 설치 및 사용</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            웹 메일의 설치 및 사용10장의 지금까지의 구현내용은 문제가 있다. 일반사용자는 POP3, SMTP 등에 대한 설정하는것에 대한 지식이 없으며 원하지도 않는다.즉. 이메일 서버를 구축하려면 웹 메일까지 설정을 해주어야 한다.우리는 이를 위해 다람쥐 메일이라고 불리는 squirrelmail을 사용한다.
+다람쥐 메일 설치(서버)센토스에서 다람쥐는 제공하지 않으
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/11/ThisIsLinux28/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="10장. 센드메일 서버의 구현" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/11/ThisIsLinux28/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-11T08:30:49.000Z" itemprop="datePublished">2017-07-11</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/11/ThisIsLinux28/">10장. 센드메일 서버의 구현</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            네임서버를 만들었으니 이메일을 보내는 메일서버를 만들어 보자.
+1.서버 메일서버를 만들자(naver)1.1 서버에서 메일 서버를 만들자(서버에서 진행)123456789101112131415161718192021222324252627282930313233# yum -y install sendmail-cf dovecot            //sendmail-
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/07/11/ThisIsLinux27/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/centoslogo.png)" alt="10장. 메일서버 개념, 메일서버를 위한 네임서버 구현" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://kkimsangheon.github.io/2017/07/11/ThisIsLinux27/">0</span>
+    
+</span>
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/OS/Linux/">Linux</a>
+            </div>
+            <div class="date"><time datetime="2017-07-10T15:56:35.000Z" itemprop="datePublished">2017-07-11</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/07/11/ThisIsLinux27/">10장. 메일서버 개념, 메일서버를 위한 네임서버 구현</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            메일서버네임서버에 대한이해가 필수적이므로 이해하고 넘어올것.E-mail의 송수신에서 사용되는 프로토콜
+다음, 네이버의 메일서버 계정을 갖고있다면 &#107;&#105;&#109;&#64;&#100;&#97;&#117;&#109;&#x2e;&#x6e;&#x65;&#x74;  &#x2F;   lee.naver.com 가 있다.
+&#x6b;&#x69;&#x6d;
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+
+    </div></section>
+
+
+    <nav id="page-nav">
+        <span class="pages">Page 3 of 6</span>
+        <a class="extend prev" rel="prev" href="/categories/OS/Linux/page/2/">&amp;laquo;</a><a class="page-number" href="/categories/OS/Linux/">1</a><a class="page-number" href="/categories/OS/Linux/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/categories/OS/Linux/page/4/">4</a><a class="page-number" href="/categories/OS/Linux/page/5/">5</a><a class="page-number" href="/categories/OS/Linux/page/6/">6</a><a class="extend next" rel="next" href="/categories/OS/Linux/page/4/">&amp;raquo;</a>
+    </nav>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

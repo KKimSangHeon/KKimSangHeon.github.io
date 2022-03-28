@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>4장. RPM 사용법, YUM 사용법 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Linux,This Is Linux" />
+    
+    
+
+      <meta name="description" content="RPM초창기 리눅스는 설치가 어려웠다 .소스코드를 갖고와서 적재적소에 컴파일을 해야했다. 그래서 일반사용자가 사용하기엔 거의 불가능했다. 이러한 이유로 외면을 받았었다. 결국 Redhat에서 RPM(Redhat Package Manager)을 내놓았다. 윈도우의 setup.exe 라고 생각하면 된다. gedit-3.8.3-6.el7.x86_64.rpm 패키">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4장. RPM 사용법, YUM 사용법">
+<meta property="og:url" content="http://kkimsangheon.github.io/2017/07/03/ThisIsLinux7/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="RPM초창기 리눅스는 설치가 어려웠다 .소스코드를 갖고와서 적재적소에 컴파일을 해야했다. 그래서 일반사용자가 사용하기엔 거의 불가능했다. 이러한 이유로 외면을 받았었다. 결국 Redhat에서 RPM(Redhat Package Manager)을 내놓았다. 윈도우의 setup.exe 라고 생각하면 된다. gedit-3.8.3-6.el7.x86_64.rpm 패키">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
+<meta property="article:published_time" content="2017-07-03T09:58:51.000Z">
+<meta property="article:modified_time" content="2022-02-09T11:44:19.896Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="This Is Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/OS/Linux/">Linux</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-ThisIsLinux7" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        4장. RPM 사용법, YUM 사용법
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/07/03/ThisIsLinux7/" class="article-date">
+            <time datetime="2017-07-03T09:58:51.000Z" itemprop="datePublished">2017-07-03</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/This-Is-Linux/" rel="tag">This Is Linux</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="RPM"><a href="#RPM" class="headerlink" title="RPM"></a>RPM</h3><p>초창기 리눅스는 설치가 어려웠다 .소스코드를 갖고와서 적재적소에 컴파일을 해야했다. 그래서 일반사용자가 사용하기엔 거의 불가능했다. 이러한 이유로 외면을 받았었다. 결국 Redhat에서 RPM(Redhat Package Manager)을 내놓았다. 윈도우의 setup.exe 라고 생각하면 된다.</p>
+<p>gedit-3.8.3-6.el7.x86_64.rpm</p>
+<p>패키지이름 : gedit -&gt; 패키지(프로그램)의 이름<br>버전 : 3.8.3 -&gt; 대게 3자리수로 구성. 주버전, 부버전, 패치버전<br>릴리즈번호 : 6 -&gt; 문제점을 개선할 때마다 붙여지는 번호   &#x2F;&#x2F;noarch:모든CPU<br>CentOS버전 : el7 -&gt; CentOS에서 배포할 경우에 붙여짐<br>아키텍처 : x86_64 -&gt; 64비트 CPU를 의미</p>
+<h4 id="자주쓰는-RPM-명령어-옵션"><a href="#자주쓰는-RPM-명령어-옵션" class="headerlink" title="자주쓰는 RPM 명령어 옵션"></a>자주쓰는 RPM 명령어 옵션</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ rpm -Uvh 패키지파일이름.rpm</span><br><span class="line">    // U -&gt; (대문자)패키지가 설치/업그레이드</span><br><span class="line">    // v -&gt; 설치진행과정의 확인</span><br><span class="line">    // h -&gt; 설치진행과정을 &quot;#&quot;마크로 화면에 출력</span><br><span class="line"></span><br><span class="line">$ rpm -e 패키지이름  //패키지 삭제</span><br><span class="line"></span><br><span class="line">$ rpm -qa 패키지이름  //패키지가 설치되었는지 확인</span><br><span class="line"></span><br><span class="line">$ rpm -qf 파일의 절대경로 // 파일이 어느 패키지에 포함된 것인지 확인</span><br><span class="line"></span><br><span class="line">$ rpm -qlp 패키지파일이름.rpm //패키지 파일에 어떤 파일들이 포함되었는지 확인</span><br><span class="line"></span><br><span class="line">$ rpm -qip 패키지파일이름.rpm //패키지 파일의 상세정보</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="실습"><a href="#실습" class="headerlink" title="실습"></a>실습</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ rpm -qa mc  //mc 패키지가 설치되었나 확인</span><br><span class="line"></span><br><span class="line">$ rpm -Uvh mc-4.8.7-8.el7.x86_64.rpm //설치</span><br><span class="line"></span><br><span class="line">$ rpm -qa mc  //mc 패키지가 설치되었나 확인</span><br><span class="line"></span><br><span class="line">$ rpm -qi mc  //mc 패키지 정보 출력</span><br><span class="line"></span><br><span class="line">$ rpm -e mc-4.8.7-8.el7.x86_64.rpm  //삭제</span><br><span class="line">오류: mc-4.8.7-8.el7.x86_64.rpm 패키지가 설치되어 있지 않습니다</span><br><span class="line">//설치파일을 삭제하는것이다.!!!!</span><br><span class="line"></span><br><span class="line">$ rpm -e mc  //패키지 이름만으로 삭제</span><br></pre></td></tr></table></figure>
+
+<h3 id="YUM의-등장"><a href="#YUM의-등장" class="headerlink" title="YUM의 등장"></a>YUM의 등장</h3><p>Yellowdog Updater Modified</p>
+<p>rpm의 경우 의존성 문제가 존재함. 이를 해결하기 위해 나온것이 YUM<br>의존성 문제란? A를 설치하기 위해 B가 먼저 설치되어있어야 하는것.<br>rpm은 B가 설치되어있지 않을 경우 A패키지 설치를 시도할 경우 B를 설치해야 한다고 알려주기는 하나 대략적으로 알려주고, B또한 다른 패키지에 의존성이 있을수도 있어 불편함을 유발한다.</p>
+<p>yum은 인터넷이 정상적으로 동작해야 작동함. yum은 의존성이 있는것을 모두 알아서 설치해준다!!! 즉 yum 명령어는 내부적으로 rpm명령을 실행하는것!!</p>
+<h4 id="yum의-동작과정"><a href="#yum의-동작과정" class="headerlink" title="yum의 동작과정"></a>yum의 동작과정</h4><p>1.yum install을 입력한다<br>2.&#x2F;etc&#x2F;yum.repos.d&#x2F; 를 참고하여 URL을 확인하고<br>3.전체 패키지 목록 파일을 요청한다(CentOS 7 패키지 저장소로)<br>4.전체 패키지 목록 파일만 다운로드<br>5.설치할 패키지와 관련된 패키지의 이름을 화면에 출력<br>6.y를 입력하면 설치에 필요한 패키지 파일을 요청함<br>7.설치할 패키지 파일을 다운로드해서 자동 설치</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ yum install 패키지이름   //패키지 설치</span><br><span class="line"></span><br><span class="line">$ yum -y install 패키지이름   //패키지 설치(y안눌러도 됨)</span><br><span class="line"></span><br><span class="line">$ yum remove 패키지이름  //패키지 제거</span><br><span class="line"></span><br><span class="line">$ yum localinstall rpm파일이름.rpm  //로컬에 존재하는 rpm으로 설치</span><br><span class="line">      // 만약 의존성이 있을경우 그 대상은 레파지토리에서 깐다.</span><br><span class="line"></span><br><span class="line">$ yum info mc   //mc패키지에 관한 정보확인      </span><br><span class="line"></span><br><span class="line">$ yum groupinstall &quot;패키지 그룹이름&quot; //예로 자바를 깐다면 jdk</span><br><span class="line">                          //이클립스 등 한꺼번에 설치됭</span><br><span class="line"></span><br><span class="line">$ yum clean all           //캐시를 지우는것.</span><br><span class="line">                      //yum이 이상할때 써보자                          </span><br></pre></td></tr></table></figure>
+
+
+<h4 id="yum고급실습"><a href="#yum고급실습" class="headerlink" title="yum고급실습"></a>yum고급실습</h4><p>네트워크를 거치지 않고 마운트 시킨 dvd에서 받는다. 교재 221참고<br>dvd에 없으면 네트워크에서 갖고온다.</p>
+<h4 id="yum-grouplist"><a href="#yum-grouplist" class="headerlink" title="yum grouplist"></a>yum grouplist</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ yum grouplist   //그룹리스트 조회</span><br><span class="line">$ yum grouplist hidden //숨겨진것까지 조회</span><br><span class="line"></span><br><span class="line">//영어로 그룹을 설치하는것이 좋다.. 그러므로</span><br><span class="line"></span><br><span class="line">$ chvt 2 //2번 가상터미널로 이동</span><br><span class="line">$ root</span><br><span class="line"> password</span><br><span class="line"></span><br><span class="line">$ yum grouplist hidden &gt; glist.txt  //glist.txt로 생성</span><br><span class="line"></span><br><span class="line">$ chvt 1  //x 윈도모드로 이동</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="226p-비타민퀴즈"><a href="#226p-비타민퀴즈" class="headerlink" title="226p 비타민퀴즈"></a>226p 비타민퀴즈</h4><p>223p를 따라 설정 후</p>
+<h1 id="yum-groupinstall-“GNOME-Desktop”-입력"><a href="#yum-groupinstall-“GNOME-Desktop”-입력" class="headerlink" title="yum groupinstall “GNOME Desktop” 입력"></a>yum groupinstall “GNOME Desktop” 입력</h1>
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2017/07/03/ThisIsLinux7/" data-id="cl1avmkma001na0unhepv3pds" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/07/04/ThisIsLinux8/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            4장. 파일 압축과 묶기, CRON과 AT
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/07/03/ThisIsLinux6/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">4장. 파일의 소유권/허가권, 링크</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2017/07/03/ThisIsLinux7/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

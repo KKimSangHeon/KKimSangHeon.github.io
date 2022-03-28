@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>apache kafka 란? | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Kafka" />
+    
+    
+
+      <meta name="description" content="핵심개념들카프카 ,  Producer, Consumer, Consumer Group, Topic, Partition, Segment, Broker, zookeeper, Quorum 알고리즘기반, __consumer_offsets, Broker replica, ISR, OSR, Controller, fetch의 흐름 카프카?움직이는 데이터를 처리하는 플랫폼카">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apache kafka 란?">
+<meta property="og:url" content="http://kkimsangheon.github.io/2022/03/24/kafka1/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="핵심개념들카프카 ,  Producer, Consumer, Consumer Group, Topic, Partition, Segment, Broker, zookeeper, Quorum 알고리즘기반, __consumer_offsets, Broker replica, ISR, OSR, Controller, fetch의 흐름 카프카?움직이는 데이터를 처리하는 플랫폼카">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/kafka.png">
+<meta property="article:published_time" content="2022-03-24T00:29:41.000Z">
+<meta property="article:modified_time" content="2022-03-24T03:26:34.716Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Kafka">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/kafka.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/CS/">CS</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-kafka1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        apache kafka 란?
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2022/03/24/kafka1/" class="article-date">
+            <time datetime="2022-03-24T00:29:41.000Z" itemprop="datePublished">2022-03-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Kafka/" rel="tag">Kafka</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="핵심개념들"><a href="#핵심개념들" class="headerlink" title="핵심개념들"></a>핵심개념들</h3><p>카프카 ,  Producer, Consumer, Consumer Group, Topic, Partition, Segment, Broker, zookeeper, Quorum 알고리즘기반, __consumer_offsets, Broker replica, ISR, OSR, Controller, fetch의 흐름</p>
+<h2 id="카프카"><a href="#카프카" class="headerlink" title="카프카?"></a>카프카?</h2><p>움직이는 데이터를 처리하는 플랫폼<br>카프카는 이벤트 스트리밍 플랫폼 - 흐르는 데이터를 처리하기 위한 플랫폼<br>LinkedIn 내에서 개발<br>기존의 Messaging Platform(예, MQ)로 이벤트 스트림이처리 불가능하여 이벤트 스트림 처리를 위해 개발</p>
+<p>카프카는 이벤트 스트림을 안전하게 전송(Publish &amp; Subscribe)<br>이벤트 스트림을 디스크에 저장(write to disk)<br>이벤트 스트림을 분석 및 처리(processing &amp; ananlysis)</p>
+<h3 id="이벤트"><a href="#이벤트" class="headerlink" title="이벤트?"></a>이벤트?</h3><p>Event는 비즈니스에서 일어나는 모든 일(데이터)을 의미<br>Event Stream은 연속적인 많은 이벤트들의 흐름을 의미</p>
+<ol>
+<li>이벤트 스트림을 안전하게 전송 &#x2F; Publish &amp; Subscribe</li>
+<li>이벤트 스트림을 디스크에 안전하게 저장 &#x2F; Write to Disk(중요)</li>
+<li>실시간 이벤트 스트림을 분석 및 처리 &#x2F; Processing &amp; Ananlysis</li>
+</ol>
+<p>Event(메시지&#x2F;데이터)가사용되는모든곳에서사용<br>o Messaging System<br>o IOT디바이스로부터데이터수집<br>o Realtime Event Stream Processing (Fraud Detection, 이상감지등)<br>o 애플리케이션에서 발생하는 로그수집<br>o DB동기화(MSA 기반의분리된DB간동기화)<br>o 실시간ETL<br>o Spark, Flink, Storm, Hadoop 과같은빅데이터기술과같이사용</p>
+<h3 id="Producer-Consumer-Consumer-Group"><a href="#Producer-Consumer-Consumer-Group" class="headerlink" title="Producer, Consumer, Consumer Group"></a>Producer, Consumer, Consumer Group</h3><p>• Producer : 메시지를생산(Produce)해서 Kafka의Topic으로메시지를 보내는애플리케이션<br>• Consumer : Topic의메시지를가져와서소비(Consume)하는 애플리케이션<br>• Consumer Group : Topic의메시지를사용하기위해협력하는 Consumer들의집합<br>• 하나의Consumer는하나의Consumer Group에포함되며, Consumer Group내의Consumer들은협력하여Topic의메시지를 분산병렬처리함</p>
+<p>Producer가Write하는LOG-END-OFFSET과Consumer Group의Consumer가Read하고<br>처리한후에Commit한CURRENT-OFFSET과의차이(Consumer Lag)가발생할수있음</p>
+<h3 id="Topic-Partition-Segment"><a href="#Topic-Partition-Segment" class="headerlink" title="Topic, Partition, Segment"></a>Topic, Partition, Segment</h3><p>Topic : Kafka안에서메시지가저장되는장소, 논리적인표현<br>Partition : Commit Log, 하나의Topic은 하나 이상의Partition으로구성 병렬처리(Throughput향상)를 위해서 다수의Partition 사용. 파티션은 브로커들에 분산되어 저장된다.<br>Segment : 메시지(데이터)가저장되는실제물리File Segment File이 지정된 크기보다크거나 지정된 기간보다 오래되면 새파일이 열리고 메시지는새파일에추가됨</p>
+<p>Topic생성시Partition개수를지정 개수변경가능하나운영시에는변경권장하지않음<br>Topic내의Partition들은서로독립적임<br>Event(Message)의순서는하나의Partition내에서만보장<br>Partition은Segment File들로구성됨<br>Rolling 정책: log.segment.bytes(default 1 GB), log.roll.hours(default 168 hours)</p>
+<h4 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h4><p>Kafka Broker는Partition에대한Read및Write를관리하는소프트웨어</p>
+<p>• Kafka Server라고부르기도함<br>• Topic내의Partition들을분산,유지및관리<br>• 각각의Broker들은ID로식별됨(단, ID는숫자)<br>• Topic의일부Partition들을포함<br>-&gt; Topic데이터의일부분(Partition)을갖을뿐데이터전체를갖고있지않음<br>• Kafka Cluster : 여러개의Broker들로구성됨<br>• Client는특정Broker에연결하면전체클러스터에연결됨<br>• 최소3대이상의Broker를하나의Cluster로구성해야함<br>-&gt; 4대이상을권장함</p>
+<p>• Topic을구성하는Partition들은여러Broker 상에분산됨<br>• Topic생성시Kafka가자동으로Topic을구성하는전체 Partition들을모든Broker에게할당해주고분배해줌</p>
+<p>모든 Kafka Broker는 Bootstrap(부트스트랩)서버라고부름<br>• 하나의Broker에만연결하면Cluster전체에연결됨<br>-&gt; 하지만,특정Broker장애를대비하여,전체Broker List(IP, port)를파라미터로입력권장<br>• 각각의Broker는모든Broker, Topic, Partition에대해알고있음(Metadata)</p>
+<h3 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h3><p>Zookeeper는Broker를관리(Broker 들의목록&#x2F;설정을관리)하는소프트웨어<br>• Zookeeper는변경사항에대해Kafka에알림<br>-&gt;Topic 생성&#x2F;제거, Broker 추가&#x2F;제거등<br>• Zookeeper 없이는Kafka가작동할수없음<br>-&gt;KIP1)-500 을통해서Zookeeper제거가진행중<br>-&gt;2022년에Zookeeper를제거한정식버전출시예정중<br>• Zookeeper는홀수의서버로작동하게설계되어있음 (최소3, 권장5)<br>• Zookeeper에는Leader(writes)가있고나머지 서버는Follower(reads)</p>
+<p>KIP : Kafka Improvement Proposal</p>
+<p>Zookeeper는 분산형 Configuration 정보유지, 분산동기화서비스를제공하고대용량분산<br>시스템을위한네이밍레지스트리를제공하는소프트웨어<br>Leader, Follower로 구성되며 Floower는 Leader와 동기화하여 브로커에 전달한다.</p>
+<p>분산작업을제어하기위한Tree형태의데이터저장소<br>-&gt; Zookeeper를사용하여멀티Kafka Broker들간의정보(변경사항포함)공유,동기화등을수행</p>
+<h4 id="zookeeper는-Quorum-알고리즘기반"><a href="#zookeeper는-Quorum-알고리즘기반" class="headerlink" title="zookeeper는 Quorum 알고리즘기반"></a>zookeeper는 Quorum 알고리즘기반</h4><p>Quorum(쿼럼)은“정족수”이며, 합의체가의사를진행시키거나의결을하는데필요한최소한도의 인원수를뜻함<br>분산코디네이션환경에서예상치못한장애가발생해도분산시스템의일관성을유지시키기 위해서사용<br>Ensemble이3대로구성되었다면Quorum은2,즉Zookeeper 1대가장애가발생하더라도정상동작<br>Ensemble이5대로구성되었다면Quorum은3,즉Zookeeper 2대가장애가발생하더라도정상동작</p>
+<p>3대를쓰나 4대를 쓰나 1개의 장애밖에 못버틴다(홀수를 권장하는 이유)</p>
+<p>• Broker는Partition에대한Read및Write를관리하는소프트웨어<br>• Broker는Topic내의Partition들을분산,유지및관리<br>• 최소3대이상의Broker를하나의Cluster로구성해야함<br>-&gt; 4대이상을권장함<br>• Zookeeper는Broker를관리(Broker 들의목록&#x2F;설정을관리)하는소프트웨어<br>• Zookeeper는홀수의서버로작동하게설계되어있음(최소3, 권장5)</p>
+<h3 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h3><p>Message &#x3D;&#x3D; Record &#x3D;&#x3D; Event &#x3D;&#x3D; Data</p>
+<p>레코드는 Header(Topic, Partition, Timestamp, etc), Key, Value로 구성된다.<br>Key와Value는Avro, JSON 등다양한형태가가능</p>
+<p>Kafka는Record(데이터)를Byte Array로저장</p>
+<p>흐름</p>
+<ol>
+<li>프로듀서에서 토픽을 send()</li>
+<li>Serializer(String, avro, json ..등 다양함) 를 통해 byte array로 변환</li>
+<li>Partitioner을 통해 어느파티션으로 보낼지 정해지고</li>
+<li>Compress(사용유무 선택가능)</li>
+<li>RecordAccumulator으로 보내져서 배치 혹은 건별로 카프카로 전송이 된다.</li>
+<li>성공하면 metadata를 리턴하고 실패하면 retry</li>
+</ol>
+<p>개발자는 Serializer, Compress만 설정하고 send()메소드 정도만 호출하면 된다</p>
+<p>Partitioner의역할<br>메시지를Topic의어떤Partition으로보낼지결정(Hash(Key) % Number of Partitions)</p>
+<p>Key 가null일때처리<br>Kafka 2.4 이전 : DefaultPartitioner는 Round Robin정책으로동작. 여러 파티션에 하나씩 배정</p>
+<p>Kafka 2.4이후: DefaultPartitioner는 Sticky정책으로동작. 하나의Batch가닫힐때까지 하나의partition에게record를 보내고랜덤으로Partition 선택.<br>배치처리가 더욱 효율적으로 이뤄짐</p>
+<h3 id="Counsumer"><a href="#Counsumer" class="headerlink" title="Counsumer"></a>Counsumer</h3><p>Consumer Offset : Consumer Group이읽은위치를표시</p>
+<p>• Consumer가자동이나수동으로데이터를읽은위치를commit하여다시읽음을방지<br>• __consumer_offsets 라는Internal Topic에서Consumer Offset을저장하여관리</p>
+<p>4개의Partition으로구성된Topic의데이터를사용하는Single Consumer가있는경우,<br>이Consumer는Topic의모든Partition에서모든Record를Consume함</p>
+<p>하나의Consumer는각Partition에서의<br>Consumer Offset을별도로유지(기록) 하면서모든Partition에서Consume함</p>
+<p>• 4개의파티션이있는Topic를consume하는4개의Consumer가하나의Consumer Group에있다면,각Consumer는정확히하나의Partition에서Record를consume함<br>• Partition은항상Consumer Group내의하나의Consumer에의해서만사용됨<br>• Consumer는주어진Topic에서0개이상의많은Partition을사용할수있음</p>
+<p>Partition이2 개이상인경우모든메시지에대한전체순서보장불가능<br>Partition을1개로구성하면모든메시지에서전체순서보장가능‒처리량저하<br>대부분의경우, Key로구분할수있는메시지들의순서보장이필요한경우가많음</p>
+<p>운영중에Partition 개수를변경하면어떻게될까?<br>해쉬알고리즘은 파티션 갯수로 나누기 때문에 결국 순서보장이 불가능해짐</p>
+<p>Key Cardinality는Consumer Group의개별Consumer가 수행하는작업의양에영향<br>적절히 잘 키를 선택해서 누군 놀고 누군 쉬는것이 일어나지 않도록 해야함<br>• Key선택이잘못되면작업부하가 고르지않을수있음<br>• Key는Integer, String등과같은 단순한유형일필요가없음<br>• Key는Value와마찬가지로Avro, JSON 등여러필드가있는복잡한객체일수있음<br>• 따라서, Partition전체에 Record를고르게배포하는Key를 만드는것이중요</p>
+<p>Consumer Rebalancing<br>Consumer Group의다른Consumer가 실패한Consumer를대신함</p>
+<h4 id="복제"><a href="#복제" class="headerlink" title="복제"></a>복제</h4><p>Broker에장애가발생하면어떻게될까?<br>장애가발생한Broker내의 Partition들은모두사용할수없게되는문제발생</p>
+<p>다른Broker에서장애가발생한Partition을대신해서Partition을새로만들면장애를해결?<br>기존메시지는버릴것인가?기존Offset 정보들을버릴것인가?</p>
+<p>Partition을복제(Replication)하여다른Broker상에서복제물(Replicas)을만들어서장애를 미리대비함</p>
+<p>Replicas - Leader Partition, Follower Partition로 구성됨<br>Replication Factor &#x3D; 3이라 하면 Leader Partition 한개, Follower Partition 두개로 구성됨</p>
+<p>Producer는Leader에만Write하고Consumer는Leader로부터만Read함(Apache Kafka 2.4부터 Follower 파티션에서 컨슈머가 Fetching(Read) 가능)<br>Follower는Broker장애시안정성을제공하기위해서만존재<br>Follower는Leader의Commit Log에서데이터를가져오기요청(Fetch Request)으로복제 - 팔로워가 리더한테 요청을 해서 가져가는 구조</p>
+<p>Leader에장애가발생하면?<br>Kafka 클러스터는Follower중에서새로운Leader를선출 Clients(Producer&#x2F;Consumer)는자동으로새Leader로전환</p>
+<p>하나의Broker에만Partition의Leader들이몰려있다면?<br>특정Broker에만Client(Producer&#x2F;Consumer)로인해부하집중(Hot Spot)</p>
+<p>Hot Spot 방지<br>auto.leader.rebalance.enable : 기본값enable # 리더가 각 브로커 적절히 분배되도록 설정하는것.<br>leader.imbalance.check.interval.seconds : 기본값300 sec  # 30 초마다 리더가 적절히 분배되었는지 확인<br>leader.imbalance.per.broker.percentage : 기본값10 # 다른 브로커보다 10퍼센트 이상 많이가져가면 불균형이라 판단</p>
+<p>Rack Awareness<br>Rack 간분산하여Rack 장애를대비<br>동일한Rack 혹은Available Zone상의Broker들에동일한“rack name” 지정<br>복제본(Replica-Leader&#x2F;Follower)은최대한Rack간에균형을유지하여Rack 장애대비<br>Topic 생성시또는Auto Data Balancer&#x2F;Self Balancing Cluster 동작때만실행</p>
+<h3 id="In-Sync-Replicas-ISR-Leader-장애시Leader를선출하는데사용"><a href="#In-Sync-Replicas-ISR-Leader-장애시Leader를선출하는데사용" class="headerlink" title="In-Sync Replicas(ISR) : Leader 장애시Leader를선출하는데사용"></a>In-Sync Replicas(ISR) : Leader 장애시Leader를선출하는데사용</h3><p>In-Sync Replicas(ISR)는High Water Mark라고하는지점까지동일한Replicas (Leader와 Follower모두)의목록</p>
+<p>Leader에장애가발생하면, ISR 중에서새Leader를선출</p>
+<h3 id="ISR-replica-lag-max-messages"><a href="#ISR-replica-lag-max-messages" class="headerlink" title="ISR : replica.lag.max.messages"></a>ISR : replica.lag.max.messages</h3><p>replica.lag.max.messages&#x3D;4 - 리더가 갖고있는 LOG-END-OFFSET과 4 미만으로 차이나는 팔로워들을 ISR로 지정한다 4개 이상 차이나는 팔로워들을 Out-of-Sync Follower(OSR) 이라 한다,</p>
+<p>High Water Mark: 4미만(replica.lag.max.messages&#x3D;4일 때)으로 차이나는 지점 중 하나로써 컨슈머가 거기까지 잘 복사해간것을 의미</p>
+<h4 id="replica-lag-max-messages로ISR판단시나타날수있는문제점"><a href="#replica-lag-max-messages로ISR판단시나타날수있는문제점" class="headerlink" title="replica.lag.max.messages로ISR판단시나타날수있는문제점"></a>replica.lag.max.messages로ISR판단시나타날수있는문제점</h4><p>• 메시지유입량이갑자기늘어날경우(예,초당10 msg&#x2F;sec),지연으로판단하고OSR(Outof-<br>Sync Replica)로상태를변경시킴<br>• 메시지가항상일정한비율(초당유입되는메시지, 3 msg&#x2F;sec 이하)로Kafka로들어올<br>때, replica.lag.max.messages&#x3D;5로하면5개이상으로지연되는경우가없으므로 ISR들이정상적으로동작<br>• 실제Follower는정상적으로동작하고단지잠깐지연만발생했을뿐인데, replica.lag.max.messages옵션을이용하면OSR로판단하게되는문제가발생(운영중에 불필요한error 발생및그로인한불필요한retry 유발)</p>
+<h3 id="ISR-replica-lag-time-max-ms으로판단해야함"><a href="#ISR-replica-lag-time-max-ms으로판단해야함" class="headerlink" title="ISR : replica.lag.time.max.ms으로판단해야함"></a>ISR : replica.lag.time.max.ms으로판단해야함</h3><p>• Follower가Leader로Fetch 요청을보내는Interval을체크<br>• 예) replica.lag.time.max.ms &#x3D; 10000이라면Follower가Leader로Fetch 요청을<br>10000 ms내에만요청하면정상으로판단<br>• Confluent 에서는replica.lag.time.max.ms옵션만제공(복잡성제거)</p>
+<p>ISR은Leader(브로커)가관리<br>①Follower가너무느리면Leader는ISR에서Follower를제거하고ZooKeeper에ISR을유지<br>②Controller는Partition Metadata에대한변경사항에대해서Zookeeper로부터수신<br>(replica.lag.time.max.ms이내에 Follower가fetch하지않으면 ISR에서제거함)</p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller ??"></a>Controller ??</h3><p>• Kafka Cluster내의Broker중하나가Controller가됨<br>• Controller는ZooKeeper를통해Broker Liveness를모니터링 , ISR 정보를 받아들임<br>• Controller는Leader와Replica 정보를Cluster내의다른Broker들에게전달<br>• Controller는ZooKeeper에Replicas정보의복사본을유지한다음더빠른액세스를<br>위해클러스터의모든Broker들에게동일한정보를캐시함<br>• Controller가Leader 장애시Leader Election을수행<br>• Controller가장애가나면다른Active Broker들중에서재선출됨(주키퍼가 함)</p>
+<h3 id="Last-Committed-Offset-Current-Position-High-Water-Mark-Log-End-Offset"><a href="#Last-Committed-Offset-Current-Position-High-Water-Mark-Log-End-Offset" class="headerlink" title="Last Committed Offset, Current Position, High Water Mark, Log End Offset??"></a>Last Committed Offset, Current Position, High Water Mark, Log End Offset??</h3><p>• Last Committed Offset(Current Offset) : Consumer가최종Commit한Offset<br>• Current Position : Consumer가읽어간위치(처리중, Commit 전)<br>• High Water Mark(Committed &#x2F; Fully-Replicated Committed) : ISR(Leader-Follower)간에복제된Offset<br>• Log End Offset : Producer가메시지를보내서저장된,로그의맨끝Offset</p>
+<h3 id="Committed의의미"><a href="#Committed의의미" class="headerlink" title="Committed의의미?"></a>Committed의의미?</h3><p>• ISR 목록의모든Replicas가메시지를성공적으로가져오면“Committed”. OSR에 있는건 신경쓰지 않음<br>• Consumer는Committed메시지만읽을수있음<br>• Leader는메시지를Commit할시기를결정<br>• Committed메시지는모든Follower에서 동일한Offset을갖도록보장(OSR이라 한들 언젠간 따라잡을테니)<br>• 즉, 어떤Replica가Leader인지에관계없이 (장애발생이라도) 모든Consumer는해당 Offset에서같은데이터를볼수있음<br>• Broker가다시시작할때Committed 메시지목록을유지하도록하기위해, Broker의모든Partition에대한마지막 Committed Offset은replicationoffset-checkpoint라는파일에기록됨</p>
+<p>High Water Mark<br>• 가장최근에Committed메시지의Offset추적<br>• replication-offset-checkpoint 파일에체크포인트를기록</p>
+<p>Leader Epoch<br>• 새Leader가선출된시점을Offset으로표시<br>• Broker복구중에메시지를체크포인트로자른다음현재Leader를따르기위해사용됨<br>• Controller가새Leader를선택하면Leader Epoch를업데이트하고해당정보를ISR 목록의모든구성원에게보냄<br>• leader-epoch-checkpoint 파일에체크포인트를기록<br>즉 새로운 리더에 대한 기록이라고 보면 될듯</p>
+<h3 id="fetch의-흐름"><a href="#fetch의-흐름" class="headerlink" title="fetch의 흐름"></a>fetch의 흐름</h3><p>팔로워들은 패쳐쓰레드가 리더한테 페치(데이터를 가져와서)를 해서 자신의 파티션에 write를 함<br>팔로워의 패쳐 쓰레드가 fetch를 했는데 null 이 오는경우(더이상 데이터를 가져갈게 없는 최신의 상태)<br>Leader는 자신의 High Water Mark 이동한다.<br>그 이후 또 팔로워가 fetch를 리더한테 하면 Leader는High Water Mark를 던져주고 팔로워들 또한 High Water Mark를 갱신한다.</p>
+<p>&#x2F;</p>
+<p>&#x2F;</p>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2022/03/24/kafka1/" data-id="cl1avml3o01pwa0uncb0c7e92" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2022/03/24/spring-security/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">spring security</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2022/03/24/kafka1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

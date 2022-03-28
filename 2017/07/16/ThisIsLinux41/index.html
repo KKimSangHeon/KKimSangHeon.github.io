@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>18장. 방화벽 컴퓨터를 만들자 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Linux,This Is Linux" />
+    
+    
+
+      <meta name="description" content="방화벽은 내부, 외부를 차단해주는 장비 또는 컴퓨터라고 생각하면 된다. 방화벽으로 인해 외부에서 내부 네트워크로 함부러 침입할 수 없다. 그 기법중 많이 쓰이는 것이 사설IP이다.방화벽 컴퓨터는 랜카드가 두개여야 된다. 내부와 결합되는(사설 IP) 랜카드 외부와 연결되는 랜카드(공인IP) 실습에서 192.168.xxx는 공인 ip10.1.xxx 는 내부ip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="18장. 방화벽 컴퓨터를 만들자">
+<meta property="og:url" content="http://kkimsangheon.github.io/2017/07/16/ThisIsLinux41/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="방화벽은 내부, 외부를 차단해주는 장비 또는 컴퓨터라고 생각하면 된다. 방화벽으로 인해 외부에서 내부 네트워크로 함부러 침입할 수 없다. 그 기법중 많이 쓰이는 것이 사설IP이다.방화벽 컴퓨터는 랜카드가 두개여야 된다. 내부와 결합되는(사설 IP) 랜카드 외부와 연결되는 랜카드(공인IP) 실습에서 192.168.xxx는 공인 ip10.1.xxx 는 내부ip">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
+<meta property="article:published_time" content="2017-07-16T02:04:12.000Z">
+<meta property="article:modified_time" content="2022-02-09T11:44:19.931Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="This Is Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/OS/Linux/">Linux</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-ThisIsLinux41" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        18장. 방화벽 컴퓨터를 만들자
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/07/16/ThisIsLinux41/" class="article-date">
+            <time datetime="2017-07-16T02:04:12.000Z" itemprop="datePublished">2017-07-16</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/This-Is-Linux/" rel="tag">This Is Linux</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>방화벽은 내부, 외부를 차단해주는 장비 또는 컴퓨터라고 생각하면 된다. 방화벽으로 인해 외부에서 내부 네트워크로 함부러 침입할 수 없다. 그 기법중 많이 쓰이는 것이 사설IP이다.<br>방화벽 컴퓨터는 랜카드가 두개여야 된다. 내부와 결합되는(사설 IP) 랜카드 외부와 연결되는 랜카드(공인IP)</p>
+<p>실습에서 192.168.xxx는 공인 ip<br>10.1.xxx 는 내부ip로 사용한다<br>책 737을 통해 네트워크 구성을 확인하자</p>
+<h4 id="1-서버-B-설정-웹서버로-사용할것임"><a href="#1-서버-B-설정-웹서버로-사용할것임" class="headerlink" title="1. 서버 B 설정(웹서버로 사용할것임)"></a>1. 서버 B 설정(웹서버로 사용할것임)</h4><p>서버B의 네트워크 세팅에 들어가서 네트워크 어댑터 클릭 후 Bridged 클릭<br>그러면 네트워크가 Bridged네트워크 안으로 들어옴(사설ip로 사용하기로 함)<br>그 후 ip를 변경하자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># nmtui edit ens32</span><br><span class="line">Address를 10.1.1.20/24로 변경</span><br><span class="line">Gateway를 10.1.1.1로 변경</span><br><span class="line">Dns 168.126.63.1로 변경  //kt에서 운영하는 dns 서버</span><br><span class="line">ok버튼</span><br><span class="line"># reboot</span><br><span class="line"></span><br><span class="line"># ip addr</span><br><span class="line"> inet이 10.1.1.20 인지 확인</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-클라이언트-설정-클라이언트에서-실행"><a href="#2-클라이언트-설정-클라이언트에서-실행" class="headerlink" title="2. 클라이언트 설정(클라이언트에서 실행)"></a>2. 클라이언트 설정(클라이언트에서 실행)</h4><p>클라이언트의 네트워크 세팅에 들어가서 네트워크 어댑터 클릭 후 Bridged 클릭 그러면 네트워크가 Bridged네트워크 안으로 들어옴</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># nmtui edit ens33</span><br><span class="line">IPv4 CONFIGURATION을 Manual로 바꾸고 Show 엔터</span><br><span class="line">Address를 10.1.1.10/24</span><br><span class="line">Gateway는 10.1.1.1</span><br><span class="line">DNS Server는 168.126.63.1  </span><br><span class="line">OK 엔터</span><br><span class="line"># reboot</span><br><span class="line"></span><br><span class="line"># ip addr</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-서버B-클라이언트-사설네트워크-테스트"><a href="#3-서버B-클라이언트-사설네트워크-테스트" class="headerlink" title="3. 서버B,클라이언트 사설네트워크 테스트"></a>3. 서버B,클라이언트 사설네트워크 테스트</h4><p>현재까지 구현한것(서버B,클라이언트)은 게이트웨이가 구현되어있지 않으므로 외부로 나갈 수 없다. 하지만 사설네트워크로 안에서는 연결되어 있으므로 ping이 왔다갔다 하는지 확인해보자</p>
+<p>클라이언트에서 실행</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ping -c 3  10.1.1.20</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-서버-구성-서버에서-실행"><a href="#4-서버-구성-서버에서-실행" class="headerlink" title="4. 서버 구성(서버에서 실행)"></a>4. 서버 구성(서버에서 실행)</h4><h4 id="4-1-랜카드-하나가-외부로-연결-잘-되어있는지-확인해보자"><a href="#4-1-랜카드-하나가-외부로-연결-잘-되어있는지-확인해보자" class="headerlink" title="4.1 랜카드 하나가 외부로 연결 잘 되어있는지 확인해보자"></a>4.1 랜카드 하나가 외부로 연결 잘 되어있는지 확인해보자</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># nmtui edit ens32</span><br><span class="line">게이트웨이, DNS Servers가 192.168.111.2로 잘 되어있다.</span><br><span class="line"># halt -p</span><br></pre></td></tr></table></figure>
+<p>서버에 랜카드를 하나 더 달자.<br>vmware 워크스테이션에서 Edit virtual machins settings를 눌러 Add 후 Network Adapter 선택 다음 후 Bridged 선택하고 Finish 그 후 부팅<br>추가한 장치가 ens32인지 확인해보자<br>날짜 옆에 랜카드 모양을 누르면 ens34가 추가되어 있다. 네트워크설정 클릭 후 오른쪽 아래 톱니모양(유선연결1)을 누르고 신원을 누르자. 그 후 ens34로 입력하자<br>다음 IPv4를 선택하여 자동을 수동으로 변경하자<br>그 후 주소 10.1.1.1<br>네트마스크 255.255.255.0<br>게이트웨이 10.1.1.1<br>네임서버 끄자<br>IPv6로 가서 끄자<br>이제 적용을 누르고 재부팅하자</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysconfig/network-scripts/ifcfg-ens34</span><br><span class="line">6,7행 지워버리기</span><br><span class="line"># systemctl restart network</span><br><span class="line"># ifconfig</span><br><span class="line">ens32 는 192.168.111.100번으로 ens34는 10.1.1.1</span><br></pre></td></tr></table></figure>
+<p>이제 하드웨어 설정은 끝났다</p>
+<h4 id="5-클라이언트에서-핑을-날려보자"><a href="#5-클라이언트에서-핑을-날려보자" class="headerlink" title="5. 클라이언트에서 핑을 날려보자"></a>5. 클라이언트에서 핑을 날려보자</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ping 10.1.1.1</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-서버에-정책을-적용시켜보자"><a href="#6-서버에-정책을-적용시켜보자" class="headerlink" title="6. 서버에 정책을 적용시켜보자"></a>6. 서버에 정책을 적용시켜보자</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/sysctl.conf</span><br><span class="line">net.ipv4.ip_foward=1 맨아래 입력</span><br><span class="line"></span><br><span class="line"># echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">      //아무 메세지 안나오면 성공</span><br><span class="line"># cat /proc/sys/net/ipv4/ip_forward</span><br><span class="line">      //1출력됨</span><br><span class="line"></span><br><span class="line">포워딩성공!</span><br><span class="line"></span><br><span class="line"># iptables --policy FORWARD DROP</span><br><span class="line"># iptables --policy INPUT DROP</span><br><span class="line"># iptables --policy OUTPUT DROP</span><br><span class="line"></span><br><span class="line">ens34 장치를 설정해주자</span><br><span class="line">input 설정</span><br><span class="line"># iptables --append INPUT --in-interface ens34 --source 10.1.1.0/24 --match state --state NEW,ESTABLISHED --jump ACCEPT</span><br><span class="line"></span><br><span class="line">output 설정</span><br><span class="line"># iptables --append OUTPUT --out-interface ens34 --destination 10.1.1.0/24 --match state --state NEW,ESTABLISHED --jump ACCEPT</span><br><span class="line"></span><br><span class="line"># iptables --append FORWARD --in-interface ens34 --source 10.1.1.0/24 --destination 0.0.0.0/0 --match state --state NEW,ESTABLISHED --jump ACCEPT</span><br><span class="line"></span><br><span class="line">ens32 설정</span><br><span class="line"># iptables --append FORWARD --in-interface ens32 --destination 10.1.1.0/24 --match state --state ESTABLISHED --jump ACCEPT</span><br><span class="line"></span><br><span class="line"># iptables --table nat --append POSTROUTING --out-interface ens32 --jump MASQUERADE</span><br><span class="line"></span><br><span class="line">설정한것 저장</span><br><span class="line"># service iptables save</span><br><span class="line"># firewall-config</span><br><span class="line">영구적 - 마스커레이딩 - 마스커레이딩영역 체크 - 옵션 다시불러오기</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-클라이언트에서-인터넷-해보자"><a href="#7-클라이언트에서-인터넷-해보자" class="headerlink" title="7.클라이언트에서 인터넷 해보자"></a>7.클라이언트에서 인터넷 해보자</h4><p>이 경우 클라이언트는 자신의 ip(10.1.1.0)이 아닌 Server IP(192.168.111.100)으로 접속하게 된다. 이를 확인해보자</p>
+<h4 id="7-1-윈-클라이언트를-켜자"><a href="#7-1-윈-클라이언트를-켜자" class="headerlink" title="7.1 윈 클라이언트를 켜자"></a>7.1 윈 클라이언트를 켜자</h4><p>파일질라서버를 카페에서 받자<br>에딧 -유저- 오른쪽add -centos 입력- password centos -ok<br>왼쪽 add 아무 디렉토리 선택- write&#x2F;delete 선택 -ok<br>cmd 열고 netsh advfirewall firewall add rule name&#x3D;”FTP서버” dir&#x3D;in action&#x3D;allow protocol&#x3D;tcp localport&#x3D;21<br>방화벽 설정 입력<br>ipconfig<br>아이피를 기억하자 (지금은 192.168.111.128임)</p>
+<h4 id="7-2-클라이언트에서-FTP-접속해보자"><a href="#7-2-클라이언트에서-FTP-접속해보자" class="headerlink" title="7.2 클라이언트에서 FTP 접속해보자"></a>7.2 클라이언트에서 FTP 접속해보자</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># su</span><br><span class="line"># yum -y install ftp</span><br><span class="line"># ftp 192.168.111.128</span><br><span class="line">centos</span><br><span class="line">centos</span><br><span class="line">&gt;pwd</span><br><span class="line">&gt;ls</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="7-3-윈도우-클라이언트에서-누가-접속했는지-확인해보자"><a href="#7-3-윈도우-클라이언트에서-누가-접속했는지-확인해보자" class="headerlink" title="7.3 윈도우 클라이언트에서 누가 접속했는지 확인해보자"></a>7.3 윈도우 클라이언트에서 누가 접속했는지 확인해보자</h4><p>netstat &#x2F;an<br>찾다 보면 192.168.111.100이 들어온것을 확인할 수 있다.<br>즉 사설네트워크 컴퓨터는 외부로 나갈 때 192.168.111.100으로 나간다!</p>
+<h4 id="8-서버B를-웹서버로-만들고-윈-클라이언트로-접속해보자"><a href="#8-서버B를-웹서버로-만들고-윈-클라이언트로-접속해보자" class="headerlink" title="8. 서버B를 웹서버로 만들고 윈 클라이언트로 접속해보자"></a>8. 서버B를 웹서버로 만들고 윈 클라이언트로 접속해보자</h4><h4 id="8-1-서버-B에서-실행"><a href="#8-1-서버-B에서-실행" class="headerlink" title="8.1 서버 B에서 실행"></a>8.1 서버 B에서 실행</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># yum -y install httpd</span><br><span class="line"># firewall-cmd --add-service=http    //포트열자</span><br><span class="line"># cd /var/www/html</span><br><span class="line"># touch index.html</span><br><span class="line"># vi index.html</span><br><span class="line">Centos7-Web Server 입력</span><br><span class="line">저장 후 종료</span><br><span class="line"></span><br><span class="line"># systemctl restart httpd</span><br><span class="line"># systemctl enable httpd</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="8-2-서버에서-80번-포트로-연결오면-서버-B로-연결해라를-설정"><a href="#8-2-서버에서-80번-포트로-연결오면-서버-B로-연결해라를-설정" class="headerlink" title="8.2 서버에서 80번 포트로 연결오면 서버 B로 연결해라를 설정"></a>8.2 서버에서 80번 포트로 연결오면 서버 B로 연결해라를 설정</h4><p>서버에서 실행</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iptables --table nat --append PREROUTING --proto tcp --in-interface ens32 --dport 80 --jump DNAT --to-destination 10.1.1.20</span><br><span class="line"># service iptables save   //저장</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-3-윈도우-클라이언트에서-접속해보자"><a href="#8-3-윈도우-클라이언트에서-접속해보자" class="headerlink" title="8.3 윈도우 클라이언트에서 접속해보자"></a>8.3 윈도우 클라이언트에서 접속해보자</h4><p>192.168.111.100 으로 접속하자</p>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2017/07/16/ThisIsLinux41/" data-id="cl1avmknc004na0un1xtiapml" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/07/16/ThisIsLinux42/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            19장. PXE 서버, 킥스타트
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/07/15/ThisIsLinux40/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">17장. 프록시 서버 설치와 운영</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2017/07/16/ThisIsLinux41/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>리눅스 명령어 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="리눅스 명령어" />
+    
+    
+
+      <meta name="description" content="참고사항 $: 일반사용자 #: 루트사용자  명령어12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091">
+<meta property="og:type" content="article">
+<meta property="og:title" content="리눅스 명령어">
+<meta property="og:url" content="http://kkimsangheon.github.io/2017/07/01/Instruction/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="참고사항 $: 일반사용자 #: 루트사용자  명령어12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
+<meta property="article:published_time" content="2017-07-01T04:57:06.000Z">
+<meta property="article:modified_time" content="2022-02-09T11:44:19.889Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="리눅스 명령어">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/OS/">OS</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/OS/Linux/">Linux</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-Instruction" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        리눅스 명령어
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/07/01/Instruction/" class="article-date">
+            <time datetime="2017-07-01T04:57:06.000Z" itemprop="datePublished">2017-07-01</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%EB%A6%AC%EB%88%85%EC%8A%A4-%EB%AA%85%EB%A0%B9%EC%96%B4/" rel="tag">리눅스 명령어</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="참고사항"><a href="#참고사항" class="headerlink" title="참고사항"></a>참고사항</h3><p> $: 일반사용자<br> #: 루트사용자</p>
+<hr>
+<h3 id="명령어"><a href="#명령어" class="headerlink" title="명령어"></a>명령어</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ halt -p 		// 종료</span><br><span class="line"></span><br><span class="line">$ gedit 파일명 		//편집기 열기</span><br><span class="line"></span><br><span class="line">$ ifconfig 		//윈도우 ipconfig와 동일</span><br><span class="line"></span><br><span class="line">$ reboot			//리부트 명령어</span><br><span class="line"></span><br><span class="line">$ su - 			//루트사용자의 권한을 얻음(폴더가 이동됨)</span><br><span class="line"></span><br><span class="line">$ su  		//루트사용자의 권한을 얻음(폴더 이동되지 않고)</span><br><span class="line"></span><br><span class="line">$ setfont sun12x22	//글자크기 변경</span><br><span class="line"></span><br><span class="line">$ vi 파일명		//vi 에디터 열기</span><br><span class="line"></span><br><span class="line">$ ip addr		 //ip 확인</span><br><span class="line"></span><br><span class="line">$ clear           //콘솔창 초기화</span><br><span class="line"></span><br><span class="line">$ yum 프로그램    //프로그램 설치</span><br><span class="line"></span><br><span class="line">$ cd  //홈디렉터리로 이동</span><br><span class="line"></span><br><span class="line">$ shutdown -P now // 종료</span><br><span class="line"></span><br><span class="line">$ shutdown -P +10 //10분후에 종료</span><br><span class="line"></span><br><span class="line">$ shutdown -c //종료예약한것 취소</span><br><span class="line"></span><br><span class="line">$ shutdown -r 23:00 //23시에 재부팅</span><br><span class="line"></span><br><span class="line">$ shutdown -r +10 //10분후에 재부팅</span><br><span class="line"></span><br><span class="line">$ shutdown -c // 리부팅예약한것 취소</span><br><span class="line"></span><br><span class="line">$ shutdown -k +15  //20분 후에 종료된다는 메세지가 날라감</span><br><span class="line">                  //루트를 제외한 모든 사용자에게..</span><br><span class="line">                  //실제 종료는 안됨.</span><br><span class="line">                  //필요한 이유: 서버에 많은 사용자가 접속하였을 경우 사용자들의 로그아웃을 유도.</span><br><span class="line"></span><br><span class="line">$ init 0~6        // 0-종료모드 2-멀티유저모드 5-그래픽모드의 다중사용자모드 6-리부트모드</span><br><span class="line"></span><br><span class="line">$ startx      //x윈도우 모드로 변경</span><br><span class="line">              주의) 예로 단순히 init4에서 init1로가는것과 다르다.</span><br><span class="line">              //명령어 모드에서 x윈도우 모드로 변경되는것</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ chvt 1~6 입력 //가상콘솔 이동</span><br><span class="line"></span><br><span class="line">$ gedit //gedit 실행</span><br><span class="line">        //윈도우 + 스페이스 : 한영전환</span><br><span class="line"></span><br><span class="line">$ gedit 파일명 // 파일열기</span><br><span class="line"></span><br><span class="line">$ vi 파일명 //vi 에디터가 실행된다.</span><br><span class="line"></span><br><span class="line">i 또는 a 입력 //이후 편집, 입력작업진행</span><br><span class="line"></span><br><span class="line">esc   //작업이 끝난 후 명령모드로 변경</span><br><span class="line"></span><br><span class="line">:wq   //저장하고 종료한다.</span><br><span class="line">:q!   //수정사항 무시하고 종료</span><br><span class="line"></span><br><span class="line">$ :set number //코드의 행번호 확인</span><br><span class="line"></span><br><span class="line">$ ls -a //숨김파일까지 조회</span><br><span class="line"></span><br><span class="line">$ rm .myfile3.txt.swp //파일삭제</span><br><span class="line"></span><br><span class="line">$ mas ls //ls에 대한 도움말을 확인 . 스페이스바로 페이지 이동가능</span><br><span class="line"></span><br><span class="line">$ umount /dev/cdrom   //마운트 된것을 끊는것. 연결이 되지 않았을 경우 오류메시지가 나온다.</span><br><span class="line"></span><br><span class="line">$ mount /dev/cdrom  /media/cdrom    //마운트!</span><br><span class="line"></span><br><span class="line">$ rpm -qa 패키지이름 //패키지 설치여부 확인</span><br><span class="line"></span><br><span class="line">$ yum -y install 패키지명 으로 설치를 한다.</span><br><span class="line"></span><br><span class="line">$ ls    // 파일이나 폴더의 목록을 보는것 윈도우의 dir.</span><br><span class="line"></span><br><span class="line">$ ls /etc/sysconfig   //특정 폴더내의 목록을 보는것</span><br><span class="line"></span><br><span class="line">$ ls -a   //숨김파일까지 보는것.</span><br><span class="line"></span><br><span class="line">$ ls -l  // 자세히 보는것</span><br><span class="line">         //-로 시작하면 파일 d로 시작하면 디렉토리</span><br><span class="line"></span><br><span class="line">$ ls *.cfg //확장자가 cfg인것</span><br><span class="line"></span><br><span class="line">$ ls ls my* // my로 시작하는것들 조회</span><br><span class="line"></span><br><span class="line">$ ls -al //숨김파일까지 자세히 조회</span><br><span class="line">          // -a, -l 의 결합</span><br><span class="line"></span><br><span class="line">$ cd /etc/sysconfig/</span><br><span class="line">$ pwd     //현재 디렉터리 위치 출력</span><br><span class="line"></span><br><span class="line">$ cd /    // 최상위폴더로 이동(루트 디렉토리라함)</span><br><span class="line">          // $ cd / 명령어의 경우 다음 명령창이 아래와 같이 나온다.</span><br><span class="line">          // [root@localhost /]#</span><br><span class="line"></span><br><span class="line">$ cd      //  &quot;/루트 디렉토리&quot;(현재 사용자의 홈폴더)로 이동</span><br><span class="line">          //  $ cd 명령어의 경우 다음 명령창이 아래와 같이 나온다.</span><br><span class="line">          //  [root@localhost ~]</span><br><span class="line"></span><br><span class="line">$ cd /etc       //루트 디렉토리의 etc로 이동(절대경로)</span><br><span class="line">$ cd etc        //현재 디렉토리에서 etc로 이동 (상대경로)</span><br><span class="line">$ cd ..         //현재 디렉토리의 바로 앞 디렉토리로 이동</span><br><span class="line">$ cd .          //현재 디렉토리 반환</span><br><span class="line"></span><br><span class="line">$ cd ~centos  //해당 사용자의 홈 디렉토리로 이동</span><br><span class="line">              //즉 $ cd~사용자 == $ cd  </span><br><span class="line"></span><br><span class="line">$ touch        //비어있는 파일 생성</span><br><span class="line"></span><br><span class="line">$ rm file1    // 삭제명령어 (삭제할것인지 재확인함)</span><br><span class="line"></span><br><span class="line">$ rm -f file1   // 삭제 명령어(삭제할것인지 확인하지 않고 삭제)</span><br><span class="line"></span><br><span class="line">$ cp file3 file4  //file3가 file4로 복사됨</span><br><span class="line"></span><br><span class="line">$ cp -r /etc/sysconfig .  //  /etc/sysconfig폴더를 현재 폴더에 복사한다. -r은 디렉토리 복사일</span><br><span class="line"></span><br><span class="line">$ mv myfile3.txt /root/sysconfig    //myfile3.txt파일을 /root/sysconfig 로 이동</span><br><span class="line"></span><br><span class="line">$ mv file file3     //파일이름을 file에서 file3로 변경</span><br><span class="line"></span><br><span class="line">$ mkdir folder1   //folder1 디렉토리 생성</span><br><span class="line"></span><br><span class="line">$ mkdir -p dir1/dir2/dir3     // dir1/dir2/dir3 디렉토리를 생성</span><br><span class="line">                      //  디렉토리가 3개가 만들어지는것이 아니라 dir1 안에 dir2 안에 dir3가 만들어진다.</span><br><span class="line"></span><br><span class="line">$ rmdir folder1   //디렉토리 제거 (폴더가 비어있을 경우 가능)</span><br><span class="line"></span><br><span class="line">$ rmdir -r folder1  //내부에 파일이 있는 디렉토리 제거</span><br><span class="line">              //(안에 들어있는 파일 하나하나 지울것인지 다물어본다.)</span><br><span class="line"></span><br><span class="line">$ rm -rf dir1   //묻지도 따지지도 않고 dir1 디렉토리 제거</span><br><span class="line">                //매우 위험하다!! 주의해서 사용</span><br><span class="line"></span><br><span class="line">$ cat anaconda.ks.cfg   // 파일을 읽기</span><br><span class="line"></span><br><span class="line">$ head anaconda-ks.cfg  //위에 10줄만 읽기</span><br><span class="line">$ head -5 anaconda-ks.cfg  //위에 5줄만 읽기</span><br><span class="line"></span><br><span class="line">$ tail anaconda-ks.cfg  //아래 10줄만 읽기</span><br><span class="line"></span><br><span class="line">$ more anaconda-ks.cfg  //페이지 단위로 끊어읽기</span><br><span class="line"></span><br><span class="line">$ less anaconda-ks.cfg  //페이지 단위로 끊어읽기 less가 more보다 몇가지 명령어가 더 존재함</span><br><span class="line"></span><br><span class="line">$ file file1    //디렉터리인지, 링크인지, 비었는지 등을 알려준다.</span><br><span class="line"></span><br><span class="line"># userdel -r user1 //보통 현업에선 -r옵션을 넣어 디렉토리까진 지우지 않는다.</span><br><span class="line">                  //하지만 실습이므로 과감하게 지운다.</span><br><span class="line"># groupadd centosGroup    //그룹생성</span><br><span class="line"></span><br><span class="line"># useradd user1         //user1생성</span><br><span class="line"></span><br><span class="line"># useradd -g centosGroup user1  //centosGroup에 소속된 user1생성</span><br><span class="line"># useradd -g centosGroup user2  //centosGroup에 소속된 user2생성</span><br><span class="line"></span><br><span class="line"># passwd shkim //사용자의 비밀번호를 지정하거나 변경</span><br><span class="line"></span><br><span class="line"># usermod -g root shkim  //사용자의 속성을 변경</span><br><span class="line"></span><br><span class="line"># userdel shkim //사용자는 지우나 디렉토리를 제거하지 않음.</span><br><span class="line">            //-r 옵션이 존재. 이는 사용자가 사용하던 디렉토리까지 제거</span><br><span class="line"></span><br><span class="line"># change -m 2 shkim  //사용자의 암호를 주기적으로 변경하도록 설정</span><br><span class="line">          //-m 2는 최소 이틀이상 써야한다.(189p 참고)</span><br><span class="line"></span><br><span class="line"># groups // 사용자가 속한 그룹을 보여줌</span><br><span class="line"></span><br><span class="line"># groupadd newgroup   //새로운 그룹을 새성          </span><br><span class="line"></span><br><span class="line"># groupmod  -n newgroup mygroup//그룹의 속성을 변경 newgroup을 mygroup로 변경</span><br><span class="line"></span><br><span class="line"># groupdel newgroup //그룹을 삭제</span><br><span class="line"></span><br><span class="line"># gpasswd newgroup  //그룹의 암호설정</span><br><span class="line"></span><br><span class="line">$ chmod o-x  test      //일반사용자(o : ordinary)는 -x (x:execute) 실행 못하도록</span><br><span class="line">$ ls -l test</span><br><span class="line">-rwxrwxrw- 1 centos centos 52  7월  3 13:52 test</span><br><span class="line">        //마지막 x가 빠짐</span><br><span class="line"></span><br><span class="line">$ chmod ug-w test    //소유주(u: user), 소유그룹(g: group) 쓰기권한 제거</span><br><span class="line">$ ls -l test</span><br><span class="line">-r-xr-xrw- 1 centos centos 52  7월  3 13:52 test</span><br><span class="line">        //3번째 6번째 w가 빠짐</span><br><span class="line"></span><br><span class="line">$ chmod ugo-r test  //전부다 읽기권한 제거</span><br><span class="line">$ ls -l test   </span><br><span class="line">---x--x-w- 1 centos centos 52  7월  3 13:52 test</span><br><span class="line">        //r이 제거된것 확인</span><br><span class="line"></span><br><span class="line">$ chmod uo+rw test  //소유주, 기타사용자에게 읽기,쓰기 허용</span><br><span class="line">$ ls -l test  </span><br><span class="line">-rwx--xrw- 1 centos centos 52  7월  3 13:52 test</span><br><span class="line"></span><br><span class="line">//숫자를 넣지 않고 하는것을 심볼릭방법이라 하는데 이것이 더 편할 때가 있다.</span><br><span class="line">숫자로 할 경우 기존의 권한도 알아야 하기 때문에..</span><br><span class="line"></span><br><span class="line"># chown centos sample.txt   //centos로 소유권을 넘김</span><br><span class="line"># ls -l sample.txt</span><br><span class="line">-rw-r-xr-x 1 centos root 0  7월  3 13:35 sample.txt  //소유권 변경됨</span><br><span class="line"></span><br><span class="line"># chgrp centos sample.txt   //파일소유그룹 변경</span><br><span class="line"># ls -l sample.txt</span><br><span class="line">-rw-r-xr-x 1 centos centos 0  7월  3 13:35 sample.txt</span><br><span class="line"></span><br><span class="line"># chown root.root sample.txt  //파일 소유자, 그룹 변경</span><br><span class="line"># ls -l sample.txt</span><br><span class="line">-rw-r-xr-x 1 root root 0  7월  3 13:35 sample.txt</span><br><span class="line"></span><br><span class="line"># su - centos   //centos계정으로 로그인</span><br><span class="line">      //루트계정일 경우 암호를 묻지않는다.</span><br><span class="line">      //-를 붙이면 디렉토리가 centos디렉토리로 변경되가</span><br><span class="line">      //붙이지 않으면 변경되지 않는다.</span><br><span class="line"></span><br><span class="line"># ps -ef | grep dnsmasq   //dnsmasq 프로세스 번호 확인</span><br><span class="line"># kill -9 xxxx    //xxxx프로세스 kill</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2017/07/01/Instruction/" data-id="cl1avmkly0011a0un9nuj7zo2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/07/01/ThisIsLinux2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            4장. 시작과종료, 가상콘솔, 런레벨, 자동완성
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/07/01/LinuxError/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">리눅스 에러</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2017/07/01/Instruction/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

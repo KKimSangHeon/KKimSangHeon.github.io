@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>6. 제네릭, 가변변수, 익명클래스, Collection프레임워크 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java" />
+    
+    
+
+      <meta name="description" content="제네릭오버로딩을 대체할 수 있으며 유용하다. 메소드에 제네릭을 적용 12345678public &lt;T,P,Q,R&gt; void println( T t ) &amp;#123;  System.out.println(t);&amp;#125;public static void main(String args[]) &amp;#123;  println( 10 );  println( tru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6. 제네릭, 가변변수, 익명클래스, Collection프레임워크">
+<meta property="og:url" content="http://kkimsangheon.github.io/2017/08/07/bigdata7/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="제네릭오버로딩을 대체할 수 있으며 유용하다. 메소드에 제네릭을 적용 12345678public &lt;T,P,Q,R&gt; void println( T t ) &amp;#123;  System.out.println(t);&amp;#125;public static void main(String args[]) &amp;#123;  println( 10 );  println( tru">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/java.png">
+<meta property="article:published_time" content="2017-08-07T00:04:17.000Z">
+<meta property="article:modified_time" content="2022-02-09T11:44:19.941Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/java.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Language/">Language</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Language/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-bigdata7" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        6. 제네릭, 가변변수, 익명클래스, Collection프레임워크
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/08/07/bigdata7/" class="article-date">
+            <time datetime="2017-08-07T00:04:17.000Z" itemprop="datePublished">2017-08-07</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="제네릭"><a href="#제네릭" class="headerlink" title="제네릭"></a>제네릭</h3><p>오버로딩을 대체할 수 있으며 유용하다.</p>
+<p>메소드에 제네릭을 적용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T,P,Q,R&gt; <span class="keyword">void</span> <span class="title function_">println</span><span class="params">( T t )</span> &#123;</span><br><span class="line">  System.out.println(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">  println( <span class="number">10</span> );</span><br><span class="line">  println( <span class="literal">true</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>메소드 반환형에 제네릭 적용</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T, P&gt; List&lt;P&gt; <span class="title function_">println</span><span class="params">( T t )</span> &#123;</span><br><span class="line">  System.out.println( t );</span><br><span class="line"></span><br><span class="line">  List&lt;P&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;P&gt;();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>제네릭 배열을 어떻게 동적으로 생성하느냐</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">MyStack</span><span class="params">( E[] objects, <span class="type">int</span> capacity )</span> &#123;</span><br><span class="line">  <span class="comment">//buffer = new E[ capacity ];	오류발생</span></span><br><span class="line">  <span class="comment">//방법1.</span></span><br><span class="line">  buffer = ( E[] ) Array.newInstance(objects.getClass(), capacity);</span><br><span class="line">  <span class="comment">//방법2. 방법2가 더 선호된다. 객체를 생성하지 않아도 된다는점 때문에</span></span><br><span class="line">  buffer = ( E[] )Array.newInstance(Object.class, capacity);</span><br><span class="line">  <span class="comment">//방법3. 방법 2와 일치하는방식이다.</span></span><br><span class="line">  buffer = ( E[] )<span class="keyword">new</span> <span class="title class_">Object</span>[capacity];</span><br><span class="line">  <span class="comment">//방법 3을 제일 많이 쓴다.</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">  currentIndex = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>제네릭 호출 방식</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">    MyStack&lt;String&gt; stack = <span class="keyword">new</span> <span class="title class_">MyStack</span>&lt;String&gt;(<span class="number">3</span>);</span><br><span class="line">    <span class="comment">//String의 스택을 생성한다.</span></span><br><span class="line"></span><br><span class="line">    MyStack&lt;?&gt; stack = <span class="keyword">new</span> <span class="title class_">MyStack</span>&lt;String&gt;(<span class="number">3</span>);</span><br><span class="line">    <span class="comment">//모든 타입의 객체를 생성하겠다.</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> .... f(List&lt;? <span class="keyword">extends</span> <span class="title class_">Shape</span>&gt;)&#123;</span><br><span class="line">  <span class="comment">// Shape를 상속한 것들의 리스트를 파라미터로 받음</span></span><br><span class="line">  <span class="comment">//와일드 카드를 사용해서 제네릭 타입 제한하기.</span></span><br><span class="line">    ...</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<h3 id="가변변수"><a href="#가변변수" class="headerlink" title="가변변수"></a>가변변수</h3><p>가변변수를 배우기 전에는 파라미터에 배열을 넣을 생각을 할 것이다. 하지만 이를 대체할 수 있는것이 가변변수이다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">  println2( <span class="string">&quot;둘리&quot;</span> );</span><br><span class="line">  println2( <span class="string">&quot;둘리&quot;</span>, <span class="string">&quot;마이콜&quot;</span> );</span><br><span class="line">  println2( <span class="string">&quot;둘리&quot;</span>, <span class="string">&quot;마이콜&quot;</span>, <span class="string">&quot;또치&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//println3( new String[]&#123;&quot;둘리&quot;, &quot;마이콜&quot;, &quot;또치&quot;&#125;); 배열사용</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">println2</span><span class="params">(String ... params)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span>( String s : params)&#123;</span><br><span class="line">      System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>아래의 경우 Object를 파라미터로 주면 캐스팅을 계속 해줘야한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="keyword">void</span> <span class="title function_">println</span><span class="params">( T t)</span> &#123;</span><br><span class="line">  System.out.println(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">println</span><span class="params">(Object o )</span> &#123;</span><br><span class="line">  System.out.println(o);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="익명클래스"><a href="#익명클래스" class="headerlink" title="익명클래스"></a>익명클래스</h3><p>파라미터를 전달하는 부분에서 객체를 생성하여 메소드를 호출.<br>객체를 생성하지 않고 메소드 호출부분에서 객체를 생성함.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//anonymous class object</span></span><br><span class="line">draw( <span class="keyword">new</span> <span class="title class_">Drawable</span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">draw</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">				System.out.println(<span class="string">&quot;한 번만 만들고 버릴 도형을 그렸습니다&quot;</span>);</span><br><span class="line">  &#125;			</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h3><p>Collection인터페이스는 inteator() 메소드를 갖고 있다.<br>List, Set 클래스는 Collection클래스를 구현하며 List는 중복허용, 순서를 갖는다. 그러나 Set는 중복을 허용하지 않으며 순서를 갖지 않는다.<br>List인터페이스는 add, get, remove를 갖는다.<br>LinkedList, ArrayList가 List 인터페이스를 구현한다.</p>
+<p>ArrayList는 빈번한 삽입,삭제가 일어나는 경우 사용하면 안된다. 그 과정이 길기 떄문에.<br>LinkedList는 삽입삭제가 유용하나 10000번째 놈이면 10000번을 next해야한다.</p>
+<p>멀티스레드에서 ArrayList, LinkedList의 add를 사용할 때는 동기화 처리를 해줘야한다. 하지만 Vector은 멀티스레드 환경에서 동기화를 해주지 않아도 된다.</p>
+<h4 id="ArrayList-LinkedList-VectorTest2"><a href="#ArrayList-LinkedList-VectorTest2" class="headerlink" title="ArrayList , LinkedList, VectorTest2"></a>ArrayList , LinkedList, VectorTest2</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ArrayListTest</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">                            LinkedList&lt;String&gt;();</span><br><span class="line">                            Vector&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">		<span class="comment">//삽입</span></span><br><span class="line">		list.add( <span class="string">&quot;둘리&quot;</span> );</span><br><span class="line">		list.add( <span class="string">&quot;마이콜&quot;</span> );</span><br><span class="line">		list.add( <span class="string">&quot;도우넛&quot;</span> );</span><br><span class="line"></span><br><span class="line">		<span class="comment">//순회1</span></span><br><span class="line">		<span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> list.size();</span><br><span class="line">		<span class="keyword">for</span>( <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; count ; i++) &#123;</span><br><span class="line">			<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> list.get( i );</span><br><span class="line">			System.out.println(i);			</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//제거</span></span><br><span class="line">		list.remove( <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">		<span class="comment">//순회2</span></span><br><span class="line">		Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line">		<span class="keyword">while</span>( it.hasNext() ) &#123;</span><br><span class="line">			<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> it.next();</span><br><span class="line">			System.out.println( s );</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//순회3</span></span><br><span class="line">		<span class="keyword">for</span>( String s : list) &#123;</span><br><span class="line">			System.out.println( s );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h4><p>1.2 시대의 Vector인터페이스는 addElement, elementAt, removeElement, elements메소드를 갖고 있다. 그 후 1.2이후에 생긴 List를 구현하여 List의 메소드를 갖는다. Vector를 사용하려면 Vector 메소드를 사용하거나 List 인터페이스 내부의 메소드만 사용하든가 해야 복잡해지지 않는다.</p>
+<p>과거 Vector을 사용하는 방식. 호환성 때문에 존재할뿐.. 사용일 지양하자.</p>
+<figure class="highlight java"><figcaption><span>VectorTest.java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VectorTest</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		Vector&lt;String&gt; v = <span class="keyword">new</span> <span class="title class_">Vector</span>&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">		v.addElement( <span class="string">&quot;둘리&quot;</span> );</span><br><span class="line">		v.addElement( <span class="string">&quot;마이콜&quot;</span> );</span><br><span class="line">		v.addElement( <span class="string">&quot;도우넛&quot;</span> );</span><br><span class="line"></span><br><span class="line">		<span class="comment">//순회1</span></span><br><span class="line">		Enumeration&lt;String&gt; e = v.elements();</span><br><span class="line">		<span class="keyword">while</span>( e.hasMoreElements() ) &#123;</span><br><span class="line">			<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> e.nextElement();</span><br><span class="line">			System.out.println( s );</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//삭제</span></span><br><span class="line">		v.removeElementAt( <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">&quot;=====================&quot;</span>);</span><br><span class="line">		<span class="comment">//순회2</span></span><br><span class="line">		<span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> v.size();</span><br><span class="line">		<span class="keyword">for</span>( <span class="type">int</span> i=<span class="number">0</span>; i&lt; count; i++) &#123;</span><br><span class="line">			<span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> v.elementAt( i );</span><br><span class="line">			System.out.println( s );</span><br><span class="line">		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><p>Set 인터페이스는 key, value로 구성된다. key를 통해 value에 접근할 수 있다.<br>HashSet, TreeSet가 Map인터페이스를 구현한다.<br>hashCode를 오버라이드 하여 사용하여야 한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashSetTest</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		Set&lt;Value&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Value&gt;();</span><br><span class="line"></span><br><span class="line">		<span class="type">Value</span> <span class="variable">v1</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">Value</span>(<span class="number">10</span>);</span><br><span class="line">		<span class="type">Value</span> <span class="variable">v2</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">Value</span>(<span class="number">5</span>);</span><br><span class="line">		<span class="type">Value</span> <span class="variable">v3</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">Value</span>(<span class="number">10</span>);</span><br><span class="line">		<span class="type">Value</span> <span class="variable">v4</span> <span class="operator">=</span><span class="keyword">new</span> <span class="title class_">Value</span>(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">		set.add(v1);</span><br><span class="line">		set.add(v2);</span><br><span class="line">		set.add(v3);</span><br><span class="line">		set.add(v4);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//존재여부 확인</span></span><br><span class="line">		System.out.println(set.contains(<span class="keyword">new</span> <span class="title class_">Value</span>(<span class="number">10</span>)));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//삭제</span></span><br><span class="line">    set.remove( <span class="keyword">new</span> <span class="title class_">Value</span>(<span class="number">10</span>) );</span><br><span class="line"></span><br><span class="line">		<span class="comment">//순회</span></span><br><span class="line">		Iterator&lt;Value&gt; it = set.iterator();</span><br><span class="line">		<span class="keyword">while</span>( it.hasNext() )&#123;</span><br><span class="line">			<span class="type">Value</span> <span class="variable">v</span> <span class="operator">=</span> it.next();</span><br><span class="line">			System.out.println(v);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>성능향상을 위해 hash를 오버라이드 한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Value</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">int</span> value;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Value</span><span class="params">( <span class="type">int</span> value )</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.value = value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;Value [value=&quot;</span> + value + <span class="string">&quot;]&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">final</span> <span class="type">int</span> <span class="variable">prime</span> <span class="operator">=</span> <span class="number">31</span>;</span><br><span class="line">		<span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">		result = prime * result + value;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object obj)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">this</span> == obj)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">if</span> (obj == <span class="literal">null</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">if</span> (getClass() != obj.getClass())</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="type">Value</span> <span class="variable">other</span> <span class="operator">=</span> (Value) obj;</span><br><span class="line">		<span class="keyword">if</span> (value != other.value)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StackTest</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		Stack&lt;String&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">		stack.push(<span class="string">&quot;둘리&quot;</span>);</span><br><span class="line">		stack.push(<span class="string">&quot;마이콜&quot;</span>);</span><br><span class="line">		stack.push(<span class="string">&quot;도우넛&quot;</span>);</span><br><span class="line">		stack.push(<span class="string">&quot;길동&quot;</span>);</span><br><span class="line"></span><br><span class="line">		System.out.println( stack.isEmpty() );</span><br><span class="line">		System.out.println( stack.pop() );</span><br><span class="line">		System.out.println( stack.pop() );</span><br><span class="line">		System.out.println( stack.peek() ); <span class="comment">//pop을 하지않고 확인만</span></span><br><span class="line">		System.out.println( stack.pop() );</span><br><span class="line">		System.out.println( stack.pop() );</span><br><span class="line"></span><br><span class="line">		<span class="comment">//스택은 비어있는 경우 pop호출 시 예외가 발생한다.</span></span><br><span class="line">		System.out.println( stack.pop() );</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">QueueTest</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		Queue&lt;String&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">		queue.offer(<span class="string">&quot;둘리&quot;</span>);</span><br><span class="line">		queue.offer(<span class="string">&quot;마이콜&quot;</span>);</span><br><span class="line">		queue.offer(<span class="string">&quot;도우너&quot;</span>);</span><br><span class="line">		queue.offer(<span class="string">&quot;길동&quot;</span>);</span><br><span class="line"></span><br><span class="line">		System.out.println( queue.isEmpty() );</span><br><span class="line">		System.out.println( queue.poll() );</span><br><span class="line">		System.out.println( queue.poll() );</span><br><span class="line"></span><br><span class="line">		System.out.println( queue.peek() );</span><br><span class="line"></span><br><span class="line">		System.out.println( queue.poll() );</span><br><span class="line">		System.out.println( queue.poll() );</span><br><span class="line"></span><br><span class="line">		System.out.println( queue.isEmpty() );</span><br><span class="line">		System.out.println( queue.poll() );</span><br><span class="line">		<span class="comment">//스택은 예외가 발생했지만 큐는 null이 리턴된다.</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><p>Map 인터페이스가 존재하는데 HashMap, HashTable가 이를 구현한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">  Map&lt;String, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Integer&gt;();</span><br><span class="line"></span><br><span class="line">  map.put(<span class="string">&quot;둘리&quot;</span>, <span class="number">100</span>);</span><br><span class="line">  map.put(<span class="string">&quot;마이콜&quot;</span>, <span class="number">50</span>);</span><br><span class="line">  map.put(<span class="string">&quot;도우넛&quot;</span>, <span class="number">80</span>);</span><br><span class="line">  map.put(<span class="string">&quot;길동&quot;</span>, <span class="number">90</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//중복</span></span><br><span class="line">  map.put( <span class="string">&quot;둘리&quot;</span> , <span class="number">0</span>);		<span class="comment">//덮어쓴다.</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//auto unboxing</span></span><br><span class="line">  <span class="type">int</span> <span class="variable">score</span> <span class="operator">=</span> map.get( <span class="string">&quot;둘리&quot;</span> );</span><br><span class="line">  System.out.println(score);</span><br><span class="line"></span><br><span class="line">  map.remove( <span class="string">&quot;둘리&quot;</span> );</span><br><span class="line"></span><br><span class="line">  <span class="comment">//평균 ( 키를 모르는데 어떻게할까?)</span></span><br><span class="line">  <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  Set&lt;String&gt; keySet = map.keySet();</span><br><span class="line">  Iterator&lt;String&gt; it = keySet.iterator();</span><br><span class="line">  <span class="keyword">while</span>( it.hasNext() ) &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> it.next();</span><br><span class="line">    System.out.println( key );</span><br><span class="line">    <span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> map.get( key );</span><br><span class="line">    sum += s;</span><br><span class="line">  &#125;</span><br><span class="line">  System.out.println( <span class="string">&quot;평균 : &quot;</span>+ sum / keySet.size() );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2017/08/07/bigdata7/" data-id="cl1avmknl005da0un4bfmb1xt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/08/07/bigdata8/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            7. 스트림
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/08/04/bigdata6/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">5.자바기본API(유틸리티API)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2017/08/07/bigdata7/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

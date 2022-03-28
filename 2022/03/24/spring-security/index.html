@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>spring security | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Spring Security" />
+    
+    
+
+      <meta name="description" content="1부Principal principal는 아규먼트 리졸버로 받아서 처리된다. 1234567@GetMapping(&quot;&#x2F;dashboard&quot;)public String dashboard(Model model, Principal principal) &amp;#123;    model.addAttribute(&quot;message&quot;, &quot;H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring security">
+<meta property="og:url" content="http://kkimsangheon.github.io/2022/03/24/spring-security/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="1부Principal principal는 아규먼트 리졸버로 받아서 처리된다. 1234567@GetMapping(&quot;&#x2F;dashboard&quot;)public String dashboard(Model model, Principal principal) &amp;#123;    model.addAttribute(&quot;message&quot;, &quot;H">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/spring.jpg">
+<meta property="article:published_time" content="2022-03-23T23:54:07.000Z">
+<meta property="article:modified_time" content="2022-03-28T15:43:49.934Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Spring Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/spring.jpg">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Web-App/">Web/App</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Web-App/Spring/">Spring</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-spring-security" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        spring security
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2022/03/24/spring-security/" class="article-date">
+            <time datetime="2022-03-23T23:54:07.000Z" itemprop="datePublished">2022-03-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Spring-Security/" rel="tag">Spring Security</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="1부"><a href="#1부" class="headerlink" title="1부"></a>1부</h2><p>Principal principal는 아규먼트 리졸버로 받아서 처리된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/dashboard&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">dashboard</span><span class="params">(Model model, Principal principal)</span> &#123;</span><br><span class="line">    model.addAttribute(<span class="string">&quot;message&quot;</span>, <span class="string">&quot;Hello &quot;</span> + principal.getName());</span><br><span class="line">    sampleService.dashboard();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;dashboard&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>의존성 추가</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>의존성을 추가하면 모든 요청은 인증을 필요로 해지고, 기본적으로 계정을 하나 만들어주는데 user&#x2F;{패스워드랜덤} 으로 만들어준다.</p>
+<h3 id="11page"><a href="#11page" class="headerlink" title="11page"></a>11page</h3><p>AuthenticationManager를 빈으로 등록하는 이유는 다른 곳에서 사용하기 위함임.<br>기본적으론 빈으로 등록이 안된다고 한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> AuthenticationManager <span class="title function_">authenticationManagerBean</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">super</span>.authenticationManagerBean();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="12page-noop-123"><a href="#12page-noop-123" class="headerlink" title="12page {noop}123?"></a>12page {noop}123?</h3><p>앞에 {xxxx}는 인코딩 방식을 의미한다. {noop}는 평문으로 저장한것이다</p>
+<p>UserDetailsService 를 implements한 service를 빈으로 등록해둘 경우 따로 WebSecurityConfigureAdapter를 상속하고 configure() 메소드에 아래처럼 세팅을 안해도 된다.<br>PasswordEncoder 또한 마찬가지</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityConfig</span> <span class="keyword">extends</span> <span class="title class_">WebSecurityConfigurerAdapter</span> &#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  AccountService accountService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    auth.UserDetailsService(accountService);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="14page"><a href="#14page" class="headerlink" title="14page"></a>14page</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;</span><br><span class="line">	&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>가짜 유저를 활용하여 테스트 코드를 작성하는법.<br>실제로 디비에 들어있다고 가정하는것이 아닌 해당 테스트 유저가 있다고 가정하고 특정 페이지에 접근시 어떤 응답이 발생하는지 확인하는데 사용됨</p>
+<p>@WithUser 대신 @WithMockUser(username &#x3D; “sangheon”, roles &#x3D; “USER”) 를 넣어도 되지만 반복을 줄이기 위해 어노테이션을 하나 생성한것임</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@WithMockUser(username = &quot;sangheon&quot;, roles = &quot;USER&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> WithUser &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@WithAnonymousUser</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">index_anonymous</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    mockMvc.perform(get(<span class="string">&quot;/&quot;</span>))</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(status().isOk());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@WithUser</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">index_user</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    mockMvc.perform(get(<span class="string">&quot;/&quot;</span>))</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(status().isOk());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@WithUser</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">admin_user</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    mockMvc.perform(get(<span class="string">&quot;/admin&quot;</span>))</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(status().isForbidden());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@WithMockUser(username = &quot;sangheon&quot;, roles = &quot;ADMIN&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">admin_admin</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    mockMvc.perform(get(<span class="string">&quot;/admin&quot;</span>))</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(status().isOk());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>form 로그인을 활용하여 로그인하는 테스트코드를 확인해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">login_success</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> <span class="string">&quot;sangheon&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;123&quot;</span>;</span><br><span class="line">    <span class="type">Account</span> <span class="variable">user</span> <span class="operator">=</span> <span class="built_in">this</span>.createUser(username, password);</span><br><span class="line">    mockMvc.perform(formLogin().user(user.getUsername()).password(password))</span><br><span class="line">            .andExpect(authenticated());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">login_success2</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> <span class="string">&quot;sangheon&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;123&quot;</span>;</span><br><span class="line">    <span class="type">Account</span> <span class="variable">user</span> <span class="operator">=</span> <span class="built_in">this</span>.createUser(username, password);</span><br><span class="line">    mockMvc.perform(formLogin().user(user.getUsername()).password(password))</span><br><span class="line">            .andExpect(authenticated());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@Transactional()</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">login_fail</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> <span class="string">&quot;sangheon&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;123&quot;</span>;</span><br><span class="line">    <span class="type">Account</span> <span class="variable">user</span> <span class="operator">=</span> <span class="built_in">this</span>.createUser(username, password);</span><br><span class="line">    mockMvc.perform(formLogin().user(user.getUsername()).password(<span class="string">&quot;12345&quot;</span>))</span><br><span class="line">            .andExpect(unauthenticated());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Account <span class="title function_">createUser</span><span class="params">(String username, String password)</span> &#123;</span><br><span class="line">    <span class="type">Account</span> <span class="variable">account</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Account</span>();</span><br><span class="line">    account.setUsername(username);</span><br><span class="line">    account.setPassword(password);</span><br><span class="line">    account.setRole(<span class="string">&quot;USER&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> accountService.createNew(account);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="2부"><a href="#2부" class="headerlink" title="2부"></a>2부</h2><h3 id="16page"><a href="#16page" class="headerlink" title="16page"></a>16page</h3><p>인증된 사용자 정보를 Principal라고 하는데 이를 Authentication객체에 담아서 보관하고 Authentication를 SecurityContext로 감싸고 SecurityContext를 SecurityContextHolder로 감싼다.</p>
+<p>SecurityContextHolder</p>
+<ul>
+<li>SecurityContext 제공, 기본적으로 ThreadLocal을 사용한다.<br>(즉 Authentication을 한 쓰레드 안에서 사용가능(파라미터를 넘기지 않아도..))<br>ThreadLocal 대신 다른 전략을 활용할 수 있다.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AccountService</span> <span class="keyword">implements</span> <span class="title class_">UserDetailsService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span> AccountRepository accountRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException &#123;</span><br><span class="line">        <span class="type">Account</span> <span class="variable">account</span> <span class="operator">=</span> accountRepository.findByUsername(username);</span><br><span class="line">        <span class="keyword">if</span> (account == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UsernameNotFoundException</span>(username);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">User</span>.builder()</span><br><span class="line">                    .username(account.getUsername())</span><br><span class="line">                    .password(account.getPassword())</span><br><span class="line">                    .roles(account.getRole())</span><br><span class="line">                    .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SampleService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dashboard</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Authentication</span> <span class="variable">authentication</span> <span class="operator">=</span> SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 리턴하는건 위에 User.builder()에서 생성된 UserDetails 타입이다.</span></span><br><span class="line">        <span class="comment">// UserDetails 는 애플리케이션이 가지고 있는 유저 정보와</span></span><br><span class="line">        <span class="comment">//스프링 시큐리티가 사용하는 Authentication 객체 사이의 어댑터이다.</span></span><br><span class="line">        <span class="type">Object</span> <span class="variable">principal</span> <span class="operator">=</span>  authentication.getPrincipal();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// User.builder()에서 지정한 role가 들어가있음</span></span><br><span class="line">        Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; authorities = authentication.getAuthorities();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// null이 나옴</span></span><br><span class="line">        <span class="type">Object</span> <span class="variable">credentials</span> <span class="operator">=</span> authentication.getCredentials();</span><br><span class="line"></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">authenticated</span> <span class="operator">=</span> authentication.isAuthenticated();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>###SecurityContextHolder, AuthenticationManager   18p<br>Authentication정보를 담고있는 SecurityContextHolder. 그리고 인증을 담당하는 AuthenticationManager</p>
+<h3 id="인증을-하는-AuthenticationManager-ProviderManager를-보통-많이씀-의-흐름-인증-연관"><a href="#인증을-하는-AuthenticationManager-ProviderManager를-보통-많이씀-의-흐름-인증-연관" class="headerlink" title="인증을 하는 AuthenticationManager(ProviderManager를 보통 많이씀)의 흐름 (인증 연관)"></a>인증을 하는 AuthenticationManager(ProviderManager를 보통 많이씀)의 흐름 (인증 연관)</h3><p>스프링 시큐리티에서 인증(Authentication)은 AuthenticationManager가 한다.</p>
+<p>AuthenticationManager인터페이스는 아래 메소드 하나만 갖는다.<br><code>Authentication authenticate(Authentication authentication) throws AuthenticationException;</code><br>인자로 받은 Authentication이 유효한 인증인지 확인하고 유효하다면 Authentication 객체를 리턴한다.<br>인자 Authentication는 사용자가 입력한 인증에 필요한 정보(username, password)로 만든 객체임. (폼 인증인 경우)<br>인증을 확인하는 과정에서 비활성 계정, 잘못된 비번, 잠긴 계정 등의 에러를 던질 수 있다.</p>
+<p>AuthenticationManager 구현체로는 ProviderManager를 보통 많이쓴다.</p>
+<p>인증이 들어오면 ProviderManager 의 authenticate() 메소드가 호출되는데<br>ProviderManager는 private List<AuthenticationProvider> providers; 를 갖고있는데 얘네들로 처리 가능한 인증인지 확인해보고 자신이 처리하지 못하는 인증일 경우  this.parent.authenticate(authentication); 를 통해 부모의 authenticate() 메소드를 호출한다.</p>
+<p>인증이 가능한 providers를 갖고있는 ProviderManager에 가게되면 provider.authenticate() 메소드를 호출하게 되고</p>
+<p>UserDetailsService를 사용했을 경우 AbstractUserDetailsAuthenticationProvider(추상클래스임) 로 들어가고  this.retrieveUser() 메소드를 호출하게 된다.</p>
+<p>그 후 DaoAuthenticationProvider(AbstractUserDetailsAuthenticationProvider를 상속한클래스) 의 retrieveUser()로 들어오고  this.getUserDetailsService() 를 활용하는데 이는 위에서 만든 UserDetailsService를 implements한 AccountService이다.</p>
+<p>그 후 DaoAuthenticationProvider를 빠져나와  AbstractUserDetailsAuthenticationProvider 안에서 this.preAuthenticationChecks.check(user);를 하는데 여기서 추가적인 체크를 진행한다. (계정잠금유무, 비활성 계정 등)</p>
+<p>그 후 ProviderManager 안 authenticate() 에선 result라는 객체(Authentication타입)를 리턴하는데 얘는 곧 AuthenticationManager의 authenticate()메서드에서 리턴하는 객체이다.</p>
+<p>result 안에 principal이라고 들어있는데 얘는 아까 위에서 loadUserByUsername() 메소드에서 리턴한 user객체가 들어있다.</p>
+<p>또한 이 result(Authentication타입)가 SecurityContextHolder안에 들어가게 된다.</p>
+<p><code>정리</code> : 인증을 담당하는 AuthenticationManager 인터페이스를 구현한 ProviderManager는 AuthenticationProvider를 리스트로 갖고이으며 갖고있는 리스트로 인증을 처리할 수 없을 경우 this.parent.authenticate(authentication); 메소드를 호출하여 부모의 리스트를 통해 인증을 진행한다. UserDetailsService를 사용했을 경우 AbstractUserDetailsAuthenticationProvider -&gt; DaoAuthenticationProvider 를 거치게 되고 retrieveUser()메소드가 호출되는데 여기선 UserDetailsService를 implements한 객체가 사용되며 loadUserByUsername() 메소드가 사용된다. 그 후  this.preAuthenticationChecks.check(user); 를 하는데 여기서 추가적인 체크를 진행한다. (계정잠금유무 등) 최종적으로 result라는 객체(Authentication타입)를 리턴하게 되고 result 안에 principal이라고 들어있는데 얘는 아까 위에서 loadUserByUsername() 메소드에서 리턴한 user객체가 들어있다. 또한 이 객체(result)는  SecurityContextHolder안에서 찾을 수 있다.</p>
+<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>한 쓰레드안에서 변수를 공유</p>
+<p>Java.lang 패키지에서 제공하는 쓰레드 범위 변수. 즉, 쓰레드 수준의 데이터 저장소.<br>●    같은 쓰레드 내에서만 공유.<br>●    따라서 같은 쓰레드라면 해당 데이터를 메소드 매개변수로 넘겨줄 필요 없음.<br>●    SecurityContextHolder의 기본 전략.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AccountContext</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Account&gt; ACCOUNT_THREAD_LOCAL</span><br><span class="line">            = <span class="keyword">new</span> <span class="title class_">ThreadLocal</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setAccount</span><span class="params">(Account account)</span> &#123;</span><br><span class="line">        ACCOUNT_THREAD_LOCAL.set(account);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Account <span class="title function_">getAccount</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> ACCOUNT_THREAD_LOCAL.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="13-Authencation과-SecurityContextHodler-인증-연관"><a href="#13-Authencation과-SecurityContextHodler-인증-연관" class="headerlink" title="13.    Authencation과 SecurityContextHodler (인증 연관)"></a>13.    Authencation과 SecurityContextHodler (인증 연관)</h3><p>AuthenticationManager가 인증을 마친 뒤 리턴 받은 Authentication 객체의 행방은?<br>SecurityContextHodler에 Authencation이 언제들어가는지 확인해보자.</p>
+<p>크게 UsernamePasswordAuthenticationFilter, SecurityContextPersisenceFilter 가  Authencation 객체를 SecurityContextHodler에 넣어준다.(위 예제의 경우)</p>
+<p>UsernamePasswordAuthenticationFilter<br>●    폼 인증을 처리하는 시큐리티 필터<br>●    인증된 Authentication 객체를 SecurityContextHolder에 넣어주는 필터<br>●    SecurityContextHolder.getContext().setAuthentication(authentication)</p>
+<p>SecurityContextPersistenceFilter<br>●    SecurityContext를 HTTP session에 캐시(기본 전략)하여 여러 요청에서 Authentication을 공유할 수 있게하는 필터.<br>●    SecurityContextRepository를 교체하여 세션을 HTTP session이 아닌 다른 곳에 저장하는 것도 가능하다.</p>
+<p><code>로그인 전 상세흐름</code></p>
+<p>처음 SecurityContextPersistenceFilter필터에 걸리는데 SecurityContextPersistenceFilter는 캐싱하고 있던 SecurityContext를 매 요청마다 복구하려 한다.<br><strong><code>SecurityContextPersistenceFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SecurityContext</span> <span class="variable">contextBeforeChainExecution</span> <span class="operator">=</span> repo.loadContext(holder);		</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">			SecurityContextHolder.setContext(contextBeforeChainExecution);</span><br><span class="line">      ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>그 후 UsernamePasswordAuthenticationFilter에 걸리게 되는데(폼 인증일 때)<br>AuthenticationManager 를 가져와 authenticate()를 실행한다. 이 때 ProviderManager를 통해 인증이 벌어진다.<br>즉 UsernamePasswordAuthenticationFilter가 AuthenticationManager(ProviderManager가 얘를 구현함)를 쓰는것임</p>
+<p><strong><code>UsernamePasswordAuthenticationFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="built_in">this</span>.getAuthenticationManager().authenticate(authRequest);</span><br></pre></td></tr></table></figure>
+
+
+<p>인증이 정상적으로 일어나게 되면 UsernamePasswordAuthenticationFilter 가 상속한 AbstractAuthenticationProcessingFilter로 가게 되고 AbstractAuthenticationProcessingFilter는 UsernamePasswordAuthenticationFilter의 attemptAuthentication() 메소드를 통해 얻은 인증결과인 authResult를 활용하여 successfulAuthentication() 메소드를 호출하고</p>
+<p><strong><code>AbstractAuthenticationProcessingFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest req, ServletResponse res, FilterChain chain)</span></span><br><span class="line">			<span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="comment">// attemptAuthentication는 추상메서드로써 UsernamePasswordAuthenticationFilter이 구현한걸 사용함</span></span><br><span class="line">    authResult = attemptAuthentication(request, response);    </span><br><span class="line">    successfulAuthentication(request, response, chain, authResult);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>successfulAuthentication() 메소드를 따라가면 SecurityContextHolder에 인증을 넣는것을 볼 수 있다.</p>
+<p><strong><code>AbstractAuthenticationProcessingFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">successfulAuthentication</span><span class="params">(HttpServletRequest request,</span></span><br><span class="line"><span class="params">    HttpServletResponse response, FilterChain chain, Authentication authResult)</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">      SecurityContextHolder.getContext().setAuthentication(authResult);</span><br><span class="line">      ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>정리하자면 AbstractAuthenticationProcessingFilter는 템플릿 메소드 패턴이며  UsernamePasswordAuthenticationFilter은 attemptAuthentication()메소드를 구현한것이다.</p>
+<p><code>로그인 후 상세흐름</code><br>SecurityContextPersistenceFilter가 먼저 받고 SecurityContextRepository(기본적인 실 구현체 HttpSessionSecurityContextRepository) 에서 SecurityContext를 가져오고 SecurityContextHolder 에 다시 넣어준다.</p>
+<p><strong><code>SecurityContextPersistenceFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> SecurityContextRepository repo;</span><br><span class="line"></span><br><span class="line"><span class="type">SecurityContext</span> <span class="variable">contextBeforeChainExecution</span> <span class="operator">=</span> repo.loadContext(holder);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">			SecurityContextHolder.setContext(contextBeforeChainExecution);</span><br><span class="line">      chain.doFilter(holder.getRequest(), holder.getResponse());</span><br><span class="line">&#125;	<span class="keyword">finally</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">      SecurityContextHolder.clearContext();</span><br><span class="line">      ...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>즉 SecurityContextPersistenceFilter는 매 요청마다 SecurityContextHolder에 SecurityContext를 넣어주고 비우고를 반복한다.</p>
+<p>총 15개정도의 필터가 있다고 한다..</p>
+<h3 id="스프링-시큐리티-Filter와-FilterChainProxy"><a href="#스프링-시큐리티-Filter와-FilterChainProxy" class="headerlink" title="스프링 시큐리티 Filter와 FilterChainProxy"></a>스프링 시큐리티 Filter와 FilterChainProxy</h3><p>SecurityContextPersistenceFilter, UsernamePasswordAuthenticationFilter가 어디서 어떻게 호출 되는지 보자</p>
+<p>FilterChainProxy에 getFilters()메소드가 있는데 urlpattern이 매치가 되면 매칭하는필터들을 가져오고 필터들을 순회하며 순차적으로 실행한다.<br>즉 filterChains중 하나의 chain에서 필터들을 찾아서 적용한다. (각 SecurityFilterChain은 여러개의 필터를 갖고있음)<br><strong><code>FilterChainProxy.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> List&lt;Filter&gt; <span class="title function_">getFilters</span><span class="params">(HttpServletRequest request)</span> &#123;</span><br><span class="line">  <span class="keyword">for</span> (SecurityFilterChain chain : filterChains) &#123;</span><br><span class="line">    <span class="keyword">if</span> (chain.matches(request)) &#123;</span><br><span class="line">      <span class="keyword">return</span> chain.getFilters();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">VirtualFilterChain</span> <span class="keyword">implements</span> <span class="title class_">FilterChain</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    currentPosition++;</span><br><span class="line">    <span class="type">Filter</span> <span class="variable">nextFilter</span> <span class="operator">=</span> additionalFilters.get(currentPosition - <span class="number">1</span>);</span><br><span class="line">    nextFilter.doFilter(request, response, <span class="built_in">this</span>);</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 getFilters() 에서 순회되는 filterChains(springSecurityFilterChain 리스트)는 내가 생성한 SecurityConfig(@configure가 붙어있고 WebSecurityConfigureAdapter를 상속한 애)가 된다. 즉 SecurityConfig가 여러개가 있으면 filterChains는 여러개가 됨.</p>
+<blockquote>
+<p>WebSecurity는  WebSecurityConfiguration 으로 만들어지며 WebSecurity를 활용하여 filterChainProxy를 만든다. 이 체인이 바로  DelegatingFilterProxy가 위임하는 체인 프록시이다. 또한 시큐리티 필터들도 WebSecurity가 만들게 된다,</p>
+</blockquote>
+<p>filterChains안에 필터들이 들어있다.</p>
+<p>스프링 시큐리티가 제공하는 필터들</p>
+<ol>
+<li>WebAsyncManagerIntergrationFilter</li>
+<li>SecurityContextPersistenceFilter</li>
+<li>HeaderWriterFilter</li>
+<li>CsrfFilter</li>
+<li>LogoutFilter</li>
+<li>UsernamePasswordAuthenticationFilter</li>
+<li>DefaultLoginPageGeneratingFilter</li>
+<li>DefaultLogoutPageGeneratingFilter</li>
+<li>BasicAuthenticationFilter</li>
+<li>RequestCacheAwareFtiler</li>
+<li>SecurityContextHolderAwareReqeustFilter</li>
+<li>AnonymouseAuthenticationFilter</li>
+<li>SessionManagementFilter</li>
+<li>ExeptionTranslationFilter</li>
+<li>FilterSecurityInterceptor</li>
+</ol>
+<p>이 모든 필터는 FilterChainProxy가 갖고있으며 사용한다.(SecurityFilterChain 마다 갖고있는 필터가 다름)</p>
+<h3 id="15-DelegatingFilterProxy와-FilterChainProxy"><a href="#15-DelegatingFilterProxy와-FilterChainProxy" class="headerlink" title="15.    DelegatingFilterProxy와 FilterChainProxy"></a>15.    DelegatingFilterProxy와 FilterChainProxy</h3><p>서블릿 필터 구현체중 하나인 DelegatingFilterProxy. 누군가에게 위임하는 프록시.<br>즉 자기가 직접 처리하지 않고 스프링 내 bean에게 위임함.<br>DelegatingFilterProxy가 FilterChainProxy를 호출하는것</p>
+<p>DelegatingFilterProxy<br>●    일반적인 서블릿 필터.<br>●    서블릿 필터 처리를 스프링에 들어있는 빈으로 위임하고 싶을 때 사용하는 서블릿 필터.<br>●    타겟 빈 이름을 설정한다.<br>●    스프링 부트 없이 스프링 시큐리티 설정할 때는 AbstractSecurityWebApplicationInitializer를 사용해서 등록.<br>●    스프링 부트를 사용할 때는 자동으로 등록 된다. (SecurityFilterAutoConfiguration)</p>
+<p>FilterChainProxy<br>●    보통 “springSecurityFilterChain” 이라는 이름의 빈으로 등록된다</p>
+<p><code>스프링부트 사용시</code><br>DelegatingFilterProxy -&gt; SecurityFilterAutoConfiguration -&gt; FilterChainProxy -&gt; filter list 호출</p>
+<h3 id="16-AccessDecisionManager-인가-연관"><a href="#16-AccessDecisionManager-인가-연관" class="headerlink" title="16.    AccessDecisionManager (인가 연관)"></a>16.    AccessDecisionManager (인가 연관)</h3><p><code>인가</code>를 할 땐 AccessDecisionManager (인터페이스임)를 쓴다.<br>AccessDecisionManager는 여러개의 AccessDecisionVoter(투표자)가 있다,</p>
+<p>Access Control 결정을 내리는 인터페이스로, 구현체 3가지를 기본으로 제공한다.<br>●    AffirmativeBased: 여러 Voter중에 한명이라도 허용하면 허용. (디폴트)<br>●    ConsensusBased: 다수결<br>●    UnanimousBased: 만장일치</p>
+<p>AccessDecisionVoter<br>●    해당 Authentication이 특정한 Object에 접근할 때 필요한 ConfigAttributes를 만족하는지 확인한다.<br>●    WebExpressionVoter: 웹 시큐리티에서 사용하는 기본 구현체, ROLE_Xxxx가 매치하는지 확인.<br>●    RoleHierarchyVoter: 계층형 ROLE 지원. ADMIN &gt; MANAGER &gt; USER</p>
+<p>AffirmativeBased 를 보면 아래와같은것들이 있다. 투표를 진행하는 코드임. 하나라도 ACCESS_GRANTED이면 승인함<br><strong><code>AffirmativeBased.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AffirmativeBased</span> <span class="keyword">extends</span> <span class="title class_">AbstractAccessDecisionManager</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">decide</span><span class="params">(Authentication authentication, Object object,</span></span><br><span class="line"><span class="params">			Collection&lt;ConfigAttribute&gt; configAttributes)</span> <span class="keyword">throws</span> AccessDeniedException &#123;</span><br><span class="line">		<span class="type">int</span> <span class="variable">deny</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    ...</span><br><span class="line">		<span class="keyword">for</span> (AccessDecisionVoter voter : getDecisionVoters()) &#123;</span><br><span class="line">			<span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> voter.vote(authentication, object, configAttributes);</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (result) &#123;</span><br><span class="line">    <span class="keyword">case</span> AccessDecisionVoter.ACCESS_GRANTED:</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> AccessDecisionVoter.ACCESS_DENIED:</span><br><span class="line">      deny++;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (deny &gt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AccessDeniedException</span>(messages.getMessage(</span><br><span class="line">					<span class="string">&quot;AbstractAccessDecisionManager.accessDenied&quot;</span>, <span class="string">&quot;Access is denied&quot;</span>));</span><br><span class="line">		&#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>admin은 일반 user권한 페이지 또한 접근이 가능해야한다. 이를 위해 아래처럼 수정해보자.<br>roleHierarchy 를 등록하기 위해 아래절차를 거치는것임. roleHierarchy 를 추가한것 외엔 기존 AffirmativeBased 디폴트 설정과 동일하게 쓰는것임</p>
+<blockquote>
+<p>위에서 말했듯이 AccessDecisionManager를 등록해놓지 않으면 기본적으로 AffirmativeBased를 쓰게 된다.</p>
+</blockquote>
+<p><strong><code>SecurityConfig.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityConfig</span> <span class="keyword">extends</span> <span class="title class_">WebSecurityConfigurerAdapter</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> AccessDecisionManager <span class="title function_">accessDecisionManager</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="type">RoleHierarchyImpl</span> <span class="variable">roleHierarchy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RoleHierarchyImpl</span>();</span><br><span class="line">  roleHierarchy.setHierarchy(<span class="string">&quot;ROLE_ADMIN &gt; ROLE_USER&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">DefaultWebSecurityExpressionHandler</span> <span class="variable">handler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultWebSecurityExpressionHandler</span>();</span><br><span class="line">  handler.setRoleHierarchy(roleHierarchy);</span><br><span class="line"></span><br><span class="line">  <span class="type">WebExpressionVoter</span> <span class="variable">webExpressionVoter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WebExpressionVoter</span>();</span><br><span class="line">  webExpressionVoter.setExpressionHandler(handler);</span><br><span class="line"></span><br><span class="line">  List&lt;AccessDecisionVoter&lt;? <span class="keyword">extends</span> <span class="title class_">Object</span>&gt;&gt; voters = Arrays.asList(webExpressionVoter);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AffirmativeBased</span>(voters);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">  http.authorizeRequests()</span><br><span class="line">    .mvcMatchers(<span class="string">&quot;/&quot;</span>, <span class="string">&quot;/info&quot;</span>, <span class="string">&quot;/account/**&quot;</span>).permitAll()</span><br><span class="line">    .mvcMatchers(<span class="string">&quot;/admin&quot;</span>).hasRole(<span class="string">&quot;ADMIN&quot;</span>)</span><br><span class="line">    .mvcMatchers(<span class="string">&quot;/user&quot;</span>).hasRole(<span class="string">&quot;USER&quot;</span>)</span><br><span class="line">    .anyRequest().authenticated()</span><br><span class="line">    .accessDecisionManager(accessDecisionManager())</span><br><span class="line">    ;</span><br><span class="line">  http.formLogin();</span><br><span class="line">  http.httpBasic();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>아래는 AccessDecisionManager를 오버라이딩 하는방식이 아닌 AccessDecisionManager가 사용하는 expressionHandler만 교체해서 사용함 . 더욱 간단해보이지?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityConfig</span> <span class="keyword">extends</span> <span class="title class_">WebSecurityConfigurerAdapter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> SecurityExpressionHandler <span class="title function_">expressionHandler</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">RoleHierarchyImpl</span> <span class="variable">roleHierarchy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RoleHierarchyImpl</span>();</span><br><span class="line">        roleHierarchy.setHierarchy(<span class="string">&quot;ROLE_ADMIN &gt; ROLE_USER&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">DefaultWebSecurityExpressionHandler</span> <span class="variable">handler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultWebSecurityExpressionHandler</span>();</span><br><span class="line">        handler.setRoleHierarchy(roleHierarchy);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> handler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        http.authorizeRequests()</span><br><span class="line">                .mvcMatchers(<span class="string">&quot;/&quot;</span>, <span class="string">&quot;/info&quot;</span>, <span class="string">&quot;/account/**&quot;</span>).permitAll()</span><br><span class="line">                .mvcMatchers(<span class="string">&quot;/admin&quot;</span>).hasRole(<span class="string">&quot;ADMIN&quot;</span>)</span><br><span class="line">                .mvcMatchers(<span class="string">&quot;/user&quot;</span>).hasRole(<span class="string">&quot;USER&quot;</span>)</span><br><span class="line">                .anyRequest().authenticated()</span><br><span class="line">                .expressionHandler(expressionHandler());</span><br><span class="line">        http.formLogin();</span><br><span class="line">        http.httpBasic();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="FilterSecurityInterceptor-인가-연관"><a href="#FilterSecurityInterceptor-인가-연관" class="headerlink" title="FilterSecurityInterceptor (인가 연관)"></a>FilterSecurityInterceptor (인가 연관)</h3><p>AccessDecisionManager는 도대체 어디서 사용하는것일까? FilterSecurityInterceptor!</p>
+<p>FilterSecurityInterceptor란?<br>AccessDecisionManager를 사용하여 Access Control 또는 예외 처리 하는 필터.<br>FilterChainProxy가 들고있는 여러개의 필터중 하나이며 대부분의 경우 제일 마지막 필터로 들어있다.</p>
+<p>인증이 마지막에 ConfigAttributes를 만족하는지 확인하는 필터가 되겠다.</p>
+<p>FilterSecurityInterceptor의 부모클래스인 AbstractSecurityInterceptor를 보면<br>accessDecisionManager를 활용해서 decision을 한다.<br><strong><code>AbstractSecurityInterceptor.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.accessDecisionManager.decide(authenticated, object, attributes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="19-ExceptionTranslationFilter-인증-인가-연관"><a href="#19-ExceptionTranslationFilter-인증-인가-연관" class="headerlink" title="19.    ExceptionTranslationFilter (인증,인가 연관)"></a>19.    ExceptionTranslationFilter (인증,인가 연관)</h3><p>FilterSecurityInterceptor에서 발생한 AccessDeniedException과 AuthenticationException을 처리하는 필터<br>(정확히는 FilterSecurityInterceptor 상위클래스인    AbstractSecurityInterceptor 에서 발생한것을 처리)</p>
+<p>AuthenticationException 발생 시<br>●    AuthenticationEntryPoint 실행<br>●    AbstractSecurityInterceptor 하위 클래스(예, FilterSecurityInterceptor)에서 발생하는 예외만 처리.<br>●    그렇다면 UsernamePasswordAuthenticationFilter에서 발생한 인증 에러는? ExceptionTranslationFilter 가 처리하지 않고 UsernamePasswordAuthenticationFilter 상위클래스인 AbstractAuthenticationProcessingFilter에서 처리됨</p>
+<p><strong><code>AbstractAuthenticationProcessingFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">catch</span> (AuthenticationException failed) &#123;</span><br><span class="line">  <span class="comment">// Authentication failed</span></span><br><span class="line">  unsuccessfulAuthentication(request, response, failed);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AccessDeniedException 발생 시<br>●    익명 사용자라면 AuthenticationEntryPoint 실행 - 로그인이 안된 사용자가 admin있는 페이지 접속<br>●    익명 사용자가 아니면 AccessDeniedHandler에게 위임 - 로그인이 된 user 사용자가 admin 페이지 접속</p>
+<p>ExceptionTranslationFilter 생김새는 다음과 같다<br><strong><code>ExceptionTranslationFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (exception <span class="keyword">instanceof</span> AuthenticationException) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> AccessDeniedException) &#123;</span><br><span class="line">    <span class="keyword">if</span> (authenticationTrustResolver.isAnonymous(authentication)) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<p>SecurityContextHolder - Authentication정보를 담고있는 SecurityContextHolder<br>AuthenticationManager(ProviderManager를 보통 많이씀) - 인증(Authentication)은 AuthenticationManager가 한다.<br>AuthenticationProvider - ProviderManager가 리스트로 갖고있음<br>SecurityContextPersisenceFilter - SecurityContext를 HTTP session에 캐시(기본 전략)하여 여러 요청에서 Authentication을 공유할 수 있게하는 필터.<br>UsernamePasswordAuthenticationFilter - 폼 인증을 처리하는 시큐리티 필터&#x2F;인증된 Authentication 객체를 SecurityContextHolder에 넣어주는 필터<br>AbstractAuthenticationProcessingFilter - UsernamePasswordAuthenticationFilter가 상속하는 필터(추상클래스).<br>FilterChainProxy - filterChains를 활용해</p>
+<p>AccessDecisionManager - 인가를 할 땐 AccessDecisionManager 를 쓴다. 여러개의 AccessDecisionVoter(투표자)가 있으며 AccessDecisionManager 구현체로는 최소하나(디폴트), 다수결, 만장일치 가 있다.<br>FilterSecurityInterceptor - AccessDecisionManager는 도대체 어디서 사용하는것일까? FilterSecurityInterceptor!<br>ExceptionTranslationFilter - FilterSecurityInterceptor에서 발생한 AccessDeniedException과 AuthenticationException을 처리하는 필터</p>
+<h3 id="ignoring"><a href="#ignoring" class="headerlink" title="ignoring()"></a>ignoring()</h3><p>시큐리티 설정 중 하나임.</p>
+<p>지금까진 모든 요청은 필터를 활용해왔다.<br>하지만 static 데이터들은 필터들을 적용하고 싶지 않다!(ex 파비콘아이콘)</p>
+<p>스프링 부트가 제공하는 PathRequest를 사용해서 정적 자원 요청을 스프링 시큐리티 필터를 적용하지 않도록 설정.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(WebSecurity web)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">           web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>아래처럼 해도 되지 않나??</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(WebSecurity web)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">           http.authorizeRequests()</span><br><span class="line">                     .mvcMatchers(<span class="string">&quot;/&quot;</span>).permitAll()</span><br><span class="line">                     .mvcMatchers(<span class="string">&quot;/admin&quot;</span>).hasRole(<span class="string">&quot;ADMIN&quot;</span>)</span><br><span class="line">                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>해도 되긴하는데 아래 방식은 추천하지 않음.<br>위의 경우 거치는 필터가 0개지만<br>아래 방식으로 할 경우 15개 필터를 모두 거치게 된다</p>
+<p>특정 리소스에 대해 인증, 인가를 거치고 싶으면 위에서 .exclude()를 활용하면 된다,</p>
+<p>요약<br>이런 설정으로도 같은 결과를 볼 수는 있지만 스프링 시큐리티 필터가 적용된다는 차이가 있다.<br>● 동적 리소스는 http.authorizeRequests()에서 처리하는 것을 권장합니다.<br>● 정적 리소스는 WebSecurity.ignore()를 권장하며 예외적인 정적 자원 (인증이 필요한<br>정적자원이 있는 경우)는 http.authorizeRequests()를 사용할 수 있습니다.</p>
+<h3 id="시큐리티-필터중-최상위-클래스인-WebAsyncManagerIntegrationFilter"><a href="#시큐리티-필터중-최상위-클래스인-WebAsyncManagerIntegrationFilter" class="headerlink" title="시큐리티 필터중 최상위 클래스인 WebAsyncManagerIntegrationFilter"></a>시큐리티 필터중 최상위 클래스인 WebAsyncManagerIntegrationFilter</h3><p>스프링 mvc async handler를 지원하는 핸들러임<br>시큐리티 컨텍스트가 threadlocal을 사용하기 때문에 동일 스레드에서만 시큐리티 컨텍스트를 쓸 수 있는데<br>다른 쓰레드에서도 시큐리티 컨텍스트를 쓸 수 있도록 도와주는 필터가 WebAsyncManagerIntegrationFilter</p>
+<p>스프링 MVC의 Async 기능(핸들러에서 Callable을 리턴할 수 있는 기능)을 사용할 때에도 SecurityContext를 공유하도록 도와주는 필터.</p>
+<p>WebAsyncManagerIntegrationFilter<br>● PreProcess: SecurityContext를 설정한다.<br>● Callable: 비록 다른 쓰레드지만 그 안에서는 동일한 SecurityContext를 참조할 수 있다.<br>● PostProcess: SecurityContext를 정리(clean up)한다.</p>
+<p>아래처럼 코드를 구성했을 때 Callable에 대한 설명<br>           call메소드를 호출하고 리퀘스트를 처리하고 있던 쓰레드를 반환 후 call()이 완료되면 그 때 응답을 보냄. 두페이지로 처리하는것!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/async-handler&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Callalbe&lt;String&gt; <span class="title function_">syncHandler</span><span class="params">()</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Callable</span>&lt;String&gt; () &#123;</span><br><span class="line">                     <span class="meta">@Override</span></span><br><span class="line">                     <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">                               <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">                     &#125;</span><br><span class="line">          &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>아래를 돌려보면 쓰레드는 다르지만 Authentication정보는 유지된다.. 이를 WebAsyncManagerIntegrationFilter가 해주는것이다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/async-handler&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Callalbe&lt;String&gt; <span class="title function_">syncHandler</span><span class="params">()</span> &#123;</span><br><span class="line">          <span class="comment">//톰캣이 할당한 NIO 쓰레드 부분</span></span><br><span class="line">          log(<span class="string">&quot;MVC&quot;</span>);</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Callable</span>&lt;String&gt; () &#123;</span><br><span class="line">                     <span class="meta">@Override</span></span><br><span class="line">                     <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">                               <span class="comment">//별도의 쓰레드 영역</span></span><br><span class="line">                               SecurityLogger.log(<span class="string">&quot;Callable&quot;</span>);</span><br><span class="line">                               <span class="keyword">return</span> <span class="string">&quot;async handler&quot;</span>;</span><br><span class="line">                     &#125;</span><br><span class="line">          &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityLogger</span> &#123;</span><br><span class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">log</span><span class="params">(String message)</span> &#123;</span><br><span class="line">                     System.out.println(message);</span><br><span class="line">                     <span class="type">Thread</span> <span class="variable">thread</span> <span class="operator">=</span> Thread.getCurrentThread();</span><br><span class="line">                     System.out.println(threade.getName());</span><br><span class="line">                     <span class="type">Object</span> <span class="variable">principal</span> <span class="operator">=</span> SecurityContextHolder.getContext().getAuthentication().getPrincipal();</span><br><span class="line">                     System.out.println(<span class="string">&quot;principal: &quot;</span> + principal);</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="스프링-시큐리티와-Async"><a href="#스프링-시큐리티와-Async" class="headerlink" title="스프링 시큐리티와 @Async"></a>스프링 시큐리티와 @Async</h3><blockquote>
+<p>@Async를 사용하기 위해선 @EnableAsync 를 붙여야함(추가로 쓰레드풀 설정을 해줘야 더 올바르게 쓸 수 있다)</p>
+</blockquote>
+<p>@Async를 사용한 서비스를 호출하는 경우<br>● 쓰레드가 다르기 때문에 SecurityContext를 공유받지 못한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMappint(&quot;/async-service&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">asyncService</span><span class="params">()</span> &#123;</span><br><span class="line">          SecurityLogger.log(<span class="string">&quot;MVC, before async service&quot;</span>);</span><br><span class="line">          samplerService.asyncService();</span><br><span class="line">          SecurityLogger.log(<span class="string">&quot;MVC, after async service&quot;</span>);</span><br><span class="line"></span><br><span class="line">          <span class="keyword">return</span> <span class="string">&quot;Async Service&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Async</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">asyncService</span><span class="params">()</span> &#123;</span><br><span class="line">          SecurityLogger.log(<span class="string">&quot;async Service&quot;</span>); <span class="comment">// NPE 발생</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>@Async를 사용하면 서비스 안에서 SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 에서 NPE가 찍히는것을 확인할 수 있다..<br>기본적으로 SecurityContextHolder는 strategy를 선택할 수 있다. 즉 SecurityContextHolder를 어디까지 유지할것인가를 선택할 수 있다(기본은 ThreadLocal. 즉 쓰레드 내)</p>
+<p>아래처럼 설정하면 현재 쓰레드에서 생성하는 하위 쓰레드까지 공유가 된다<br>● SecurityContext를 자식 쓰레드에도 공유하는 전략.<br>● @Async를 처리하는 쓰레드에서도 SecurityContext를 공유받을 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">proteceted <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurty http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">           http.authorizeRequests()</span><br><span class="line">           .mvcMatchers(<span class="string">&quot;/&quot;</span>).permitAll()</span><br><span class="line">           ....</span><br><span class="line"></span><br><span class="line">           SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="SecurityContext-영속화-필터-SecurityContextPersistenceFilter"><a href="#SecurityContext-영속화-필터-SecurityContextPersistenceFilter" class="headerlink" title="SecurityContext 영속화 필터: SecurityContextPersistenceFilter"></a>SecurityContext 영속화 필터: SecurityContextPersistenceFilter</h3><p>여러 요청간 시큐리티 콘텍스트를 공유할 수 있게해주는 필터로써 두번째에 위치한다(첫번째는 WebAsyncManagerIntegrationFilter)<br>최초 인증 후 재 리퀘스트를 날려도 인증정보가 유지됨.</p>
+<p>SecurityContextRepository를 사용하는데 SecurityContextRepository의 기본 구현체가 HTTPSessionSecurityContextRepository이다.<br>즉 HTTPSession에서 읽어오는것이다. 처음엔 HTTPSession엔 아무런 정보가 없는데 비어있을 때 비어있는 시큐리티 컨텍스트를 만들때도 SecurityContextPersistenceFilter가 활용이 된다. 기존에 HTTPSesion에 시큐리티 컨텍스트가 저장되어 있는경우에도 가져와 활용한다.<br>그러므로 모든 인증 필터들 보다 위에 있어야 한다. 필터 중 두번째에 위치함</p>
+<p>SecurityContextRepository를 사용해서 기존의 SecurityContext를 읽어오거나 초기화 한다.<br>● 기본으로 사용하는 전략은 HTTP Session을 사용한다.<br>● Spring-Session과 연동하여 세션 클러스터를 구현할 수 있다</p>
+<h3 id="시큐리티-관련-헤더-추가하는-필터-HeaderWriterFilter"><a href="#시큐리티-관련-헤더-추가하는-필터-HeaderWriterFilter" class="headerlink" title="시큐리티 관련 헤더 추가하는 필터: HeaderWriterFilter"></a>시큐리티 관련 헤더 추가하는 필터: HeaderWriterFilter</h3><p>직접 신경쓰지 않아도 되는필터임</p>
+<p>응답 헤더에 시큐리티 관련 헤더를 추가해주는 필터로써 세번째 필터임(첫번째는 WebAsyncManagerIntegrationFilter&#x2F; 두번째는 SecurityContextPersistenceFilter &#x2F; 세번째는 HeaderWriterFilter)</p>
+<p>XContentTypeOptionsHeaderWriter: 마임 타입 스니핑 방어.<br>XXssProtectionHeaderWriter: 브라우저에 내장된 XSS 필터 적용.<br>CacheControlHeadersWriter: 캐시 히스토리 취약점 방어.<br>HstsHeaderWriter: HTTPS로만 소통하도록 강제.<br>XFrameOptionsHeaderWriter: clickjacking 방어.</p>
+<p>Cache-Control: no-cache, no-store, max-age&#x3D;0, must-revalidate<br>Content-Language: en-US<br>Content-Type: text&#x2F;html;charset&#x3D;UTF-8<br>Date: Sun, 04 Aug 2019 16:25:10 GMT<br>Expires: 0<br>Pragma: no-cache<br>Transfer-Encoding: chunked<br>X-Content-Type-Options: nosniff<br>X-Frame-Options: DENY<br>X-XSS-Protection: 1; mode&#x3D;block</p>
+<p>기본적으로 다섯개의 HeaderWriter가 적용된다.<br>● XContentTypeOptionsHeaderWriter: 마임 타입 스니핑 방어.<br>브라우저가 마임타입을 판단하려고 컨텐츠를 분석하는 경우가 있다. 그럴 경우 보안상 이슈가 발생할 수 있다.<br>X-Content-Type-Options: nosniff 을 주면 반드시 Content-Type으로만 랜더링 하도록 되어있다. 즉 브라우저가 추가적인 실행을 하지 않기 때문에 보안상 안전하다</p>
+<p>● XXssProtectionHeaderWriter: 브라우저에 내장된 XSS 필터 적용.<br>XSS를 방어해주는것. 브라우저마다 내장된 XSS 필터가 있는데 이 필터로 공격을 방어할 순 없으나 최소한 1차적으로 공격을 걸러낼 수 있다.<br>X-XSS-Protection: 1; mode&#x3D;block 에서 1이 그 기능을 활성화 하는것이고 mode&#x3D;block가 막아준다는 옵션임<br>이걸 켜 놓고 부가적으로 커스텀한 XSS 필터를 적용할 수 있다..</p>
+<p>● CacheControlHeadersWriter: 캐시 히스토리 취약점 방어.<br>Cache-Control: no-cache, no-store, max-age&#x3D;0, must-revalidate<br>Expires: 0<br>Pragma: no-cache<br>위 세개 옵션을 활용해서 캐시를 쓰지 않도록 설정하는것.<br>정적인 리소스는 캐시를 쓰면 좋지만 동적인 리소스는 민감한 정보가 포함되어 있을 수 있기때문에 그런경우에 대한 방어를 하고자 캐시를 비워주는것</p>
+<p>● HstsHeaderWriter: HTTPS로만 소통하도록 강제.<br>Strict-Transport-Security: max-age&#x3D;31536000; includeSubDomains 이런 정보가 샘플로 나간다.</p>
+<p>● XFrameOptionsHeaderWriter: clickjacking 방어.<br>iframe, object, http 그런걸 넣을 수 있는데 보이지 않은 영역에 뭘 누르면 내 정보가 가도록 설정되어 있을 수 있다. 그걸 clickjacking 이라 하는데 이걸 방어하는것으로 아래 헤더정보를 추가한다.<br>X-Frame-Options: DENY</p>
+<h3 id="CSRF-어택-방지-필터-CsrfFilter-네번째-필터"><a href="#CSRF-어택-방지-필터-CsrfFilter-네번째-필터" class="headerlink" title="CSRF 어택 방지 필터: CsrfFilter (네번째 필터)"></a>CSRF 어택 방지 필터: CsrfFilter (네번째 필터)</h3><p>CSRF 어택을 방지하는 필터임<br>Cross site request forgery - 원치않는 요청을 임의로 만들어서 보내는것.<br>인증된 유저의 계정을 사용해 악의적인 변경 요청을 만들어 보내는 기법.<br>은행사이트에 로그인 후 나쁜사이트에 접속했는데 나쁜사이트에서 재밌어 보이는걸 눌렀는데 은행으로 요청을 보냄</p>
+<p>모든 대부분의 요청은 same origin이라 해서 요청하는곳이 일치해야하지만 경우에 따라서 다른 도메인에서의 요청을 허용해야 하는 경우가 있다.<br>이 경우 인증서를 사용하거나 특정 도메인들한테 열어주는것(CORS)가 있다.<br>CORS를 사용할 때 특히 주의 해야 함. 타 도메인에서 보내오는 요청을 허용하기 때문에…</p>
+<p>스프링시큐리티에선 이 경우 CsrfFilter을 활용해서 특정한 토큰(CSRF 토큰)을 활용한다.<br>이를 활용하여 리소스를 변경하는 요청의 경우 서버에서 발급한 토큰이 있는지 확인한다.</p>
+<p>은행이 만들어준 form에는 csrf 토큰이 들어있고 나쁜 사이트가 만들어준 form에는 csrf 토큰이 없기 때문에 은행서버에선 잘못된 요청을 인지할 수 있다.<br>(스프링 시큐리티에서 제공하는 기본 로그인 화면에서도 폼에 csrf가 설정되어있는것을 확인할 수 있다.)<br>restapi에서도 csrf 토큰을 적용할 순 있다. form 기반에선 리소스를 변경하는 요청에는 csrf 토큰을 활용하는것을 추천한다.</p>
+<p>CsrfFilter.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span>(csrfToken.getToken().equals(actualToken)) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>csrf 토큰을 사용하지 않고 싶을 땐 http.csrf().disable(); 를 추가해주면 됨</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">proteceted <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurty http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">           http.authorizeRequests()</span><br><span class="line">           .mvcMatchers(<span class="string">&quot;/&quot;</span>).permitAll()</span><br><span class="line">           ....</span><br><span class="line"></span><br><span class="line">           http.csrf().disable();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="28-CSRF-토큰-사용-예제"><a href="#28-CSRF-토큰-사용-예제" class="headerlink" title="28.    CSRF 토큰 사용 예제"></a>28.    CSRF 토큰 사용 예제</h3><p>JSP에서 스프링 MVC가 제공하는 <a href="form:form">form:form</a> 태그 또는 타임리프 2.1+ 버전을 사용할 때 폼에 CRSF 히든 필드가 기본으로 생성 됨.<br>get요청인 경우 csrf 토큰 확인안하지만 post 요청인 경우 확인한다<br>포스트맨으로 post로 form으로 로그인 api 호출하면 401이 발생한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="meta">@AutoConfigureMockMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SignUpControllerTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">signUpForm</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        mockMvc.perform(get(<span class="string">&quot;/signup&quot;</span>))</span><br><span class="line">                .andDo(print())</span><br><span class="line">                .andExpect(content().string(containsString(<span class="string">&quot;_csrf&quot;</span>)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">procesSignUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        mockMvc.perform(post(<span class="string">&quot;/signup&quot;</span>)</span><br><span class="line">            .param(<span class="string">&quot;username&quot;</span>, <span class="string">&quot;sangheon&quot;</span>)</span><br><span class="line">            .param(<span class="string">&quot;password&quot;</span>, <span class="string">&quot;123&quot;</span>)</span><br><span class="line">            .with(csrf()))</span><br><span class="line">                .andExpect(status().is3xxRedirection());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="29-로그아웃-처리-필터-LogoutFilter"><a href="#29-로그아웃-처리-필터-LogoutFilter" class="headerlink" title="29.    로그아웃 처리 필터: LogoutFilter"></a>29.    로그아웃 처리 필터: LogoutFilter</h3><p>LogoutHandler, LogoutSuccessHandler가 있다.</p>
+<p>LogoutHandler는 composite 객체로써 다른 여러가지 핸들러를 감싸고 있는 composite타입이여서 사실상 여러개의 핸들러를 사용하고 있는것임<br>LogoutSuccessHandler는 로그아웃을 끝내고 난 후 어떤처리를 할것인지에 대한 핸들러임</p>
+<p>기본으론 SimplUrlLogoutSuccessHandler가 명시되어있는 쪽으로 이동시켜 준다.</p>
+<p>로그아웃 페이지로 가면 로그아웃 창이 뜨는데 이는 DefaultLogoutPageGeneratingFilter가 만들어 준것이다.</p>
+<p>거기서 로그아웃 버튼을 눌렀을 때 (실제로그아웃이 일어났을 때) 로그아웃 필터가 해준다.</p>
+<p><strong><code>LogoutFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (requiresLogout(request, response)) &#123;  <span class="comment">//로그아웃요청만 if문안에 들어감</span></span><br><span class="line">  <span class="type">Authentication</span> <span class="variable">auth</span> <span class="operator">=</span> SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">this</span>.handler.logout(request, response, auth);</span><br><span class="line">  logoutSuccessHandler.onLogoutSuccess(request, response, auth);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>위에서 logout를 호출하면 CompositeLogoutHandler logout로 오게되는데 기본적으로<br>얘는 여러 로그아웃 핸들러를 들고있고(this.logoutHandlers) 우리가 임의로 추가할 수 있다.</p>
+<p>기본적으로는 2개를 들고있는데<br>하나는 CsrfLogoutHandlers이고 하나는 SecurityContextLogoutHandler이다.<br><strong><code>CompositeLogoutHandler.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">logout</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Authentication authentication)</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> (LogoutHandler handler : <span class="built_in">this</span>.logoutHandlers) &#123;</span><br><span class="line">			handler.logout(request, response, authentication);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>logout 후 위에서 logoutSuccessHandler.onLogoutSuccess를 호출하게 되는데 기본적으로 로그인 페이지로 가도록 되어있다.</p>
+<p>근데 얘를 &#x2F; 로 바꾸고 싶으면 아래처럼 하면 된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">http.logout()</span><br><span class="line">        .loginUrl(<span class="string">&quot;/logout&quot;</span>)    <span class="comment">// logout 하는 주소</span></span><br><span class="line">        .logoutSuccessUrl(<span class="string">&quot;/&quot;</span>); <span class="comment">// logout 후 주소</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="폼-인증-처리-필터-UsernamePasswordAuthenticationFilter"><a href="#폼-인증-처리-필터-UsernamePasswordAuthenticationFilter" class="headerlink" title="폼 인증 처리 필터: UsernamePasswordAuthenticationFilter"></a>폼 인증 처리 필터: UsernamePasswordAuthenticationFilter</h3><p>로그인 버튼을 눌렀을 때 이를 처리하는것이 UsernamePasswordAuthenticationFilter<br>UsernamePasswordAuthenticationFilter는 사용자가 폼에 입력한 username과 password로 Authentcation을 만들고<br>AuthenticationManager를 사용하여 인증을 시도한다</p>
+<p>UsernamePasswordAuthenticationFilter 를 보면 UsernamePasswordAuthenticationToken을 만듦. 이후 AuthenticationManager를 활용해 인증을 시도함.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authRequest</span> <span class="operator">=</span> UsernamePasswordAuthenticationToken(username, password);</span><br><span class="line">...</span><br><span class="line"><span class="keyword">return</span> <span class="built_in">this</span>.getAuthenticationManager().authenticate(authRequest);</span><br></pre></td></tr></table></figure>
+
+<p>AuthenticationManager는 AuthenticationManager의 구현체인 ProviderManager를 사용하는데 ProviderManager는 여러개의 AuthenticationProvider을 갖고있는데 얘한테 위임해서 인증처리를 위임해서 함.<br>AuthenticationProvider 또한 자신이 처리하지 못할경우 부모한테 위임해서 처리를 함.</p>
+<p>AuthenticationProvider 중에서 DaoAuthenticationProvider를 사용하는데 얘는 UserDetailService를 사용하는데 얘가 바로  UserDetailService를 구현한 (우리가만든)놈이다.</p>
+<p>인증이 끝나면 AbstractAuthenticationProcessingFilter 쪽에서 SecurityContextHolder에다 넣어준다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SecurityContextHolder.getContext().setAuthentication(authResult);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="DefaultLoginPageGeneratingFilter"><a href="#DefaultLoginPageGeneratingFilter" class="headerlink" title="DefaultLoginPageGeneratingFilter"></a>DefaultLoginPageGeneratingFilter</h3><p>로그인 페이지를 만들어주는 필터<br>get으로 로그인 api에 들어오면 로그인 페이지로 넘겨줌</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http.formLogin()</span><br><span class="line">           .loginPage(<span class="string">&quot;/login&quot;</span>)         <span class="comment">//얘를 붙이면 DefaultLoginPageGeneratingFilter, DefaultLogoutPageGeneratingFilter 가 등록이 안됨.(LogoutFilter는 유지됨)</span></span><br><span class="line">                                <span class="comment">// 커스텀한 로그인페이지를 쓴다고 인지하기 때문</span></span><br><span class="line">           .usernameParameter(<span class="string">&quot;my-username&quot;</span>)         <span class="comment">// 파라미터 변경</span></span><br><span class="line">           .passwordParameter(<span class="string">&quot;my-password&quot;</span>);</span><br><span class="line">           .</span><br></pre></td></tr></table></figure>
+
+<h3 id="로그인-x2F-로그아웃-폼-커스터마이징"><a href="#로그인-x2F-로그아웃-폼-커스터마이징" class="headerlink" title="로그인&#x2F;로그아웃 폼 커스터마이징"></a>로그인&#x2F;로그아웃 폼 커스터마이징</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http.formLogin()</span><br><span class="line">           .loginPage(<span class="string">&quot;/signin&quot;</span>)                 </span><br><span class="line">          <span class="comment">// 이 옵션을 추가하면 DefaultLoginPageGeneratingFilter, DefaultLogoutPageGeneratingFilter 가 등록이 안됨.</span></span><br><span class="line">           <span class="comment">// 즉 로그인, 로그아웃 페이지를 만들어줘야함</span></span><br><span class="line">           .permitAll();</span><br></pre></td></tr></table></figure>
+
+<p>signin 에 get 으로 들어오면 form을 보여주고 post로 들어오면 UsernamePasswordAuthenticationFilter 가 처리한다.</p>
+<p>get으로 들어오는 페이지를 보여주는 컨트롤러만 생성하면 됨. post signin은 UsernamePasswordAuthenticationFilter 가 처리해줌</p>
+<p>위에서 말한대로 loginPage(“&#x2F;signin”) 를 적용하면 Logout 뷰도 사라지기 때문에 새로 만들어줘야한다.</p>
+<h3 id="Basic-인증-처리-필터-BasicAuthenticationFilter"><a href="#Basic-인증-처리-필터-BasicAuthenticationFilter" class="headerlink" title="Basic 인증 처리 필터: BasicAuthenticationFilter"></a>Basic 인증 처리 필터: BasicAuthenticationFilter</h3><p>요청 헤더에 username와 password를 실어 보내면 브라우저 또는 서버가 그 값을 읽어서 인증하는 방식.<br>예)  Authorization: Basic QWxhZGRpbjpPcGVuU2VzYW1l<br>QWxhZGRpbjpPcGVuU2VzYW1l &lt;- (sangheon:123 을 BASE 64인코딩한것)</p>
+<p>보통, 브라우저 기반 요청이 클라이언트의 요청을 처리할 때 자주 사용.<br>● 보안에 취약하기 때문에 반드시 HTTPS를 사용할 것을 권장.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.httpBasic();</span><br></pre></td></tr></table></figure>
+
+<p>curl -u sangheon:123 http:localhost:8080</p>
+<p>BasicAuthenticationFilter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//form 로그인은 form에서 읽어왔지만 Basic 인증의 경우에는 헤더에서 읽어옴</span></span><br><span class="line"><span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authRequest</span> <span class="operator">=</span> <span class="built_in">this</span>.authenticationConverter.convert(request);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (authenticationIsRequired(username)) &#123;</span><br><span class="line">                                          <span class="type">Authentication</span> <span class="variable">authResult</span> <span class="operator">=</span> <span class="built_in">this</span>.authenticationManager.authenticate(authRequest);</span><br><span class="line">                                          <span class="type">SecurityContext</span> <span class="variable">context</span> <span class="operator">=</span> SecurityContextHolder.createEmptyContext();</span><br><span class="line">                                          context.setAuthentication(authResult);</span><br><span class="line">                                          SecurityContextHolder.setContext(context);</span><br><span class="line"></span><br><span class="line">                                          <span class="built_in">this</span>.rememberMeServices.loginSuccess(request, response, authResult);          <span class="comment">//이부분 강의시점엔 없는데 추가된듯??</span></span><br><span class="line">                                          <span class="built_in">this</span>.securityContextRepository.saveContext(context, request, response);         <span class="comment">//이부분 강의시점엔 없는데 추가된듯??</span></span><br><span class="line">                                          onSuccessfulAuthentication(request, response, authResult);</span><br><span class="line">                                &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>repo 에 저장하는건 없기에 form 로그인처럼 로그인이 유지되진 않는다. 즉 form로그인과 다르게 stateless 함.<br>강의시점엔 로그인이 유지되진 않았으나 인증을 유지할 수 있는 방안이 추가된듯 하다.</p>
+<h3 id="요청-캐시-필터-RequestCacheAwareFilter"><a href="#요청-캐시-필터-RequestCacheAwareFilter" class="headerlink" title="요청 캐시 필터: RequestCacheAwareFilter"></a>요청 캐시 필터: RequestCacheAwareFilter</h3><p>현재 요청과 관련 있는 캐시된 요청이 있는지 찾아서 적용하는 필터.<br>● 캐시된 요청이 없다면, 현재 요청 처리<br>● 캐시된 요청이 있다면, 해당 캐시된 요청 처리</p>
+<p>대시보드 페이지로 접속했는데 로그인 페이지로 넘어가게 될 경우 대시보드 요청이 캐시에 저장이 되어있다가 로그인이 완료되면 캐시에 있는걸 꺼내서 대시보드로 연결시켜줌</p>
+<h3 id="시큐리티-관련-서블릿-스팩-구현-필터-SecurityContextHolderAwareRequestFilter"><a href="#시큐리티-관련-서블릿-스팩-구현-필터-SecurityContextHolderAwareRequestFilter" class="headerlink" title="시큐리티 관련 서블릿 스팩 구현 필터: SecurityContextHolderAwareRequestFilter"></a>시큐리티 관련 서블릿 스팩 구현 필터: SecurityContextHolderAwareRequestFilter</h3><p>서블릿3 스펙을 지원하는 일을 함. 그중에서 시큐리티 관련된 스프링 시큐리티 기반으로 구현을 매꿔줌</p>
+<p>HttpServletRequest 클래스 안에 authenticate라는 메소드가 있는데 얘를 호출하면 인증여부를 판단하고 안되어 있으면 로그인페이지로 보냄<br>login메소드는 AuthenticationManager을 활용하서 내부 인증하는것이고<br>logout메소드는 LogoutHandler로 구현이 되어있고<br>AsynContext 의 start메소드도 지원하는데 SecurityContextHolder을 지원하는것임. 새로운 스레드에서도 SecurityContextHolder을 복사하여 사용가능케함</p>
+<p>시큐리티 관련된 서블릿 api를 지원하는것임. 서블릿을 직접 쓸 일 이 있으면 해당 메소드를 쓰면 됨. 뒷단은 결국 스프링 시큐리티 기반으로 동작함</p>
+<h3 id="익명-인증-필터-AnonymousAuthenticationFilter"><a href="#익명-인증-필터-AnonymousAuthenticationFilter" class="headerlink" title="익명 인증 필터: AnonymousAuthenticationFilter"></a>익명 인증 필터: AnonymousAuthenticationFilter</h3><p> 아무도 인증하지 않은 요청일 때 인증이 안된사용자를 AnonymousAuthentication로 만들어 SecurityContextHolder에 넣어준다<br>null object pattern 이라 해서 null 대신에 null을 대변하는 객체를 넣는 패턴임.<br>타 필터를 보면 종종 Anonymous 를 판단해서 분기하는 로직이 종종있다.<br>principal named은 기본적으로 “anonymousUser”이고<br>authority은 기본적으로 “ROLE_ANONYMOUS”.<br>아래코드를 활용할 경우 변경할 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http.anonymous()</span><br><span class="line">	.principal(<span class="string">&quot;auser&quot;</span>)</span><br><span class="line">	.authorities(<span class="string">&quot;ROLE_A&quot;</span>)</span><br><span class="line">	.key()</span><br></pre></td></tr></table></figure>
+
+<h3 id="세션-관리-필터-SessionManagementFilter"><a href="#세션-관리-필터-SessionManagementFilter" class="headerlink" title="세션 관리 필터: SessionManagementFilter"></a>세션 관리 필터: SessionManagementFilter</h3><p>기능 1. 세션 변조 방지 전략 설정: sessionFixation<br>공격자가 웹사이트에 로그인 해서 쿠키를 받아오고 희생자는 공격자의 쿠키로 로그인을 함. 그럼 공격자는 희생자의 정보를 읽어들일 수 있음.<br>해결방법”인증 후 세션 id나 정보를 바꿔 어택커의 쿠키로 희생자의 정보를 볼 수 없도록 함.<br>스프링 시큐리티는 세션변조 방지전략이 서블릿 컨테이너에 따라 달라짐.<br>● none<br>● newSession<br>● migrateSession (서블릿 3.0- 컨테이너 사용시 기본값)<br>● changeSessionId (서브릿 3.1+ 컨테이너 사용시 기본값) - 위에서 말한 세션 id를 바꾸는 전략<br>서블릿 3.0 이하부터 migrateSession전략을 쓰는데 이는 인증이 되었을 때 새로운 세션을 새로 만들고 세션에 있는 정보들을 복사해 오는것임.<br>changeSessionId는 copy과정이 없기에 migrateSession보다 빠름</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.sessionManagement()</span><br><span class="line">	.newSession() / .migrateSeesion()/ .changeSessionId() / .none()를 선택할 수 있다.</span><br></pre></td></tr></table></figure>
+
+<p>기능 2. 유효하지 않은 세션을 리다이렉트 시킬 URL 설정<br>로그아웃했을 때 해당세션은 유효하지 않기 때문에 어디로 보낼지 설정가능함</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.sessionManagement().invalidSessionUrl(<span class="string">&quot;/error&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>기능 3. 동시성 제어<br>여러 로그인을 막고싶을때 사용함</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http.sessionManagement()</span><br><span class="line">	.maximumSession(<span class="number">1</span>)</span><br><span class="line">	.expiredUrl()	<span class="comment">// 다중로그인로 인해 만료가 되었을 때 어디로 보낼것인지</span></span><br><span class="line">	.maxSessionsPreventsLogin(<span class="literal">true</span>) <span class="comment">// 새로운 세션로그인을 불가능하게 할것이다</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>동시성 제어: maximumSessions<br>● 추가 로그인을 막을지 여부 설정 (기본값, false)</p>
+<p>기능 4. 세션생성전략<br>아래 4가지가 들어갈 수 있다.<br>● IF_REQUIRED - 기본값. 필요할때 만ㄷ늘어서 사용<br>● NEVER    - 새로 만들진 않지만 있으면 갖다가 쓴다<br>● STATELESS    - 세션이 있더라도 쓰지 않음(캐싱된것도 안쓴다)<br>● ALWAYS</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http.sessionManagement()</span><br><span class="line">	.sessionCreationPolicy(IF_REQUIRED)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>여러개의 서버를 띄울 때 세션을 관리하고자 하면 spring session을 써서 세션 클러스터링을 할 수 있다.</p>
+<h3 id="인증-x2F-인가-예외-처리-필터-ExceptionTranslationFilter"><a href="#인증-x2F-인가-예외-처리-필터-ExceptionTranslationFilter" class="headerlink" title="인증&#x2F;인가 예외 처리 필터: ExceptionTranslationFilter"></a>인증&#x2F;인가 예외 처리 필터: ExceptionTranslationFilter</h3><p>마지막에서 두번째 앞에 위치함<br>마지막 필터인 FilterSecurityInterceptor와 밀접한 관계가 있음<br> ExceptionTranslationFilter가 FilterSecurityInterceptor보다 앞서 위치해서 FilterSecurityInterceptor를 감싸서 실행해야함.<br>FilterSecurityInterceptor의 구현체가 AccessDecisionManager, AffirmativeBased이고 얘네를 활용해서 인가처리를 하는데 이 때 인증관련예외, 인가 관련예외가 발생할 수 있는데 이게 발생하면 ExceptionTranslationFilter는 각 예외에 맞는 처리를 한다.<br>AuthenticationException이 발생하면 ExceptionTranslationFilter가 갖고있는 AuthenticationEntryPoint를 사용하여 예외를 처리함(해당 유저를 인증할 수 있게 인증이 가능한 페이지로 보내는것)<br>AccessDeniedException이 발생하면 ExceptionTranslationFilter가 갖고있는 AccessDeniedHandler를 사용하여 처리를 하는데 기본처리는 403 에러메세지를 보여주는것이다.</p>
+<p>AccessDeniedException을 커스텀한 페이지로 보내고 싶다면 간단하게 아래처럼 하면된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.exceptionHandling()</span><br><span class="line">	.accessDeniedPage(<span class="string">&quot;/access-denied&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>서버단에 로그를 남기고 싶다면</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http.exceptionHandling()</span><br><span class="line">	.accessDeniedHandler((request, response, accessDeniedException) -&gt; &#123;</span><br><span class="line">  <span class="type">UserDetails</span> <span class="variable">principal</span> <span class="operator">=</span> (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();</span><br><span class="line">  <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> principal.getUsername();</span><br><span class="line">  <span class="type">String</span> <span class="variable">servletPath</span> <span class="operator">=</span> request.getServletPath();</span><br><span class="line">  System.out.println(username + <span class="string">&quot; is denied to access to &quot;</span> + servletPath);</span><br><span class="line">  response.sendRedirect(<span class="string">&quot;/access-denied&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="인가-처리-필터-FilterSecurityInterceptor"><a href="#인가-처리-필터-FilterSecurityInterceptor" class="headerlink" title="인가 처리 필터: FilterSecurityInterceptor"></a>인가 처리 필터: FilterSecurityInterceptor</h3><p>기본적으로 등록하는 필터중 가장 마지막에 있는 필터<br>HTTP 리소스 시큐리티 처리를 담당하는 필터. AccessDecisionManager를 사용하여 인가를 처리한다.</p>
+<p>antPattern()도 지원되고 mvcMatcher() 또는 regexMatcher()도 사용해도 된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http.authorizeRequests()</span><br><span class="line">.mvcMatchers(<span class="string">&quot;/&quot;</span>, <span class="string">&quot;/info&quot;</span>, <span class="string">&quot;/account/**&quot;</span>, <span class="string">&quot;/signup&quot;</span>).permitAll()</span><br><span class="line">.mvcMatchers(<span class="string">&quot;/admin&quot;</span>).hasRole(<span class="string">&quot;ADMIN&quot;</span>)</span><br><span class="line">.mvcMatchers(<span class="string">&quot;/user&quot;</span>).hasRole(<span class="string">&quot;USER&quot;</span>)</span><br><span class="line">.anyRequest().authenticated()	<span class="comment">//어떤 권한을 갖던 인증을 하기만 하면 접근가능</span></span><br><span class="line">.anyRequest().fullyAuthenticated() <span class="comment">//이전까진 rememberme로 동작하다 중요한 때 다시 인증을 요청하는것</span></span><br><span class="line">.expressionHandler(expressionHandler());</span><br></pre></td></tr></table></figure>
+<p>hasRole은 hasAuthority의 하위개념임 .hasRole(“USER”) .hasAuthority(“ROLE_USER”) 은 동일하다고 보면 됨<br>마찬가지로 아래코드에서 .roles(account.getRole()) 는 .authorities(“ROLE_”+account.getRole()) 와 같은것임</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> User.builder()</span><br><span class="line">	.username(account.getUsername())</span><br><span class="line">	.password(account.getPassword())</span><br><span class="line">	.roles(account.getRole())</span><br><span class="line">	.build();</span><br></pre></td></tr></table></figure>
+<p>즉 .roles() 는 prefix로 ROLE_가 붙음</p>
+<h3 id="토큰-기반-인증-필터-RememberMeAuthenticationFilter"><a href="#토큰-기반-인증-필터-RememberMeAuthenticationFilter" class="headerlink" title="토큰 기반 인증 필터 : RememberMeAuthenticationFilter"></a>토큰 기반 인증 필터 : RememberMeAuthenticationFilter</h3><p>로그인할 때 로그인 기억하기 체크박스를 본적 있을것이다. 세션이 종료되거나 만료되어도 세션보다 더 긴 것으로 쿠키나 토큰이 브라우저에 남아있거나 서버 디비에 남아있거나 함.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http.rememberMe()</span><br><span class="line">.userDetailsService(accountService)</span><br><span class="line">.tokenValiditySeconds(<span class="number">10</span>) <span class="comment">//기본 2주가 유지됨</span></span><br><span class="line">.useSecureCookie(<span class="literal">true</span>)</span><br><span class="line"> <span class="comment">//https만 쿠키에 접근가능하도록 하는것. https를 적용한다면 true로 해주면 좋다. 쿠키가 노출되면 취약하기에...</span></span><br><span class="line">.key(<span class="string">&quot;remember-me-sample&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>위를 적용하면 브라우저 내 remember-me-sample 키를 갖는 쿠기가 추가된다.<br>로그인을 하면 jsseionId, remember-me-sample 두개가 있는것을 확인할 수 있고, jsessionId를 지우고 리프레시를 해도 재로그인이 필요없고 jsessionId가 다시 생긴것을 확인할 수 있다.</p>
+<p>jsessionId를 지우고 remember-me-sample만 갖고있는 상황에서 request를 날리면 <code>SecurityContextHolder.getContext().getAuthentication() == null</code> 가 충족하고 rememberMeAuth로 인증을 한다. 인증 후엔 SecurityContextHolder에 넣어준다.</p>
+<p><strong><code>RememberMeAuthenticationFilter.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (SecurityContextHolder.getContext().getAuthentication() == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="type">Authentication</span> <span class="variable">rememberMeAuth</span> <span class="operator">=</span> rememberMeServices.autoLogin(request,</span><br><span class="line">        response);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rememberMeAuth != <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="comment">// Attempt authenticaton via AuthenticationManager</span></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        rememberMeAuth = authenticationManager.authenticate(rememberMeAuth);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Store to SecurityContextHolder</span></span><br><span class="line">        SecurityContextHolder.getContext().setAuthentication(rememberMeAuth);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="커스텀필터-추가하기"><a href="#커스텀필터-추가하기" class="headerlink" title="커스텀필터 추가하기"></a>커스텀필터 추가하기</h3><p>서블릿 필터를 만들어서 활용해도 되고 GenericFilterBean 을 상속받아서 클래스를 만들어도 됨<br>그러면 doFilter()만 오버라이딩 하면 됨</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoggingFilter</span> <span class="keyword">extends</span> <span class="title class_">GenericFilterBean</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(<span class="built_in">this</span>.getClass());</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="type">StopWatch</span> <span class="variable">stopWatch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StopWatch</span>();</span><br><span class="line">    stopWatch.start(((HttpServletRequest)request).getRequestURI());</span><br><span class="line">    chain.doFilter(request, response);</span><br><span class="line">    stopWatch.stop();</span><br><span class="line">    logger.info(stopWatch.prettyPrint());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>addFilterAfter() 메소드로 어디 뒤에놓을지, addFilterBefroe() 메소드로 어디 앞에놓을지 설정 가능</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.addFilterAfter(<span class="keyword">new</span> <span class="title class_">LoggingFilter</span>(), UsernamePasswordAuthenticationFilter.class);</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="메소드-시큐리티"><a href="#메소드-시큐리티" class="headerlink" title="메소드 시큐리티"></a>메소드 시큐리티</h3><p>웹이아니라 평범한 애플리케이션일 때 활용할 수 있도록 하는것<br>@Secured와 @RollAllowed @PreAuthorize와 @PostAuthorize 를 서비스단의 메소드에 붙이고 서비스 호출 전 Authencation을 만들어 SecurityContextHodler에 넣어서 서비스 메소드 호출가능여부를 판단</p>
+<h3 id="AuthenticationPrincipal"><a href="#AuthenticationPrincipal" class="headerlink" title="@AuthenticationPrincipal"></a>@AuthenticationPrincipal</h3><p>@AuthenticationPrincipal을 활용하면 UserDetailsService 구현체에서 리턴하는 객체를 매개변수로 받을 수 있다.</p>
+<p><strong><code>UserAccount.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserAccount</span> <span class="keyword">extends</span> <span class="title class_">User</span> &#123;</span><br><span class="line"><span class="keyword">private</span> Account account;</span><br><span class="line"><span class="keyword">public</span> <span class="title function_">UserAccount</span><span class="params">(Account account)</span> &#123;</span><br><span class="line"><span class="built_in">super</span>(account.getUsername(), account.getPassword(), List.of(<span class="keyword">new</span></span><br><span class="line"><span class="title class_">SimpleGrantedAuthority</span>(<span class="string">&quot;ROLE_&quot;</span> + account.getRole())));</span><br><span class="line"><span class="built_in">this</span>.account = account;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> Account <span class="title function_">getAccount</span><span class="params">()</span> &#123;</span><br><span class="line"><span class="keyword">return</span> account;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>UserDetails.java</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span></span><br><span class="line">UsernameNotFoundException &#123;</span><br><span class="line"><span class="type">Account</span> <span class="variable">account</span> <span class="operator">=</span> accountRepository.findByUsername(username);</span><br><span class="line"><span class="keyword">if</span> (account == <span class="literal">null</span>) &#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UsernameNotFoundException</span>(username);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserAccount</span>(account);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>UserDetailsService 구현체에서 리턴하는 객체를 매개변수로 받을 수 있다.<br>그 안에 들어있는 Account객체를 getter를 통해 참조할 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">xxx</span><span class="params">(Model model, <span class="meta">@AuthenticationPrincipal</span> UserAccount userAccount)</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>Account를 바로 받을 수 있도록 바꿔보자</p>
+<p>아래처럼 어노테이션을 생성하고</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.PARAMETER)</span></span><br><span class="line"><span class="meta">@AuthenticationPrincipal(expression = &quot;#this == &#x27;anonymousUser&#x27; ? null : account&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CurrentUser &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>아래처럼 만들어주면 된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">xxx</span><span class="params">(Model model, <span class="meta">@CurrentUser</span> Account account)</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>.</p>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2022/03/24/spring-security/" data-id="cl1avml3p01pya0unh7y9d4nj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/03/24/kafka1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            apache kafka 란?
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/02/09/ServerMonitoring/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">ServerMonitoring</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">71</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2022/03/24/spring-security/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
