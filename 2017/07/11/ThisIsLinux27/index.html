@@ -10,12 +10,12 @@
     
     
 
-      <meta name="description" content="메일서버네임서버에 대한이해가 필수적이므로 이해하고 넘어올것.E-mail의 송수신에서 사용되는 프로토콜 다음, 네이버의 메일서버 계정을 갖고있다면 &amp;#107;&amp;#105;&amp;#109;&amp;#64;&amp;#100;&amp;#97;&amp;#117;&amp;#109;&amp;#x2e;&amp;#x6e;&amp;#x65;&amp;#x74;  &#x2F;   lee.naver.com 가 있다. &amp;#x6b;&amp;#x69;&amp;#x6d;">
+      <meta name="description" content="메일서버네임서버에 대한이해가 필수적이므로 이해하고 넘어올것.E-mail의 송수신에서 사용되는 프로토콜 다음, 네이버의 메일서버 계정을 갖고있다면 &amp;#x6b;&amp;#x69;&amp;#x6d;&amp;#64;&amp;#x64;&amp;#97;&amp;#x75;&amp;#x6d;&amp;#x2e;&amp;#x6e;&amp;#x65;&amp;#x74;  &#x2F;   lee.naver.com 가 있다. &amp;#x6b;&amp;#105;&amp;#109;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10장. 메일서버 개념, 메일서버를 위한 네임서버 구현">
 <meta property="og:url" content="http://kkimsangheon.github.io/2017/07/11/ThisIsLinux27/index.html">
 <meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
-<meta property="og:description" content="메일서버네임서버에 대한이해가 필수적이므로 이해하고 넘어올것.E-mail의 송수신에서 사용되는 프로토콜 다음, 네이버의 메일서버 계정을 갖고있다면 &amp;#107;&amp;#105;&amp;#109;&amp;#64;&amp;#100;&amp;#97;&amp;#117;&amp;#109;&amp;#x2e;&amp;#x6e;&amp;#x65;&amp;#x74;  &#x2F;   lee.naver.com 가 있다. &amp;#x6b;&amp;#x69;&amp;#x6d;">
+<meta property="og:description" content="메일서버네임서버에 대한이해가 필수적이므로 이해하고 넘어올것.E-mail의 송수신에서 사용되는 프로토콜 다음, 네이버의 메일서버 계정을 갖고있다면 &amp;#x6b;&amp;#x69;&amp;#x6d;&amp;#64;&amp;#x64;&amp;#97;&amp;#x75;&amp;#x6d;&amp;#x2e;&amp;#x6e;&amp;#x65;&amp;#x74;  &#x2F;   lee.naver.com 가 있다. &amp;#x6b;&amp;#105;&amp;#109;">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://kkimsangheon.github.io/images/centoslogo.png">
 <meta property="article:published_time" content="2017-07-10T15:56:35.000Z">
@@ -200,8 +200,8 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
             <h3 id="메일서버"><a href="#메일서버" class="headerlink" title="메일서버"></a>메일서버</h3><p>네임서버에 대한이해가 필수적이므로 이해하고 넘어올것.<br>E-mail의 송수신에서 사용되는 프로토콜</p>
-<p>다음, 네이버의 메일서버 계정을 갖고있다면 <a href="mailto:&#107;&#105;&#109;&#64;&#100;&#97;&#117;&#109;&#x2e;&#x6e;&#x65;&#x74;">&#107;&#105;&#109;&#64;&#100;&#97;&#117;&#109;&#x2e;&#x6e;&#x65;&#x74;</a>  &#x2F;   lee.naver.com 가 있다.</p>
-<p><a href="mailto:&#x6b;&#x69;&#x6d;&#x40;&#100;&#x61;&#117;&#109;&#x2e;&#x6e;&#x65;&#x74;">&#x6b;&#x69;&#x6d;&#x40;&#100;&#x61;&#117;&#109;&#x2e;&#x6e;&#x65;&#x74;</a> -&gt; lee.naver.com 메일전송<br>smtp를 통해 kim 메일서버의 큐에 들어가고 여유가 있을 때 smtp 프로토콜을 이용해 lee의 메일서버로 보내놓는다. 메일서버는 메일 박스에 넣어놓고 lee는 pop3 imap프로토콜을 써서 자신의 컴퓨터로 확인한다.<br>보내는 프로토콜 : smtp<br>받는 프로토콜 : POP3 IMAP</p>
+<p>다음, 네이버의 메일서버 계정을 갖고있다면 <a href="mailto:&#x6b;&#x69;&#x6d;&#64;&#x64;&#97;&#x75;&#x6d;&#x2e;&#x6e;&#x65;&#x74;">&#x6b;&#x69;&#x6d;&#64;&#x64;&#97;&#x75;&#x6d;&#x2e;&#x6e;&#x65;&#x74;</a>  &#x2F;   lee.naver.com 가 있다.</p>
+<p><a href="mailto:&#x6b;&#105;&#109;&#x40;&#100;&#97;&#x75;&#x6d;&#x2e;&#x6e;&#101;&#116;">&#x6b;&#105;&#109;&#x40;&#100;&#97;&#x75;&#x6d;&#x2e;&#x6e;&#101;&#116;</a> -&gt; lee.naver.com 메일전송<br>smtp를 통해 kim 메일서버의 큐에 들어가고 여유가 있을 때 smtp 프로토콜을 이용해 lee의 메일서버로 보내놓는다. 메일서버는 메일 박스에 넣어놓고 lee는 pop3 imap프로토콜을 써서 자신의 컴퓨터로 확인한다.<br>보내는 프로토콜 : smtp<br>받는 프로토콜 : POP3 IMAP</p>
 <h3 id="실습계획"><a href="#실습계획" class="headerlink" title="실습계획"></a>실습계획</h3><p>Server : naver 메일서버, 네임서버 역할을 한다.<br>Server(B) : daum 메일 서버<br>WinClient : 메일 클라이언트<br>Client : 메일 클라이언트</p>
 <h4 id="1-메일서버를-구현하기-전에-네임서버를-구현하자"><a href="#1-메일서버를-구현하기-전에-네임서버를-구현하자" class="headerlink" title="1. 메일서버를 구현하기 전에 네임서버를 구현하자"></a>1. 메일서버를 구현하기 전에 네임서버를 구현하자</h4><h5 id="1-1-다음을-서버에서-실행하자"><a href="#1-1-다음을-서버에서-실행하자" class="headerlink" title="1.1 다음을 서버에서 실행하자"></a>1.1 다음을 서버에서 실행하자</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/hostname    </span><br><span class="line">   첫줄 지우고 mail.naver.com 입력</span><br><span class="line"></span><br><span class="line"># vi /etc/hosts</span><br><span class="line">   맨 뒤에 다음 입력</span><br><span class="line">   192.168.111.100     mail.naver.com</span><br><span class="line"></span><br><span class="line"># yum -y install sendmail   //메일서버를 구현하려면 sendmail이 설치되어 있어야함</span><br><span class="line"># vi /etc/mail/local-host-names</span><br><span class="line">    아래 mail.naver.com 입력</span><br><span class="line"></span><br><span class="line"># vi /etc/sysconfig/network</span><br><span class="line">    HOSTNAME=mail.naver.com 입력</span><br><span class="line"></span><br><span class="line"># reboot</span><br></pre></td></tr></table></figure>
 
@@ -234,7 +234,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="http://kkimsangheon.github.io/2017/07/11/ThisIsLinux27/" data-id="cl1avmkmw003ha0un2sz98eop" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://kkimsangheon.github.io/2017/07/11/ThisIsLinux27/" data-id="cl1awgtdl003h2oun2je9871m" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
