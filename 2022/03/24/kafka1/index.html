@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://kkimsangheon.github.io/images/kafka.png">
 <meta property="article:published_time" content="2022-03-24T00:29:41.000Z">
-<meta property="article:modified_time" content="2022-03-24T03:26:34.716Z">
+<meta property="article:modified_time" content="2022-03-28T15:52:52.063Z">
 <meta property="article:author" content="Kim Sang Heon">
 <meta property="article:tag" content="Kafka">
 <meta name="twitter:card" content="summary">
@@ -270,8 +270,6 @@ ga('send', 'pageview');
 <p>High Water Mark<br>• 가장최근에Committed메시지의Offset추적<br>• replication-offset-checkpoint 파일에체크포인트를기록</p>
 <p>Leader Epoch<br>• 새Leader가선출된시점을Offset으로표시<br>• Broker복구중에메시지를체크포인트로자른다음현재Leader를따르기위해사용됨<br>• Controller가새Leader를선택하면Leader Epoch를업데이트하고해당정보를ISR 목록의모든구성원에게보냄<br>• leader-epoch-checkpoint 파일에체크포인트를기록<br>즉 새로운 리더에 대한 기록이라고 보면 될듯</p>
 <h3 id="fetch의-흐름"><a href="#fetch의-흐름" class="headerlink" title="fetch의 흐름"></a>fetch의 흐름</h3><p>팔로워들은 패쳐쓰레드가 리더한테 페치(데이터를 가져와서)를 해서 자신의 파티션에 write를 함<br>팔로워의 패쳐 쓰레드가 fetch를 했는데 null 이 오는경우(더이상 데이터를 가져갈게 없는 최신의 상태)<br>Leader는 자신의 High Water Mark 이동한다.<br>그 이후 또 팔로워가 fetch를 리더한테 하면 Leader는High Water Mark를 던져주고 팔로워들 또한 High Water Mark를 갱신한다.</p>
-<p>&#x2F;</p>
-<p>&#x2F;</p>
 
         </div>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
