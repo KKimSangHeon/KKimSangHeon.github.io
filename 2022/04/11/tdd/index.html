@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>TDD, 클린코드 학습내용 정리 | Kim Sang Heon&#39;s Bolg</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Java" />
+    
+    
+
+      <meta name="description" content="TDDTDD와 단위테스트는 다름.TDD: 테스트 먼저 짜고 프로덕션 코드를 구현하는것. 시작전 To do 리스트를 작성.to do 리스트는 언제든지 프로젝트를 진행해나가면서 변경될 수 있다. 최초 실패하는 코드를 작성그 후 프로덕션 코드를 고쳐 테스트를 통과하도록 해라 테스트에서 먼저 이뤄지라테스트코드에서부터 프로덕트 코드를 만들어 나가는것에 익숙해져야함.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TDD, 클린코드 학습내용 정리">
+<meta property="og:url" content="http://kkimsangheon.github.io/2022/04/11/tdd/index.html">
+<meta property="og:site_name" content="Kim Sang Heon&#39;s Bolg">
+<meta property="og:description" content="TDDTDD와 단위테스트는 다름.TDD: 테스트 먼저 짜고 프로덕션 코드를 구현하는것. 시작전 To do 리스트를 작성.to do 리스트는 언제든지 프로젝트를 진행해나가면서 변경될 수 있다. 최초 실패하는 코드를 작성그 후 프로덕션 코드를 고쳐 테스트를 통과하도록 해라 테스트에서 먼저 이뤄지라테스트코드에서부터 프로덕트 코드를 만들어 나가는것에 익숙해져야함.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://kkimsangheon.github.io/images/java.png">
+<meta property="article:published_time" content="2022-04-10T17:25:57.000Z">
+<meta property="article:modified_time" content="2022-04-10T17:30:10.737Z">
+<meta property="article:author" content="Kim Sang Heon">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kkimsangheon.github.io/images/java.png">
+        <link rel="alternate" href="" title="Kim Sang Heon&#39;s Bolg" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-101744076-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/2017/06/29/about-me/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/">About Me</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/My-Projects/">My Projects</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Photograph/">Photograph</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/About-Me/Travel/">Travel</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Search/">Search</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/Sort/">Sort</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/">CS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Data-Base/">Data Base</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/IOT/">IOT</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/MSA/">MSA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Network/">Network</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/OOP/">OOP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/Operating-System/">Operating System</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/">Etc</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/">Language</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/C/">C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Embeded-C/">Embeded C</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/">OS</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/OS/Linux/">Linux</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/">Web/App</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Angular2/">Angular2</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Django/">Django</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Firebase/">Firebase</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Spring/">Spring</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Language/">Language</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Language/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+                            <article id="post-tdd" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        TDD, 클린코드 학습내용 정리
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2022/04/11/tdd/" class="article-date">
+            <time datetime="2022-04-10T17:25:57.000Z" itemprop="datePublished">2022-04-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h3 id="TDD"><a href="#TDD" class="headerlink" title="TDD"></a>TDD</h3><p>TDD와 단위테스트는 다름.<br>TDD: 테스트 먼저 짜고 프로덕션 코드를 구현하는것.</p>
+<h4 id="시작전-To-do-리스트를-작성"><a href="#시작전-To-do-리스트를-작성" class="headerlink" title="시작전 To do 리스트를 작성."></a>시작전 To do 리스트를 작성.</h4><p>to do 리스트는 언제든지 프로젝트를 진행해나가면서 변경될 수 있다.</p>
+<h3 id="최초-실패하는-코드를-작성"><a href="#최초-실패하는-코드를-작성" class="headerlink" title="최초 실패하는 코드를 작성"></a>최초 실패하는 코드를 작성</h3><p>그 후 프로덕션 코드를 고쳐 테스트를 통과하도록 해라</p>
+<h3 id="테스트에서-먼저-이뤄지라"><a href="#테스트에서-먼저-이뤄지라" class="headerlink" title="테스트에서 먼저 이뤄지라"></a>테스트에서 먼저 이뤄지라</h3><p>테스트코드에서부터 프로덕트 코드를 만들어 나가는것에 익숙해져야함.<br>실제로 없는 함수를 테스트 코드에서 호출하고 이 후 프로덕션에서 만든다.</p>
+<h3 id="메세지를-던지자"><a href="#메세지를-던지자" class="headerlink" title="메세지를 던지자"></a>메세지를 던지자</h3><p>ball.getNothing() &#x3D;&#x3D; 0 을 ball.isNotingng() 로 하듯이..</p>
+<h3 id="Random-값을-테스트"><a href="#Random-값을-테스트" class="headerlink" title="Random 값을 테스트"></a>Random 값을 테스트</h3><p>객체관계가</p>
+<p>RacingMain -&gt; RacingGame -&gt; Car 라고 하자.</p>
+<p>Car 내부에 move라는 함수가 있는데 이는 random 값을 기반으로 도는 함수라 테스트하기가 쉽지않다. Car move안에 random으로 동작하는 부분으로 인해 RacingGame, RacingMain 또한 테스트하기가 쉽지않아짐.<br>random 생성하는 부분을 RacingMain으로 올리면 RacingGame, Car는 테스트가 가능해진다.</p>
+<p>원래 최 상위 RacingMain 같은 부분은 테스트하기가 쉽지 않은 부분이긴 함.</p>
+<p>랜덤값에 의존하는 레거시코드를 못바꿀 때 테스트하는 방법.<br>사진 참고(private였던 getRandom을 protected로 바꾸고 getRandom을 오버라이딩해서 테스트 진행)</p>
+<p>테스트는 경계값으로 테스트한느것이 좋다.</p>
+<p>move 작동방식이 계속변경된다면 해당메소드를 인터페이스로 뽑아내는것도 좋은방법임.</p>
+<p>게터&#x2F;세터는 되도록 쓰지마라(dto 제외)<br>객체와 객체를 비교하는것이 객체지향적인 사고이다.<br>equals를 만들어줘야하겠지?</p>
+<p>기본형 타입에 대해서도 일급객체를 만들어서 써라.<br>int position이 아닌 Postion postion으로 해서<br>position++; 보단 postion.increase(); &#x2F;&#x2F;메세지를 전달</p>
+<h3 id="CQRS"><a href="#CQRS" class="headerlink" title="CQRS"></a>CQRS</h3><p>CQRS는 Command and Query Responsibility Segregation(명령과 조회의 책임 분리)을 나타냅니다. 이름처럼 시스템에서 명령을 처리하는 책임과 조회를 처리하는 책임을 분리하는 것이 CQRS의 핵심입니다. 이제 명령과 조회에 대해 정의할 필요가 있습니다. CQRS에서 명령은 시스템의 상태를 변경하는 작업을 의미하며 조회는 시스템의 상태를 반환하는 작업을 의미합니다. 정리하면, CQRS는 시스템의 상태를 변경하는 작업과 시스템의 상태를 반환하는 작업의 책임을 분리하는 것입니다.</p>
+<p>상수 값의 경우 static final, 변수 이름은 대문자<br>private static int RANGE &#x3D; 9;<br>private final int MIN_COUNT &#x3D; 1;</p>
+<p>상수의 위치는? 상수, 클래스 변수, 인스턴스 변수, 생성자 순으로 위치한다</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Car &#123;</span><br><span class="line">	private int moveIndex;</span><br><span class="line">	private int carNumber;</span><br><span class="line">	private String carName;</span><br><span class="line">	private static final int INIT_POSITION = 0;</span><br><span class="line">	private static int autoIncrease = 0;</span><br><span class="line">[...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>공백 라인을 의미있게 사용해라. 문맥을 분리하는 부분에 사용한다.<br>리팩토링의 단위가 될 수 있따.</p>
+<p>space도 고려한다</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (int i=10; i&lt;1000; i++) &#123;</span><br><span class="line">	assertTrue(checkMove(2, i));</span><br><span class="line">	assertTrue(checkMove(20, i));</span><br><span class="line">	assertTrue(checkMove(200, i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>equals, hashcode는 맨아래 놓는게 관례임</p>
+<h3 id="이름은-가능한-구체적이어야-한다-모호하거나-하나-이상의-목적으로-사용될-수-있는-일반적인-이름은보통-나쁜-이름이다"><a href="#이름은-가능한-구체적이어야-한다-모호하거나-하나-이상의-목적으로-사용될-수-있는-일반적인-이름은보통-나쁜-이름이다" class="headerlink" title="이름은 가능한 구체적이어야 한다. 모호하거나 하나 이상의 목적으로 사용될 수 있는 일반적인 이름은보통 나쁜 이름이다"></a>이름은 가능한 구체적이어야 한다. 모호하거나 하나 이상의 목적으로 사용될 수 있는 일반적인 이름은보통 나쁜 이름이다</h3><p>적당한 이름<br>numTeamMembers, teamMemberCount<br>numSeatsInStadium, seatCount<br>teamPointsMax, pointsRecord</p>
+<h3 id="Total-Sub-Average-Max-Min-Record-String-Pointer-등의-한정자를-사용해야-한다면-이름의-끝이-이런-수정자를-입력하는-것이-좋다"><a href="#Total-Sub-Average-Max-Min-Record-String-Pointer-등의-한정자를-사용해야-한다면-이름의-끝이-이런-수정자를-입력하는-것이-좋다" class="headerlink" title="Total, Sub, Average, Max, Min, Record, String, Pointer 등의 한정자를 사용해야 한다면, 이름의 끝이 이런 수정자를 입력하는 것이 좋다"></a>Total, Sub, Average, Max, Min, Record, String, Pointer 등의 한정자를 사용해야 한다면, 이름의 끝이 이런 수정자를 입력하는 것이 좋다</h3><p>좋은 예<br>revenueTotal<br>expenseTotal<br>revenueAverage<br>expenseAverage</p>
+<h3 id="클린코드-가이드함수-메소드"><a href="#클린코드-가이드함수-메소드" class="headerlink" title="클린코드 가이드함수(메소드)"></a>클린코드 가이드함수(메소드)</h3><ul>
+<li><p>작게 만들어라.<br>함수를 만드는 첫 번재 규칙은 ‘작게’다. 함수를 만드는 두 번째 규칙은 ‘더 작게’다.</p>
+</li>
+<li><p>한 가지만 해라.<br>함수는 한 가지를 해야 한다. 그 한 가지를 잘 해야 한다. 그 한 가지만 해야 한다.</p>
+</li>
+<li><p>함수 당 추상화 수준은 하나로<br>함수가 확실히 ‘한 가지’ 작업만 하려면 함수 내 모든 문장이 동일한 추상화 수준에 있어야 한다.<br>코드는 위에서 아래로 이야기처럼 일해야 좋다.</p>
+</li>
+<li><p>서술적인 이름을 사용하라<br>이름이 길어도 괜찮다.<br>이름을 정하느라 시간을 들여도 괜찮다.<br>이름을 붙일 때는 일관성이 있어야 한다.</p>
+</li>
+<li><p>함수 인수<br>함수에서 이상적인 인수 개수는 0개(무항)이다. 다음은 1개이고, 다음은 2개이다.<br>3개는 가능한 피하는 편이 좋다.<br>4개 이상은 특별한 이유가 있어도 사용하면 안된다<br>인수가 2 ~ 3개 필요한 경우가 생긴다면 인수를 독자적인 클래스를 생성할 수 있는지 검토해 본다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Circle makeCircle(double x, double y, double radius);</span><br><span class="line">Circle makeCircle(Point center, double radius);</span><br></pre></td></tr></table></figure></li>
+<li><p>side effect를 만들지 마라.<br>side effect는 많은 경우 예상치 못한 버그를 발생시킨다.<br>명령과 조회를 분리하라.<br>함수는 뭔가를 수행하거나 답하거나 둘 중 하나만 해야 한다. 둘 다 하면 안된다.<br>개체 상태를 변경하거나 아니면 개체 정보를 반환하거나 둘 중 하나다.</p>
+</li>
+<li><p>오류 코드보다 예외를 사용하라.<br>오류 처리도 한 가지 작업이다.<br>함수는 ‘한 가지’ 작업만 해야 한다. 오류 처리도 ‘한 가지’ 작업에 속한다.<br>그러므로 오류를 처리하는 함수는 오류만 처리해야 마땅하다.<br>try&#x2F;catch 블록은 원래가 추하다. 코드 구조에 혼란을 일으키며, 정상적인 동작과 오류 처리 동작을 뒤섞는다. try&#x2F;catch 블록을 별도 함수로 뽑아내는 편이 낫다.</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public void delete(Page page) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        deletePageAndAllReferences(page);</span><br><span class="line">    &#125; catch (Exception e) &#123;</span><br><span class="line">        logError(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="인스턴스-변수의-수를-최소화한다"><a href="#인스턴스-변수의-수를-최소화한다" class="headerlink" title="인스턴스 변수의 수를 최소화한다."></a>인스턴스 변수의 수를 최소화한다.</h3><p>인스턴스 변수의 수를 최소화할 수 있는 방법을 찾는다.<br>인스턴스 변수에 중복이 있는지를 확인하고 제거할 수 있는 방법을 찾는다<br>인스턴스 변수는 2개가 적절<br>아래 코드에서 winners는 cars에서 추출하는것으로서 중복으로 봐도 무방함.<br>cars가 변경되면 winners도 변경되어야 하는데 이는 버그유발 가능성을 높이는것.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class RacingGame &#123;</span><br><span class="line">	private List&lt;Car&gt; cars;</span><br><span class="line">	private List&lt;String&gt; winners;</span><br><span class="line">	public List&lt;Car&gt; move(int time) &#123;</span><br><span class="line">		int curCountOfWin = 0;</span><br><span class="line">		for(Car car : cars)&#123;</span><br><span class="line">			countOfMove(time, car);</span><br><span class="line">			curCountOfWin = max(car.getCarPosition(), curCountOfWin);</span><br><span class="line">		&#125;</span><br><span class="line">		for(Car car : cars)&#123;</span><br><span class="line">			setWinners(curCountOfWin, car);</span><br><span class="line">		&#125;</span><br><span class="line">		return cars;</span><br><span class="line">	&#125;</span><br><span class="line">	[...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="setter-geeter를-최대한-지양하라-dto는-써도-됨"><a href="#setter-geeter를-최대한-지양하라-dto는-써도-됨" class="headerlink" title="setter, geeter를 최대한 지양하라(dto는 써도 됨)"></a>setter, geeter를 최대한 지양하라(dto는 써도 됨)</h3><p>car.setPosition(car.getPosition)) 대신 car.increase()<br>전자는 c언어의 구조체처럼 car을 쓰는것임<br>즉 car로 메세지를 보내라!<br>인스턴스를 초기화한 후에 값을 변경할 수 있는 setter 메소드를 생성하지 않는다. 가능하면 생성자를 사용해 초기화한다.<br>상태 데이터를 get하지 말고 메시지를 보내라<br>객체의 데이터를 꺼내 로직을 구현하면 중복 코드가 발생한다.<br>객체에 메시지를 보내 상태 데이터를 가지는 객체가 일하도록 하라.<br>private void addMaxCarPostion(GameResult result, int maxCarPosition, Car car) {<br>    if(maxCarPosition &#x3D;&#x3D; car.getCarPostion()) {<br>        result.addWinner(car);<br>    }<br>}</p>
+<h3 id="좋은-이름-짓기-위한-연습-방법"><a href="#좋은-이름-짓기-위한-연습-방법" class="headerlink" title="좋은 이름 짓기 위한 연습 방법"></a>좋은 이름 짓기 위한 연습 방법</h3><p>JDK, Spring 프레임워크와 같이 유명한 오픈소스 코드를 많이 읽는다.<br>동의어, 유사어 사전을 활용해 문맥에 맞는 이름을 찾으려 노력한다.<br>구현하는 프로그래밍 도메인에 대한 지식을 쌓기 위해 노력한다. 도메인 지식을 높아질 수록 좋은 이름을 지을 가능성이 높아진다</p>
+<h3 id="비지니스-로직과-UI-로직의-분리"><a href="#비지니스-로직과-UI-로직의-분리" class="headerlink" title="비지니스 로직과 UI 로직의 분리"></a>비지니스 로직과 UI 로직의 분리</h3><p>비지니스 로직과 UI 로직을 한 클래스가 담당하지 않도록 한다.<br>단일 책임의 원칙에도 위배된다</p>
+<h3 id="어느-부분을-테스트할-것인가"><a href="#어느-부분을-테스트할-것인가" class="headerlink" title="어느 부분을 테스트할 것인가?"></a>어느 부분을 테스트할 것인가?</h3><p>어느 정도의 테스트가 적정한가? 너무많이는 필요없다, 필요한것만!<br>경계 값을 기준으로 테스트</p>
+<h3 id="Test-Fixture-생성"><a href="#Test-Fixture-생성" class="headerlink" title="Test Fixture 생성"></a>Test Fixture 생성</h3><p>Fixture란 테스트를 실행하기 위해 필요한 것으로 테스트를 실행하기 위해 준비해야할 것들을 의미한다.<br>테스트의 인스턴스 변수는 각 Test Case에서 공통으로 필요한 Fixture만 위치, 나머지는 각 TestCase에 로컬 변수로 구현한다.<br>@BeforeEach는 각 Test Case에서 중복으로 사용하는 Fixture만 초기화해야 한다</p>
+<h3 id="테스트를-위해-생성자를-추가하는것도-괜찮다"><a href="#테스트를-위해-생성자를-추가하는것도-괜찮다" class="headerlink" title="테스트를 위해 생성자를 추가하는것도 괜찮다."></a>테스트를 위해 생성자를 추가하는것도 괜찮다.</h3><p>우승자 구하는 로직을 테스트하기 위해 Test Fixture 준비</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class RacingGameResultTest &#123;</span><br><span class="line">	@Test</span><br><span class="line">	public void check_ranking_if_correct() &#123;</span><br><span class="line">		List&lt;Car&gt; cars = new ArrayList&lt;&gt;();</span><br><span class="line">		Car car1 = new Car(&quot;pobi&quot;);</span><br><span class="line">		Car car2 = new Car(&quot;crong&quot;);</span><br><span class="line">		Car car3 = new Car(&quot;honux&quot;);</span><br><span class="line">		car1.move();</span><br><span class="line">		car1.move();</span><br><span class="line">		car2.move();</span><br><span class="line">		car2.move();</span><br><span class="line">		car2.move();</span><br><span class="line">		car3.move();</span><br><span class="line">		cars.add(car1);</span><br><span class="line">		cars.add(car2);</span><br><span class="line">		cars.add(car3);</span><br><span class="line">		[...]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Test Fixture를 위해 Car(String name, int position) 생성자를 추가한다면</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class RacingGameResultTest &#123;</span><br><span class="line">	@Test</span><br><span class="line">	public void check_ranking_if_correct() &#123;</span><br><span class="line">		List&lt;Car&gt; cars = Arrays.asList(new Car(&quot;pobi&quot;, 2), new Car(&quot;crong&quot;, 3), new Car(&quot;honux&quot;, 1));</span><br><span class="line">		[...]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MVC-기반으로"><a href="#MVC-기반으로" class="headerlink" title="MVC 기반으로"></a>MVC 기반으로</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class RacingMain &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		String carNames = InputView.getCarNames();</span><br><span class="line">		int tryNo = InputView.getTryNo();</span><br><span class="line">		RacingGame racingGame = new RacingGame(carNames, tryNo);</span><br><span class="line">		while(!racingGame.isEnd()) &#123;</span><br><span class="line">			racingGame.race();</span><br><span class="line">			ResultView.printCars(racingGame.getCars());</span><br><span class="line">		&#125;</span><br><span class="line">		ResultView.printWinners(racingGame.getWinners());</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="자료-전달-객체-dto"><a href="#자료-전달-객체-dto" class="headerlink" title="자료 전달 객체 - dto"></a>자료 전달 객체 - dto</h3><p>자료 구조체의 전형적인 형태는 공개 변수만 있고 함수가 없는 클래스다. 이런 자료 구조체를 Data Transfer Object(DTO)라고 한다.<br>자바에서 DTO의 일반적인 형태는 ‘자바 빈(java bean)’ 구조다.</p>
+<h3 id="클래스는-작아야-한다"><a href="#클래스는-작아야-한다" class="headerlink" title="클래스는 작아야 한다."></a>클래스는 작아야 한다.</h3><p>클래스를 만들 때 첫 번째 규칙은 크기다. 클래스는 작아야 한다. 두 번째 규칙도 크기다. 더 작아야 한다.<br>단일 책임 원칙(Single Responsibility Principle, SRP)은 클래스나 모듈을 변경할 이유가 하나, 단 하나뿐이어야 한다는 원칙이다.<br>클래스는 책임, 즉 변경할 이유가 하나여야 한다는 의미다.<br>응집도(cohesion) - 클래스는 인스턴스 변수 수가 작아야 한다.<br>응집도를 유지하면 작은 클래스 여럿이 나온다.<br>큰 함수를 작은 함수 여럿으로 쪼개다 보면 종종 작은 클래스 여럿으로 쪼갤 기회가 생긴다. 그러면서 프로그램에 체계가 더 잡히고 구조가 더 투명해진다.</p>
+<h3 id="변경하기-쉬운-클래스"><a href="#변경하기-쉬운-클래스" class="headerlink" title="변경하기 쉬운 클래스"></a>변경하기 쉬운 클래스</h3><p>요구사항은 변화기 마련이다. 따라서 코드도 변하기 마련이다.<br>구현 클래스에 의존하게 되면 테스트가 어려우며, 변화에 빠르게 대응하기 힘들다. 변화에 따르게 대응하려면 DIP 원칙을 지키는 습관을 가져야 한다.<br>DIP(Dependency Inversion Principle) 원칙은 클래스가 상세한 구현이 아니라 추상화(인터페이스)에 의존해야 한다는 원칙이다.<br>테스트가 가능할 정도로 시스템 결합도를 낮추면 유연성과 재사용성도 더 높아진다.</p>
+<h3 id="디미터-법칙"><a href="#디미터-법칙" class="headerlink" title="디미터 법칙"></a>디미터 법칙</h3><p>디미터 법칙은 모듈은 자신이 조작하는 객체의 속사정을 몰라야 한다는 법칙이다.<br>객체는 자료를 숨기고 함수를 공개한다. 즉, 객체는 조회 함수로 내부 구조를 공개하면 안 된다는 것이다.<br>다음 코드는 디미터 법칙을 어기는 것으로 보인다.<br>final String outputDir &#x3D; ctxt.getOptions().getScratchDir().getAbsolutePath();</p>
+<h3 id="서비스레이어에-있는것을-도메인-객체로-이동해라"><a href="#서비스레이어에-있는것을-도메인-객체로-이동해라" class="headerlink" title="서비스레이어에 있는것을 도메인 객체로 이동해라."></a>서비스레이어에 있는것을 도메인 객체로 이동해라.</h3><p>테이블과 도메인 객체(엔티티)는 1:N으로 구성되어야 함.<br>즉 테이블 하나에 엔티티 하나로 제한하지 마라</p>
+<p><a target="_blank" rel="noopener" href="https://velog.io/@neity16/4-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8%EC%99%80-JPA-%ED%99%9C%EC%9A%A9-3-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EA%B5%AC%EC%A1%B0-Service-Repository-%EA%B0%9C%EB%B0%9C">https://velog.io/@neity16/4-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8%EC%99%80-JPA-%ED%99%9C%EC%9A%A9-3-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EA%B5%AC%EC%A1%B0-Service-Repository-%EA%B0%9C%EB%B0%9C</a><br>상품도메인 개발부분 참고</p>
+<h3 id="요약한-규칙"><a href="#요약한-규칙" class="headerlink" title="요약한 규칙"></a>요약한 규칙</h3><ul>
+<li><p>한 메서드에 오직 한 단계의 들여쓰기만 한다.</p>
+</li>
+<li><p>else 예약어를 쓰지 않는다. if 조건절에서 값을 return하는 방식으로 구현하면 else를 사용하지 않아도 된다.</p>
+</li>
+<li><p>모든 원시 값과 문자열을 포장한다.</p>
+</li>
+<li><p>한 줄에 점을 하나만 찍는다.</p>
+</li>
+<li><p>줄여 쓰지 않는다(축약 금지).</p>
+</li>
+<li><p>모든 엔티티를 작게 유지한다.</p>
+</li>
+<li><p>3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않는다.</p>
+</li>
+<li><p>일급 컬렉션을 쓴다.<br> Map을 사용하는 경우 Map의 모든 인터페이스를 노출하지 않을 수 있게됨</p>
+</li>
+<li><p>getter&#x2F;setter&#x2F;프로퍼티를 쓰지 않는다.</p>
+</li>
+<li><p>메소드의 라인 수를 15라인이 넘지 않도록 구현한다.</p>
+</li>
+<li><p>try&#x2F;catch 블록을 별도 함수로 뽑아내는 편이 낫다.</p>
+</li>
+<li><p>한 줄에 점을 하나만 찍는다. (디미터 법칙을 지키는 것을 의미)</p>
+</li>
+<li><p>모든 엔티티를 작게 유지한다.</p>
+</li>
+<li><p>3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않는다.</p>
+</li>
+<li><p>게터&#x2F;세터&#x2F;프로퍼티를 쓰지 않는다.</p>
+</li>
+<li><p>4개 이상은 특별한 이유가 있어도 사용하면 안된다. 인수가 2 ~ 3개 필요한 경우가 생긴다면 인수를 독자적인 클래스를 생성할 수 있는지 검토해 본다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Circle makeCircle(double x, double y, double radius);</span><br><span class="line">Circle makeCircle(Point center, double radius);</span><br></pre></td></tr></table></figure></li>
+<li><p>기본형 타입에 대해서도 일급객체를 만들어서 써라.<br>int position이 아닌 Postion postion으로 해서<br>position++; 보단 postion.increase(); &#x2F;&#x2F;메세지를 전달</p>
+</li>
+<li><p>클래스 이름과 객체 이름은 명사나 명사구가 적합하다.<br>Customer, WikiPage, Account, AddressParser 등이 좋은 예다.<br>Manager, Processor, Data, Info 등과 같은 단어는 피하고, 동사는 사용하지 않는다.</p>
+</li>
+<li><p>메소드 이름은 동사나 동사구가 적합하다.<br>postPayment, deletePage, save 등이 좋은 예다.<br>접근자, 변경자, 조건자는 자바 빈 표준에 따라 값 앞에 get, set, is를 붙인다.<br>생성자를 중복해 정의할 때는 정적 팩토리 메소드를 사용한다. 메소드를 인수를 설명하는 이름을 사용한다.</p>
+</li>
+</ul>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://kkimsangheon.github.io/2022/04/11/tdd/" data-id="cl1tkfine00019wunf1w7afws" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/KKimSangHeon/" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="instagram" href="https://www.instagram.com/tkdgjs1501/" target="_blank">
+                        <i class="icon fa fa-instagram"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/04/11/tdd2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            TDD 학습내용 정리
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/04/11/optional/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Java Optional 활용방법 요약</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/">About Me</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/My-Projects/">My Projects</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Photograph/">Photograph</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/About-Me/Travel/">Travel</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Search/">Search</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/Sort/">Sort</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/">CS</a><span class="category-list-count">92</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Data-Base/">Data Base</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Design-Pattern/">Design Pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/IOT/">IOT</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/MSA/">MSA</a><span class="category-list-count">34</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/OOP/">OOP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/Operating-System/">Operating System</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/">오픈소스,기술</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/HEX-Team/">HEX Team</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EA%B0%95%EC%97%B0/">강연</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EB%A9%B4%EC%A0%91/">면접</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98/">아무거나</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/%EC%9E%90%EA%B2%A9%EC%A6%9D/">자격증</a><span class="category-list-count">5</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">75</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Language/C/">C++</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Embeded-C/">Embeded C</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Java/">Java</a><span class="category-list-count">44</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/Python/">Python</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/SQL-Oracle/">SQL(Oracle)</a><span class="category-list-count">12</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">58</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/OS/Linux/">Linux</a><span class="category-list-count">58</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/">Web/App</a><span class="category-list-count">49</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Angular2/">Angular2</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Django/">Django</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Firebase/">Firebase</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Servlet-JSP/">Servlet/JSP</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Spring/">Spring</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-App/Vuejs/">Vuejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-2850951807285210"
+     data-ad-slot="1831621923"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Kim Sang Heon</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'https-kkimsangheon-github-io-2';
+    
+    
+    var disqus_url = 'http://kkimsangheon.github.io/2022/04/11/tdd/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

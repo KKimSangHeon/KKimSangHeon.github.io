@@ -9,6 +9,20 @@
 
 
     <url>
+        <loc>http://kkimsangheon.github.io/categories/Language/Java/</loc>
+        <lastmod>2022-04-10T17:35:32.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://kkimsangheon.github.io/categories/Language/</loc>
+        <lastmod>2022-04-10T17:35:32.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://kkimsangheon.github.io/categories/Web-App/Spring/</loc>
         <lastmod>2022-03-28T16:08:06.209Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -102,20 +116,6 @@
     <url>
         <loc>http://kkimsangheon.github.io/categories/Etc/</loc>
         <lastmod>2022-02-09T11:44:20.843Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://kkimsangheon.github.io/categories/Language/Java/</loc>
-        <lastmod>2022-02-09T11:44:20.840Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://kkimsangheon.github.io/categories/Language/</loc>
-        <lastmod>2022-02-09T11:44:20.840Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
