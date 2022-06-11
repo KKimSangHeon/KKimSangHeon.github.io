@@ -3,6 +3,48 @@
 
 
     <url>
+        <loc>http://kkimsangheon.github.io/tags/jenkins/</loc>
+        <lastmod>2022-06-11T08:14:21.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://kkimsangheon.github.io/tags/k8s/</loc>
+        <lastmod>2022-06-11T08:14:21.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://kkimsangheon.github.io/tags/Spring-boot/</loc>
+        <lastmod>2022-06-11T08:14:21.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://kkimsangheon.github.io/tags/MSA/</loc>
+        <lastmod>2022-06-11T08:14:21.934Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://kkimsangheon.github.io/tags/Vuejs/</loc>
+        <lastmod>2022-06-11T07:50:03.301Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://kkimsangheon.github.io/tags/Django/</loc>
+        <lastmod>2022-06-11T07:50:03.301Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://kkimsangheon.github.io/tags/Java/</loc>
         <lastmod>2022-04-10T17:44:35.362Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,20 +61,6 @@
     <url>
         <loc>http://kkimsangheon.github.io/tags/Kafka/</loc>
         <lastmod>2022-03-28T15:52:52.063Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://kkimsangheon.github.io/tags/Vuejs/</loc>
-        <lastmod>2022-02-09T12:44:45.415Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://kkimsangheon.github.io/tags/Django/</loc>
-        <lastmod>2022-02-09T12:44:45.415Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -82,13 +110,6 @@
     <url>
         <loc>http://kkimsangheon.github.io/tags/kubernetes/</loc>
         <lastmod>2022-02-09T11:44:20.836Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://kkimsangheon.github.io/tags/MSA/</loc>
-        <lastmod>2022-02-09T11:44:20.754Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
