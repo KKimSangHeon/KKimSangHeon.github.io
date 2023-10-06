@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://KKimSangHeon.github.io/"/>
-  <updated>2023-10-06T17:18:00.161Z</updated>
+  <updated>2023-10-06T19:46:11.716Z</updated>
   <id>http://KKimSangHeon.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring Reactive</title>
+    <link href="http://KKimSangHeon.github.io/2023/10/07/spring-reactive1/"/>
+    <id>http://KKimSangHeon.github.io/2023/10/07/spring-reactive1/</id>
+    <published>2023-10-06T19:45:42.000Z</published>
+    <updated>2023-10-06T19:46:11.716Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="리액티브-선언문"><a href="#리액티브-선언문" class="headerlink" title="리액티브 선언문"></a>리액티브 선언문</h3><p><a href="https://www.reactivemanifesto.org/">https://www.reactivemanifesto.org</a></p><h3 id="위에서-말하는-리액티브-시스템의-특징-4가지"><a href="#위에서-말하는-리액티브-시스템의-특징-4가지" class="headerlink" title="위에서 말하는 리액티브 시스템의 특징 4가지"></a>위에서 말하는 리액티브 시스템의 특징 4가지</h3><p>Responsive - 응답성<br>Resilient - 유연성<br>Elastic - 탄력성<br>Message Driven</p><h3 id="리액티브-스트림즈-Reactive-Streams"><a href="#리액티브-스트림즈-Reactive-Streams" class="headerlink" title="리액티브 스트림즈(Reactive Streams)"></a>리액티브 스트림즈(Reactive Streams)</h3><p><a href="https://github.com/reactive-streams/reactive-streams-jvm/blob/v1.0.3/README.md#specification">https://github.com/reactive-streams/reactive-streams-jvm/blob/v1.0.3/README.md#specification</a></p><p>Reactive Streams에선 4가지 명세가 존재하며 이를 구현한 구현체는 RxJava, Java 9 Flow API, Akka Streams, Reactor, RxJS, RxScala, RxAndroid  등이 존재한다.</p><ul><li>Publisher</li><li>Subscriber</li><li>Subscription</li><li>Processor</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;리액티브-선언문&quot;&gt;&lt;a href=&quot;#리액티브-선언문&quot; class=&quot;headerlink&quot; title=&quot;리액티브 선언문&quot;&gt;&lt;/a&gt;리액티브 선언문&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://www.reactivemanifesto.org/&quot;&gt;h
+      
+    
+    </summary>
+    
+      <category term="Web/App" scheme="http://KKimSangHeon.github.io/categories/Web-App/"/>
+    
+      <category term="Spring" scheme="http://KKimSangHeon.github.io/categories/Web-App/Spring/"/>
+    
+    
+      <category term="Spring Security" scheme="http://KKimSangHeon.github.io/tags/Spring-Security/"/>
+    
+  </entry>
   
   <entry>
     <title>Resilience4j</title>
@@ -544,33 +571,6 @@
       <category term="CS" scheme="http://KKimSangHeon.github.io/categories/CS/"/>
     
       <category term="오픈소스,기술" scheme="http://KKimSangHeon.github.io/categories/CS/%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4-%EA%B8%B0%EC%88%A0/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>ubuntu usb설치시 발생하는 오류 해결방법</title>
-    <link href="http://KKimSangHeon.github.io/2020/11/24/linux-1/"/>
-    <id>http://KKimSangHeon.github.io/2020/11/24/linux-1/</id>
-    <published>2020-11-24T12:28:18.000Z</published>
-    <updated>2022-02-09T11:44:22.819Z</updated>
-    
-    <content type="html"><![CDATA[<p>데스크톱에 usb를 활용하여 우분투를 설치하며 꽤 오랜시간 삽질을 했었는데 gpu와 충돌로 인한 문제였다.</p><p>증상은 설치화면으로 들어가지지 않고 어찌어찌 설치를 완료해도 부팅이 안되는 문제…</p><p>해결방법<br><a href="http://ejklike.github.io/2017/03/05/install-ubuntu-16.04-with-nvidia-gpu.html">http://ejklike.github.io/2017/03/05/install-ubuntu-16.04-with-nvidia-gpu.html</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;데스크톱에 usb를 활용하여 우분투를 설치하며 꽤 오랜시간 삽질을 했었는데 gpu와 충돌로 인한 문제였다.&lt;/p&gt;
-&lt;p&gt;증상은 설치화면으로 들어가지지 않고 어찌어찌 설치를 완료해도 부팅이 안되는 문제…&lt;/p&gt;
-&lt;p&gt;해결방법&lt;br&gt;&lt;a href=&quot;
-      
-    
-    </summary>
-    
-      <category term="OS" scheme="http://KKimSangHeon.github.io/categories/OS/"/>
-    
-      <category term="Linux" scheme="http://KKimSangHeon.github.io/categories/OS/Linux/"/>
     
     
   </entry>
