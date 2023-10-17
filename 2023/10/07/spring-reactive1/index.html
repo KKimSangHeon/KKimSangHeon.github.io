@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://kkimsangheon.github.io/images/spring.jpg">
 <meta property="article:published_time" content="2023-10-06T19:45:42.000Z">
-<meta property="article:modified_time" content="2023-10-12T12:32:18.216Z">
+<meta property="article:modified_time" content="2023-10-17T10:26:07.992Z">
 <meta property="article:author" content="Kim Sang Heon">
 <meta property="article:tag" content="Spring Security">
 <meta name="twitter:card" content="summary">
@@ -222,6 +222,15 @@ ga('send', 'pageview');
 <p><code>Subscriber</code> : 구독자, 소비자<br><code>Emit</code> : Publisher가 데이터를 내보내는 것(방출하다. 내보내다. 통지하다.)<br><code>Sequence</code> : Publisher가 emit하는 데이터의 연속적인 흐름을 정의 해 놓은 것. Operator 체인형태로 정의 된다.<br><code>Subscribe</code> : Subscriber가 Sequence를 구독하는 것. 오퍼레이터 체인을 정의해 놓은것<br><code>Subscriber</code>: subscribe()메소드가 Subscriber가 아니라 파라미터로 넘어가는 람다가 subscriber이다<br><code>Dispose</code> : Subscriber가 Sequence 구독을 해지 하는 것<br><code>Operator</code> : just, map 등 연산자를 의미. 데이터를 가공함</p>
 <h4 id="Mono"><a href="#Mono" class="headerlink" title="Mono"></a>Mono</h4><p>Mono : 0개 또는 1개의 데이터를 emit하는 Publisher이다.<br>Mono는 emit을 종료하면 onComplete signal을 emit하고, 비정상적으로 종료 될 경우 onError signal을 emit한다</p>
 <h4 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a>Flux</h4><p>Flux : 0개 ~ N개의 데이터를 emit하는 Publisher이다.<br>Flux는 emit을 종료하면 onComplete signal을 emit하고, 비정상적으로 종료 될 경우 onError signal을 emit한다</p>
+<h3 id="Publish가-만들어-내는-Sequence"><a href="#Publish가-만들어-내는-Sequence" class="headerlink" title="Publish가 만들어 내는 Sequence"></a>Publish가 만들어 내는 Sequence</h3><p>React에선 Publish가 만들어 내는걸 Sequence라 한다.</p>
+<p>Sequence는 Cold Sequence, Hot Sequence가 존재하며 이는 각각 Cold Publisher, Hot Publisher가 만들어낸다.</p>
+<p><code>Cold Sequence</code><br>Cold Publisher가 emit 한 데이터를 Subscriber가 구독할 때마다 타임라인의 처음부터 emit 된 모든 데이터를 받을 수 있다.<br>즉 Sequence timeline이 구독을 할 때마다 하나씩 더 생긴다.<br>ex.Subscriber A, B의 구독 시점이 발행 이후라도 데이터는 처음부터 받을 수 있다.</p>
+<p><code>Hot Sequence</code><br>구독 이전시점에 emit 된 데이터는 전달받지 못한다<br>즉 Subscriber가 구독한 시점의 타임라인부터 emit된 데이터를 받을 수 있다.<br>즉 구독이 얼마나 발생되던지 타임라인은 하나만 생성된다.</p>
+<h3 id="Back-pressure-백프레셔"><a href="#Back-pressure-백프레셔" class="headerlink" title="Back pressure 백프레셔"></a>Back pressure 백프레셔</h3><p>puvlisher가 sub로 데이터를 보낼때 sub가 안정적으로 데이터를 받기위해하는 제어기능<br>즉, 들어오는 데이터를 적절히 제한해서 과부하 방지</p>
+<p>Back pressur의 여러가지 방법<br><code>1. 요청데이터의 개수를 제어하는 방법</code><br>sub가 처리할 수 있는 수준의 개수를 pub에 요청</p>
+<p><code>2. 백프레셔 전략 사용</code><br>2.1 Ignore 전략. 즉 적용하지 않는다<br>2.2 Error 전략. 다운스트림으로 전달할 데이터가 버퍼에 가득차면 익셉션을 발생시킨다<br>2.3 Drop 전략. 다운스트림으로 전달할 데이터가 버퍼에 가득처면 버퍼 밖에서 대기하는 먼저 emit된 데이터부터 드랍<br>2.4 Latest전략. 더운스트림으로 전달할 데이터가 버퍼에 가득차면 버퍼 밖에서 대기하는 가장 최근에 emit된 데이터부터 버퍼에 태우는 전략<br>2.5 Buffer전략. 다운스트림으로 전달할 데이터가 버퍼에 가득찰경우 버퍼안에 있는 데이터를 드랍시키는 전략</p>
+<p><code>3. 버퍼 전략</code><br>3.1 Buffer Drop latest 전략<br>버퍼가 가득찼을 때 가장 최근에 들어온 데이터를 드랍</p>
+<p>3.2 Buffer Drop Oldest 전략<br>버퍼가 가득찼을 때 가장 먼저 들어온 데이터를 드랍(버퍼에서 가장 오래된 데이터)</p>
 
         </div>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
