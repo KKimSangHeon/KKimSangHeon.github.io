@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://kkimsangheon.github.io/images/spring.jpg">
 <meta property="article:published_time" content="2023-10-06T19:45:42.000Z">
-<meta property="article:modified_time" content="2023-10-22T05:41:25.349Z">
+<meta property="article:modified_time" content="2023-10-22T10:52:53.532Z">
 <meta property="article:author" content="Kim Sang Heon">
 <meta property="article:tag" content="Spring Security">
 <meta name="twitter:card" content="summary">
@@ -231,8 +231,12 @@ ga('send', 'pageview');
 <p><code>2. 백프레셔 전략 사용</code><br>2.1 Ignore 전략. 즉 적용하지 않는다<br>2.2 Error 전략. 다운스트림으로 전달할 데이터가 버퍼에 가득차면 익셉션을 발생시킨다<br>2.3 Drop 전략. 다운스트림으로 전달할 데이터가 버퍼에 가득처면 버퍼 밖에서 대기하는 먼저 emit된 데이터부터 드랍<br>2.4 Latest전략. 더운스트림으로 전달할 데이터가 버퍼에 가득차면 버퍼 밖에서 대기하는 가장 최근에 emit된 데이터부터 버퍼에 태우는 전략<br>2.5 Buffer전략. 다운스트림으로 전달할 데이터가 버퍼에 가득찰경우 버퍼안에 있는 데이터를 드랍시키는 전략</p>
 <p><code>3. 버퍼 전략</code><br>3.1 Buffer Drop latest 전략<br>버퍼가 가득찼을 때 가장 최근에 들어온 데이터를 드랍. 버퍼가 크기가 2일 때 1,2가 존재한다면 3이 들어오면 3이 드랍됨. 이후 1이 subscriber에게 emit 되면 데이터가 드랍되지 않고 버퍼로 들어온다</p>
 <p>3.2 Buffer Drop Oldest 전략<br>버퍼가 가득찼을 때 가장 먼저 들어온 데이터를 드랍(버퍼에서 가장 오래된 데이터)</p>
-<h3 id="sink"><a href="#sink" class="headerlink" title="sink"></a>sink</h3><p>mono flux는 onNext onComplete 시그널을 내부적으로 발생시키기때문에 프로그래밍 코드에는 이러한것들이 보이지 않는다. 내부적으로 처리하기 때문<br>sink는 프로그래민적으로 이러한 시그널을 푸쉬할수 잇는 기능을 갖고있는 퍼블리셔의 한 종류임</p>
+<h3 id="sink-thread-safe함"><a href="#sink-thread-safe함" class="headerlink" title="sink - thread safe함"></a>sink - thread safe함</h3><p>mono flux는 onNext onComplete 시그널을 내부적으로 발생시키기때문에 프로그래밍 코드에는 이러한것들이 보이지 않는다. 즉 내부적으로 처리하기 때문<br>sink는 프로그래밍적으로 이러한 시그널을 푸쉬할수 잇는 기능을 갖고있는 퍼블리셔의 한 종류임</p>
 <p>processor 는 퍼블리셔 서브스라이버의 특징을 동시에 갖고있음(processor는 리액트 3.5.0부터 제거될예정)<br>프로세서는 멀티스레드 환경에서 스레드세이프 하지 않기때문에 쓰레드 세이프한sink가 프로세서보다 더 나은 대안이 된다.(프로세서는 onNext, onComplete, onError를 직접적으로 호출하기 때문에 쓰레드 세이프 하지 않을 수 있다.sink는 동시접근을 감지하고 그중 하나가 빠르게 실패하기 때문에 쓰레드 세이프를 보장함)<br>sinks는 sink.many 또눈 sink.one 인터페이스를 사용해서 스레드세이프하게 시그널을 발생시킨다</p>
+<h3 id="프로그래밍-적으로-데이터를-emit하는-방법-그리고-Sink와-차이"><a href="#프로그래밍-적으로-데이터를-emit하는-방법-그리고-Sink와-차이" class="headerlink" title="프로그래밍 적으로 데이터를 emit하는 방법 그리고 Sink와 차이"></a>프로그래밍 적으로 데이터를 emit하는 방법 그리고 Sink와 차이</h3><p><code>create() Sink와 차이점</code> : </p>
+<p>ex&gt;Flux.create(~~~)<br>create() 메소드 내부에서만 데이터를 emit할 수 있다.</p>
+<p>Sink객체를 이용해서 외부, 내부에서 데이터를 emit 할 수 있다. 또한 EmitFailureHandler를 제공해서 멀티 스레드 환경에서 빠르게 실패할 수 있는 환경을 제공함</p>
+<p><code>generate()</code></p>
 
         </div>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
