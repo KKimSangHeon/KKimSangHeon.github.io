@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://kkimsangheon.github.io/images/spring.jpg">
 <meta property="article:published_time" content="2023-10-06T19:45:42.000Z">
-<meta property="article:modified_time" content="2023-11-06T14:55:52.900Z">
+<meta property="article:modified_time" content="2023-11-07T14:15:23.659Z">
 <meta property="article:author" content="Kim Sang Heon">
 <meta property="article:tag" content="Spring Security">
 <meta name="twitter:card" content="summary">
@@ -245,6 +245,8 @@ ga('send', 'pageview');
 <p>Context에 값을 저장하는 메소드: contextWrite( )<br>데이터 소스레벨에서 접근하기 위한 메소드: deferContextual( )<br>오퍼레이터 중간에서 접근하기 위한 메소드: transformDeferredContextual( )</p>
 <p><code>자주사용되는 Context API - 저장 할 때</code><br>put(key, value)<br>Context.of(key1, value2, key2, value2 …) : key&#x2F;value형태로 Context에 여러개의 값을 쓴다<br>putAll(ContextView)  : 파라미터로 입력된 ContextView를 합친다<br>delete(key)</p>
 <p><code>자주사용되는 Context API - 데이터를 읽어올 때</code><br>get(key)<br>getOrEmpty(key) : value를 Opetional로 래핑해서 반환<br>getOrDefault(key, default value) : ContextView에서 key에 해당하는 value를 가져온다. key에 해당하는 value가 없으면 default value를 가져온다<br>hasKey(key)<br>isEmpty() : Context가 비어있는지 확인<br>size()</p>
+<h3 id="context-특징"><a href="#context-특징" class="headerlink" title="context 특징"></a>context 특징</h3><p>컨텍스트는 구독시점에 subscriber를 통해 reactor sequence에 연결된다.또한 체인에서 각각의 Operator들이 실행 쓰레드가 달라도 연결된 Context에 접근할 수 있으며 subscriber 마다 context가 연결된다.</p>
+<p>Context는 체인의 맨 아래에서부터 위로 전파되므로 Operator 체인에서 Context read 메서드가 Context write 메서드 밑에 있을 경우에는 write된 값을 read할 수 없다. 따라서 일반적으로 Context에 write 할때에는 Operator 체인의 마지막에 둔다.<br>메인 Operator 내부에서 Sequence를 생성하는 flatMap( ) 같은 Operator내에서 write 된 Context의 값은 Inner Sequence 내부에서만 유효하고, 외부 Operator 체인에서는 보이지 않는다.</p>
 
         </div>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -428,7 +430,7 @@ ga('send', 'pageview');
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2023 Kim Sang Heon</p>
+                <p>&copy; 2024 Kim Sang Heon</p>
                 <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
             </div>
         </div>

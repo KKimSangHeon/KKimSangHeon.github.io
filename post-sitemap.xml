@@ -9,8 +9,16 @@
 
 
     <url>
+        <loc>http://KKimSangHeon.github.io/2024/01/23/triple-monitor/</loc>
+        <lastmod>2024-01-23T14:25:25.844Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://KKimSangHeon.github.io/2023/10/07/spring-reactive1/</loc>
-        <lastmod>2023-11-06T14:55:52.900Z</lastmod>
+        <lastmod>2023-11-07T14:15:23.659Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
