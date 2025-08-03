@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://KKimSangHeon.github.io/"/>
-  <updated>2024-09-04T11:04:17.399Z</updated>
+  <updated>2025-08-03T13:07:05.841Z</updated>
   <id>http://KKimSangHeon.github.io/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LLM 관련 지식정리</title>
+    <link href="http://KKimSangHeon.github.io/2025/08/03/ai-study/"/>
+    <id>http://KKimSangHeon.github.io/2025/08/03/ai-study/</id>
+    <published>2025-08-03T12:57:04.000Z</published>
+    <updated>2025-08-03T13:07:05.841Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="최근-AI-트렌드-요약"><a href="#최근-AI-트렌드-요약" class="headerlink" title="최근 AI 트렌드 요약"></a>최근 AI 트렌드 요약</h1><p>최근 LLM 관련 많은 자동화도구, 라이브러리, 툴 들이 생겨나면서 정리해본 내용을 올려본다.</p><h2 id="A-노코드-x2F-워크플로우-x2F-파이프라인-자동화-도구-및-라이브러리"><a href="#A-노코드-x2F-워크플로우-x2F-파이프라인-자동화-도구-및-라이브러리" class="headerlink" title="A. 노코드 &#x2F; 워크플로우 &#x2F; 파이프라인 자동화 도구 및 라이브러리"></a>A. 노코드 &#x2F; 워크플로우 &#x2F; 파이프라인 자동화 도구 및 라이브러리</h2><h3 id="1-n8n"><a href="#1-n8n" class="headerlink" title="1. n8n"></a>1. n8n</h3><ul><li>오픈 소스 워크플로우 자동화 툴</li><li>GUI 기반 시각적 인터페이스 제공</li><li>JavaScript 확장 가능 → 유연한 로직 구현</li><li>이메일 → LangChain → 응답 이메일 등 다양한 자동화 구성</li><li>클라우드 및 온프레미스 환경 모두 지원</li><li>AI와 통합하여 지능형 챗봇, 비서 등 구현 가능</li></ul><h3 id="2-Opal"><a href="#2-Opal" class="headerlink" title="2. Opal"></a>2. Opal</h3><ul><li>Google에서 출시한 n8n 대항마</li></ul><h3 id="3-Zapier"><a href="#3-Zapier" class="headerlink" title="3. Zapier"></a>3. Zapier</h3><ul><li>앱 간 이벤트 기반 자동화 플랫폼</li><li>UI 친화적이며 API 지식 없이도 활용 가능</li><li>다양한 앱 연동으로 반복 업무 자동화 가능</li></ul><h3 id="4-Make"><a href="#4-Make" class="headerlink" title="4. Make"></a>4. Make</h3><ul><li>클라우드 기반 워크플로우 자동화 도구</li><li>직관적인 UI와 강력한 연결 기능</li><li>수많은 앱&#x2F;서비스와 통합 가능</li></ul><h3 id="5-LangChain"><a href="#5-LangChain" class="headerlink" title="5. LangChain"></a>5. LangChain</h3><ul><li>LLM 기반 앱 개발을 위한 오픈소스 프레임워크</li><li>GPT-4, Hugging Face 등 다양한 LLM과 연동 가능</li><li>주요 컴포넌트:<ul><li><code>PromptTemplate</code>: 프롬프트 구성</li><li><code>ChatModel</code>: 다양한 AI 모델 인터페이스 (예: <code>ChatOpenAI</code>, <code>ChatGroq</code>, <code>ChatGoogleGenerativeAI</code>)</li><li><code>OutputParser</code>: 결과 파싱</li></ul></li><li>RAG (Retrieval-Augmented Generation) 구성 가능<ul><li>외부 데이터 검색 → 요약 및 응답 생성</li></ul></li><li>빠른 MVP 제작에 적합하며, 전체 워크플로우보다는 일부 핵심 컴포넌트 활용 권장</li></ul><h3 id="6-Playwright"><a href="#6-Playwright" class="headerlink" title="6. Playwright"></a>6. Playwright</h3><ul><li>Microsoft의 브라우저 자동화 도구</li><li>크로미움, 파이어폭스, 웹킷 지원</li><li>API 기반으로 빠르고 안정적인 테스트 및 UI 자동화</li><li>Claude 등 AI 코드 생성 도구와 연동 가능</li></ul><hr><h2 id="B-바이브코딩-Vibe-Coding"><a href="#B-바이브코딩-Vibe-Coding" class="headerlink" title="B. 바이브코딩 (Vibe Coding)"></a>B. 바이브코딩 (Vibe Coding)</h2><blockquote><p>생성형 AI와 함께 개발하는 신조어</p></blockquote><h3 id="1-Cursor"><a href="#1-Cursor" class="headerlink" title="1. Cursor"></a>1. Cursor</h3><ul><li>VS Code 기반의 통합 개발 환경 (Fork 버전)</li><li>AI를 활용한 코드 작성, 디버깅, 리팩토링 가능</li><li>생산성 향상에 유리한 개발 도구</li></ul><p>사용후기: 사용하기 편리하며 꽤 사용성이 좋음. 대다수의 사람들이 꽤 비싸다고 언급함.</p><h3 id="2-Claude-by-Anthropic"><a href="#2-Claude-by-Anthropic" class="headerlink" title="2. Claude (by Anthropic)"></a>2. Claude (by Anthropic)</h3><ul><li>Opus: 고난도 추론&#x2F;에이전트 기능에 특화</li><li>Sonnet: 성능&#x2F;속도 균형 → 코딩에 적합</li><li>Claude Desktop App:<ul><li>코드 이해 및 수정 기능 탁월</li><li>JetBrains의 MCP (Model Context Protocol) 지원 → IntelliJ와 연동</li></ul></li></ul><p>사용후기: Claude Client, IntelliJ MCP 서버를 활용해 free 버전을 사용해봤으며, 꽤 괜찮은 수준으로 결과물을 만들어냄. IntelliJ plugin 형태로도 제공되나 유료결제가 필요함.  Claude Client 를 활용할 땐 Cursor처럼 내가 일일이 컨펌하는 절차가 없어서 약간 아쉬움. CLI나 plugin을 활용하면 컨펌하는 절차가 있는것 같긴함</p><h3 id="3-Gemini"><a href="#3-Gemini" class="headerlink" title="3. Gemini"></a>3. Gemini</h3><p>사용후기: IntelliJ 내 plugin을 통해 활용해봤으며 Cursor, Claude 보다는 문제를 잘 해결하지 못했음</p><hr><h2 id="C-기타-도구-및-플랫폼"><a href="#C-기타-도구-및-플랫폼" class="headerlink" title="C. 기타 도구 및 플랫폼"></a>C. 기타 도구 및 플랫폼</h2><h3 id="Hugging-Face"><a href="#Hugging-Face" class="headerlink" title="Hugging Face"></a>Hugging Face</h3><ul><li>트랜스포머, 데이터셋 등 제공하는 세계 최대 AI&#x2F;ML 플랫폼</li><li>다양한 사전학습 모델과 커뮤니티 리소스 제공</li></ul><h3 id="Supabase"><a href="#Supabase" class="headerlink" title="Supabase"></a>Supabase</h3><ul><li>Firebase 대체 오픈소스 백엔드 플랫폼</li><li>PostgreSQL 기반</li><li>제공 기능:<ul><li>실시간 DB</li><li>유저 인증</li><li>스토리지</li><li>서버리스 함수 등</li></ul></li></ul><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;최근-AI-트렌드-요약&quot;&gt;&lt;a href=&quot;#최근-AI-트렌드-요약&quot; class=&quot;headerlink&quot; title=&quot;최근 AI 트렌드 요약&quot;&gt;&lt;/a&gt;최근 AI 트렌드 요약&lt;/h1&gt;&lt;p&gt;최근 LLM 관련 많은 자동화도구, 라이브러리, 툴 들
+      
+    
+    </summary>
+    
+      <category term="CS" scheme="http://KKimSangHeon.github.io/categories/CS/"/>
+    
+      <category term="AI / LLM" scheme="http://KKimSangHeon.github.io/categories/CS/AI-LLM/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>1. 스마트홈 구성 입문 - 필립스 휴, 스마트싱스 활용</title>
     <link href="http://KKimSangHeon.github.io/2024/09/03/smart-home1/"/>
     <id>http://KKimSangHeon.github.io/2024/09/03/smart-home1/</id>
     <published>2024-09-03T10:31:37.000Z</published>
-    <updated>2024-09-04T11:04:17.399Z</updated>
+    <updated>2025-01-27T09:37:00.163Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="스마트-홈-구성"><a href="#스마트-홈-구성" class="headerlink" title="스마트 홈 구성"></a>스마트 홈 구성</h3><p>필립스 휴 조명을 구매하고, 이를 시리를 통한 호출 또는 자동화를 위해선 필립스 휴 브릿지가 필요하는 사실을 늦게 깨달았다.<br>필립스 휴 조명을 더 살 생각은 없었기에 휴 브릿지를 사기엔 애매했고, 스마트싱스 스테이션이 휴 조명과 연동된다는 사실을 알게되었다.</p><p>아래와 같은 플로우면 시리를 통해 휴 조명을 제어할 수 있지 않을까 생각해봤고 가능하겠다는 판단하에 스마트싱스 스테이션을 추가 구매하였다.<br><code>시리 - 아이폰 단축어 - http request - 스마트싱스서버 - 스마트싱스 스테이션 - 휴 조명 </code></p><h3 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h3><p>필립스 휴 , 스마트싱스 스테이션</p><h3 id="과정"><a href="#과정" class="headerlink" title="과정"></a>과정</h3><p><code>1.스마트싱스 스테이션, 필립스 휴 연동</code><br>스마트싱스 스테이션 앱을 설치 후 스마트싱스 스테이션을 연동한다. 이후 필립스 스마트싱스 앱에서 주변검색 후 필립스 휴 연동</p><p><code>2.스마트싱스 토큰발급</code><br><a href="https://account.smartthings.com/tokens">https://account.smartthings.com/tokens</a> 로그인 후 새 토큰을 발급받는다. 권한은 장치 &gt; 모든 디바이스 표시, 모든 디바이스 보기, 모든 디바이스 제어로 선택</p><p><code>3.디바이스 제어를 위한 capa 정보 조회</code><br><a href="https://blackdeery.github.io/st_helper/">https://blackdeery.github.io/st_helper/</a> 에 접속 후 위에서 발급한 토큰 입력 후 capa정보 습득 </p><p><code>4.제어 api 호출테스트</code></p><p>전원제어</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">https://api.smartthings.com/v1/devices/&#123;&#123;HUE_LIGHT_ID&#125;&#125;/commands</span><br><span class="line">--header &#x27;Authorization: Bearer &#123;&#123;SMART_THINGS_TOKEN&#125;&#125;&#x27; \</span><br><span class="line">--header &#x27;Content-Type: application/json&#x27;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;commands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;component&quot;: &quot;main&quot;,</span><br><span class="line">            &quot;capability&quot;: &quot;switch&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;on&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>밝기제어</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">https://api.smartthings.com/v1/devices/&#123;&#123;HUE_LIGHT_ID&#125;&#125;/commands</span><br><span class="line">--header &#x27;Authorization: Bearer &#123;&#123;SMART_THINGS_TOKEN&#125;&#125;&#x27; \</span><br><span class="line">--header &#x27;Content-Type: application/json&#x27;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;commands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;component&quot;: &quot;main&quot;,</span><br><span class="line">            &quot;capability&quot;: &quot;switchLevel&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;setLevel&quot;,</span><br><span class="line">            &quot;arguments&quot;: [</span><br><span class="line">                100</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>5.시리를 통한 제어 api 호출테스트</code><br>단축어에 http 리퀘스트를 등록하고 제목을 ‘불켜’ 와 같이 등록한다.</p><p><code>6.홈 앱을 사용해보고싶다..</code><br>홈앱을 사용하기 위해선 HomePod 또는 Apple TV가 필요하다고 한다.<br>하지만 홈브릿지라는걸 설치하면 위 두개 없이 연동이 가능하다 하여 남는 노트북에 VirtualBox로 설치하고 홈 앱과 연동까지 완료하였다.<br>이후 홈브릿지에 스마트싱스 플러그인을 설치하여 홈 앱에서 스마트싱스에 연동된 필립스 휴를 잘 갖고오고 있는것을 확인했고 제어까지 잘 되는것을 확인하였다.</p><p><code>조금 더 뭔가 복합적인 자동화를 생성하고 싶다. 홈 앱은 뭔가 부족한느낌. </code><br>아이패드로 홈 앱을 띄워 월패드처럼 사용하고, 아이폰과 홈 앱을 공유하여 사용하고자 했으나 너무 오래된 아이패드인지 홈 앱이 내 아이폰과 연동이 불가능했다.</p><p>홈 앱을 버리고, 홈 어시스턴트를 사용하여 웹으로 제어를 해보자 (홈어시스턴트 앱이 있는데 설치 불가. 워낙구형이라,..)</p><p>홈 어시스턴스</p><p>애드온 중 ssh 서버를 설치하려면 첫 화면에서 좌측하단에 내 계정을 누르면 나타나는 화면에서 고급 모드를 활성화 해야한다.</p><p>vi가 설치되어있지않아 file editor 애드온을 설치함</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="스마트-홈-구성"><a href="#스마트-홈-구성" class="headerlink" title="스마트 홈 구성"></a>스마트 홈 구성</h3><p>필립스 휴 조명을 구매하고, 이를 시리를 통한 호출 또는 자동화를 위해선 필립스 휴 브릿지가 필요하는 사실을 늦게 깨달았다.<br>필립스 휴 조명을 더 살 생각은 없었기에 휴 브릿지를 사기엔 애매했고, 스마트싱스 스테이션이 휴 조명과 연동된다는 사실을 알게되었다.</p><p>아래와 같은 플로우면 시리를 통해 휴 조명을 제어할 수 있지 않을까 생각해봤고 가능하겠다는 판단하에 스마트싱스 스테이션을 추가 구매하였다.<br><code>시리 - 아이폰 단축어 - http request - 스마트싱스서버 - 스마트싱스 스테이션 - 휴 조명 </code></p><h3 id="준비물"><a href="#준비물" class="headerlink" title="준비물"></a>준비물</h3><p>필립스 휴 , 스마트싱스 스테이션</p><h3 id="과정"><a href="#과정" class="headerlink" title="과정"></a>과정</h3><p><code>1.스마트싱스 스테이션, 필립스 휴 연동</code><br>스마트싱스 스테이션 앱을 설치 후 스마트싱스 스테이션을 연동한다. 이후 필립스 스마트싱스 앱에서 주변검색 후 필립스 휴 연동</p><p><code>2.스마트싱스 토큰발급</code><br><a href="https://account.smartthings.com/tokens">https://account.smartthings.com/tokens</a> 로그인 후 새 토큰을 발급받는다. 권한은 장치 &gt; 모든 디바이스 표시, 모든 디바이스 보기, 모든 디바이스 제어로 선택</p><p><code>3.디바이스 제어를 위한 capa 정보 조회</code><br><a href="https://blackdeery.github.io/st_helper/">https://blackdeery.github.io/st_helper/</a> 에 접속 후 위에서 발급한 토큰 입력 후 capa정보 습득 </p><p><code>4.제어 api 호출테스트</code></p><p>전원제어</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">https://api.smartthings.com/v1/devices/&#123;&#123;HUE_LIGHT_ID&#125;&#125;/commands</span><br><span class="line">--header &#x27;Authorization: Bearer &#123;&#123;SMART_THINGS_TOKEN&#125;&#125;&#x27; \</span><br><span class="line">--header &#x27;Content-Type: application/json&#x27;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;commands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;component&quot;: &quot;main&quot;,</span><br><span class="line">            &quot;capability&quot;: &quot;switch&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;on&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>밝기제어</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">https://api.smartthings.com/v1/devices/&#123;&#123;HUE_LIGHT_ID&#125;&#125;/commands</span><br><span class="line">--header &#x27;Authorization: Bearer &#123;&#123;SMART_THINGS_TOKEN&#125;&#125;&#x27; \</span><br><span class="line">--header &#x27;Content-Type: application/json&#x27;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;commands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;component&quot;: &quot;main&quot;,</span><br><span class="line">            &quot;capability&quot;: &quot;switchLevel&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;setLevel&quot;,</span><br><span class="line">            &quot;arguments&quot;: [</span><br><span class="line">                100</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>5.시리를 통한 제어 api 호출테스트</code><br>단축어에 http 리퀘스트를 등록하고 제목을 ‘불켜’ 와 같이 등록한다.</p><p><code>6.홈 앱을 사용해보고싶다..</code><br>홈앱을 사용하기 위해선 HomePod 또는 Apple TV가 필요하다고 한다.<br>하지만 홈브릿지라는걸 설치하면 위 두개 없이 연동이 가능하다 하여 남는 노트북에 VirtualBox로 설치하고 홈 앱과 연동까지 완료하였다.<br>이후 홈브릿지에 스마트싱스 플러그인을 설치하여 홈 앱에서 스마트싱스에 연동된 필립스 휴를 잘 갖고오고 있는것을 확인했고 제어까지 잘 되는것을 확인하였다.</p><p><code>조금 더 뭔가 복합적인 자동화를 생성하고 싶다. 홈 앱은 뭔가 부족한느낌. </code><br>아이패드로 홈 앱을 띄워 월패드처럼 사용하고, 아이폰과 홈 앱을 공유하여 사용하고자 했으나 너무 오래된 아이패드인지 홈 앱이 내 아이폰과 연동이 불가능했다.</p><p>홈 앱을 버리고, 홈 어시스턴트를 사용하여 웹으로 제어를 해보자 (홈어시스턴트 앱이 있는데 설치 불가. 워낙구형이라,..)</p><p>홈 어시스턴스</p>]]></content>
     
     <summary type="html">
     
@@ -522,35 +547,6 @@
       
         &lt;p&gt;model을 조회하고 이를 response로 리턴할 때 values를 활용하면 유용함.&lt;/p&gt;
 &lt;h3 id=&quot;쿼리셋-편하게-리턴하기-values&quot;&gt;&lt;a href=&quot;#쿼리셋-편하게-리턴하기-values&quot; class=&quot;headerlink&quot; title
-      
-    
-    </summary>
-    
-      <category term="Web/App" scheme="http://KKimSangHeon.github.io/categories/Web-App/"/>
-    
-      <category term="Django" scheme="http://KKimSangHeon.github.io/categories/Web-App/Django/"/>
-    
-    
-      <category term="Django" scheme="http://KKimSangHeon.github.io/tags/Django/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>django model inner join - orm</title>
-    <link href="http://KKimSangHeon.github.io/2021/02/21/django-model-join/"/>
-    <id>http://KKimSangHeon.github.io/2021/02/21/django-model-join/</id>
-    <published>2021-02-21T13:01:41.000Z</published>
-    <updated>2022-02-09T11:44:22.823Z</updated>
-    
-    <content type="html"><![CDATA[<p>django model의 inner 조인방법</p><p>order, detail_order 이라는 모델이 있을 때</p><h4 id="detail-order을-가져올-때-order내-customer이라는-컬럼을-통해-조인하는-방법"><a href="#detail-order을-가져올-때-order내-customer이라는-컬럼을-통해-조인하는-방법" class="headerlink" title="detail order을 가져올 때 order내 customer이라는 컬럼을 통해 조인하는 방법"></a>detail order을 가져올 때 order내 customer이라는 컬럼을 통해 조인하는 방법</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">detail_order_list = DetailOrder.objects.filter(order__customer=finder)</span><br><span class="line">둘 다 결과 동일</span><br><span class="line">detail_order_list = DetailOrder.objects.select_related(&#x27;order&#x27;).filter(order__customer=finder)</span><br></pre></td></tr></table></figure><p>즉 ‘__’ 를 잘 활용하자…</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;django model의 inner 조인방법&lt;/p&gt;
-&lt;p&gt;order, detail_order 이라는 모델이 있을 때&lt;/p&gt;
-&lt;h4 id=&quot;detail-order을-가져올-때-order내-customer이라는-컬럼을-통해-조인하는-방법&quot;&gt;&lt;a hr
       
     
     </summary>
